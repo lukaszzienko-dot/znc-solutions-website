@@ -2,30 +2,32 @@
 (function () {
   "use strict";
   var CAT = window.__ZNC || {};
-  var LABELS = { chairs: "Chairs & Barstools", tables: "Tables", lounge: "Lounge Furniture", bars: "Bars", barware: "Barware", coffee: "Coffee & Tea Service", china: "China & Tabletop", glass: "Glassware", silver: "Silverware", display: "Serving & Display", kitchen: "Kitchen Equipment", event: "Event Equipment", walls: "Gallery Walls", other: "Other Rentals" };
-  var ORDER = ["walls", "chairs", "tables", "lounge", "bars", "barware", "coffee", "china", "glass", "silver", "display", "kitchen", "event", "other"];
-  var PLACEHOLDER = "6413a13b8d3d455b83c63008900a033f";
-  var SPECS = { "Round Folding Table": "48″ round · seats 6<br>60″ round · seats 8–10<br>72″ round · seats 10–12", "Round Cocktail Tables": "24″ round · seats 2–3<br>30″ round · seats 3–5", "Farmhouse Table": "Size options available on request", "Rectangular Tables": "Multiple sizes available · exact dimensions on request", "Wall Panel System": "4′ × 7′ per panel · modular or stationary gallery walls", "Room Divider": "You can choose any fabric to cover the panel", "Custom Fabric Bar Screen": "6′ or 8′ · any tablecloth fabric · optional logo" };
-  var GALLERIES = { "Wall Panel System": ["fe3a504cd4644d88b0ecd0c3ee54a27b~mv2.png", "fe2f6271d2474dd88315d9e3ce490e91~mv2.png", "8a2059f55dec4eea82cc6e43ab48fc60~mv2.png", "43074cfa6677487b8115be11d9908bfa~mv2.jpg"], "Custom Fabric Bar Screen": ["774ac52f42ee4e3d937a4081104ce0db~mv2.jpg", "c2e52d94b6cc4b4f8b5c646b12461545~mv2.jpg", "bffdb87250644fbb86faea71f5298abd~mv2.jpg", "655812636b164854a5a017e117c51c7d~mv2.jpg"] };
+  var CATS = window.__ZNC_CATS || [];
+  var LABELS = {}, CSLUG = {}, ORDER = [];
+  CATS.forEach(function (c) { LABELS[c.key] = c.label; CSLUG[c.key] = c.slug; ORDER.push(c.key); });
+  Object.keys(CAT).forEach(function (k) { if (ORDER.indexOf(k) < 0) { ORDER.push(k); LABELS[k] = LABELS[k] || k; } });
+  var SPEC_KEYS = [["dimensions", ""], ["seats", ""], ["colors", "Colors: "], ["material", ""], ["stackable", ""], ["minOrder", "Min. order: "], ["notes", ""]];
   function $(id) { return document.getElementById(id); }
   function img(id) { return "https://static.wixstatic.com/media/e06c28_" + id; }
   function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
-  function slugify(s) { return String(s).toLowerCase().replace(/&/g, " and ").replace(/[″"']/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, ""); }
+  function fullName(it) { return it.name + (it.variant ? " (" + it.variant + ")" : ""); }
+  function specLines(it) {
+    var s = it.specs || {}, out = [];
+    SPEC_KEYS.forEach(function (p) { var v = s[p[0]]; if (v === undefined || v === null || v === "") return; if (p[0] === "stackable") v = v === true ? "Stackable" : v === false ? "Not stackable" : v; out.push(p[1] + v); });
+    return out;
+  }
 
-  /* Build an index: every item gets a stable, globally unique id (slug). */
-  var ITEMS = [];
-  (function () {
-    var seen = {};
-    Object.keys(CAT).forEach(function (k) {
-      (CAT[k] || []).forEach(function (row) {
-        var base = slugify(row[0]), s = base, i = 2;
-        while (seen[s]) s = base + "-" + i++;
-        seen[s] = 1;
-        ITEMS.push({ name: row[0], img: row[1], cat: k, slug: s });
-      });
+  /* Item index from catalog.js (each item has an explicit, unique slug). */
+  var ITEMS = [], BY_SLUG = {};
+  Object.keys(CAT).forEach(function (k) {
+    (CAT[k] || []).forEach(function (row) {
+      var it = Array.isArray(row) ? { name: row[0], img: row[1] } : Object.assign({}, row);
+      it.cat = k; it.slug = it.slug || it.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+      it.url = CSLUG[k] ? "/rentals/" + CSLUG[k] + "/" + it.slug + ".html" : "";
+      BY_SLUG[it.slug] = it; if (!it.hidden) ITEMS.push(it);
     });
-  })();
-  function itemsIn(k) { return ITEMS.filter(function (it) { return it.cat === k && it.img.indexOf(PLACEHOLDER) !== 0; }); }
+  });
+  function itemsIn(k) { return ITEMS.filter(function (it) { return it.cat === k; }); }
 
   /* ---------- Quote list (localStorage) ---------- */
   var QKEY = "znc_quote_list_v1";
@@ -114,22 +116,29 @@
 
   /* ---------- Catalog (homepage) ---------- */
   var cats = $("cats"), grid = $("grid"), panel = $("panel"), pt = $("pt");
-  function openPanel(title) { if (!panel) return; pt.textContent = title; panel.classList.add("on"); panel.scrollIntoView({ behavior: "smooth", block: "start" }); }
+  function openPanel(title, k) {
+    if (!panel) return; pt.textContent = title;
+    if (k && CSLUG[k]) { pt.appendChild(document.createTextNode(" ")); var va = el("a", "pt-all", "View all " + LABELS[k] + " →"); va.href = "/rentals/" + CSLUG[k] + "/"; pt.appendChild(va); } panel.classList.add("on"); panel.scrollIntoView({ behavior: "smooth", block: "start" }); }
   function card(it, opts) {
     opts = opts || {};
-    var d = el("div", "p");
-    var im = el("img"); im.loading = "lazy"; im.src = img(opts.img || it.img); im.alt = it.name + " rental";
-    d.append(im, el("b", null, it.name));
-    if (SPECS[it.name]) { var sp = el("span"); sp.innerHTML = SPECS[it.name]; d.appendChild(sp); }
+    var d = el("div", "p"), gal = !opts.gallery && it.gallery && it.gallery.length;
+    var im = el("img"); im.loading = "lazy"; im.src = img(opts.img || it.img); im.alt = fullName(it) + " rental";
+    var nm = el("b", null, fullName(it));
+    if (it.url && !gal && !opts.gallery) { var a = el("a", "p-link"); a.href = it.url; a.append(im, nm); d.appendChild(a); } else d.append(im, nm);
+    var lines = specLines(it);
+    if (lines.length) { var sp = el("span"); lines.forEach(function (l, i) { if (i) sp.appendChild(el("br")); sp.appendChild(document.createTextNode(l)); }); d.appendChild(sp); }
     else if (opts.showCat) d.appendChild(el("span", null, LABELS[it.cat]));
-    if (!opts.noAdd) d.appendChild(addControl({ id: it.slug, name: it.name, cat: LABELS[it.cat] }));
-    if (!opts.gallery && GALLERIES[it.name]) {
+    var pairs = (it.pairsWith || []).map(function (s) { return BY_SLUG[s]; }).filter(function (p) { return p && !p.hidden; });
+    if (pairs.length) { var pw = el("span", "p-pairs", "Pairs well with: "); pairs.forEach(function (p, i) { if (i) pw.appendChild(document.createTextNode(", ")); var a2 = el("a", null, fullName(p)); a2.href = p.url; pw.appendChild(a2); }); d.appendChild(pw); }
+    if (!opts.noAdd) d.appendChild(addControl({ id: it.slug, name: fullName(it), cat: LABELS[it.cat], url: it.url }));
+    if (it.url && !opts.noAdd) { var more = el("a", "p-more", "View details"); more.href = it.url; d.appendChild(more); }
+    if (gal) {
       d.style.cursor = "pointer";
       d.onclick = function (e) {
         if (e.target.closest(".ql-add,a")) return;
         grid.innerHTML = "";
-        GALLERIES[it.name].forEach(function (g, i) { grid.appendChild(card(it, { img: g, gallery: true, noAdd: i > 0 })); });
-        openPanel(it.name);
+        it.gallery.forEach(function (g, i) { grid.appendChild(card(it, { img: g, gallery: true, noAdd: i > 0 })); });
+        openPanel(fullName(it));
       };
     }
     return d;
@@ -140,14 +149,15 @@
     var list = itemsIn(k);
     if (k === "walls") list = list.slice().sort(function (a, b) { return (a.name === "Wall Panel System" ? 0 : 1) - (b.name === "Wall Panel System" ? 0 : 1); });
     list.forEach(function (it) { grid.appendChild(card(it)); });
-    openPanel(LABELS[k]);
+    openPanel(LABELS[k], k);
   }
   if (cats) {
     ORDER.forEach(function (k) {
       var list = CAT[k]; if (!list || !list.length) return;
       var t = el("div", "cat" + (k === "walls" ? " walls" : "")); t.tabIndex = 0;
       var im = el("img"); im.alt = LABELS[k];
-      var src = list[0][1]; if (k === "walls") { var w = list.filter(function (r) { return r[0] === "Wall Panel System"; })[0]; if (w) src = w[1]; }
+      var vis = itemsIn(k); if (!vis.length) return;
+      var src = vis[0].img; if (k === "walls") { var w = vis.filter(function (r) { return r.name === "Wall Panel System"; })[0]; if (w) src = w.img; }
       im.src = img(src);
       t.append(im, el("strong", null, LABELS[k]));
       t.onclick = function () { showCat(k); };
@@ -199,6 +209,10 @@
         .then(function () { btn.disabled = false; btn.textContent = "Send Quote Request"; });
     });
   }
+
+  /* Item page photo thumbnails */
+  var photo = $("itemPhoto");
+  if (photo) document.querySelectorAll("[data-photo]").forEach(function (b) { b.addEventListener("click", function () { photo.src = b.getAttribute("data-photo"); }); });
 
   qBuildUI(); qRender();
   window.addEventListener("storage", function (e) { if (e.key === QKEY) qRender(); });
