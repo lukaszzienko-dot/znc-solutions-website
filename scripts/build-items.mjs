@@ -45,6 +45,7 @@ for (const c of cats) for (const it of Z[c.key]) {
 }
 for (const k of Object.keys(Z)) if (!cats.find(c => c.key === k) && Z[k].length) throw new Error('Category missing from __ZNC_CATS: ' + k);
 const itemsOf = c => ITEMS.filter(i => i.cat === c);
+const catTitle = c => c.title || `${c.label} Rentals`;
 const fullName = it => it.name + (it.variant ? ` (${it.variant})` : '');
 
 function titleFor(n) {
@@ -114,12 +115,12 @@ for (const c of cats) {
   const list = itemsOf(c); if (!list.length) continue;
   const u = `/rentals/${c.slug}/`;
   const bc = crumbs([['Home', '/'], ['Rentals', '/rentals/'], [c.label, u]]);
-  const title = (t => t.length <= 60 ? t : `${c.label} Rentals | ZNC Solutions`)(`${c.label} Rentals | ZNC Solutions NJ/NY`);
+  const title = (t => t.length <= 60 ? t : `${catTitle(c)} | ZNC Solutions`)(`${catTitle(c)} | ZNC Solutions NJ/NY`);
   const desc = `${c.label} rentals from ZNC Solutions in Wayne, NJ: ${list.length} items for events across NJ, NYC and CT. Build a quote list or call ${PHONE}.`;
   const itemList = { '@type': 'ItemList', name: `${c.label} rentals`, numberOfItems: list.length, itemListElement: list.map((it, i) => ({ '@type': 'ListItem', position: i + 1, url: SITE + it.url, name: fullName(it) })) };
   const landing = CAT_LANDING[c.key];
   const html = head({ title, desc, canonical: SITE + u, ogImage: imgSized(list[0].img, 1000, list[0].slug), ld: { '@context': 'https://schema.org', '@graph': [bc.ld, itemList] } }) + HEADER +
-    `<main>${bc.html}<section class="cat-head"><div class="w"><div class="ey">ZNC Rentals</div><h1>${esc(c.label)} Rentals</h1><p class="lead">${esc(c.blurb)}</p><p class="price-note">${PRICE_NOTE} Add items to your quote list, then send it with your quote request.</p>${landing ? `<p class="small">See also <a href="${landing[0]}">${esc(landing[1])}</a>.</p>` : ''}</div></section>` +
+    `<main>${bc.html}<section class="cat-head"><div class="w"><div class="ey">ZNC Rentals</div><h1>${esc(catTitle(c))}</h1><p class="lead">${esc(c.blurb)}</p><p class="price-note">${PRICE_NOTE} Add items to your quote list, then send it with your quote request.</p>${landing ? `<p class="small">See also <a href="${landing[0]}">${esc(landing[1])}</a>.</p>` : ''}</div></section>` +
     `<section class="related"><div class="w"><div class="grid">${list.map(it => card(it, true)).join('')}</div></div></section>` +
     `<section class="related"><div class="w"><h2>Other rental categories</h2><p class="cat-links">${cats.filter(o => o !== c && itemsOf(o).length).map(o => `<a href="/rentals/${o.slug}/">${esc(o.label)}</a>`).join('')}</p></div></section></main>` + FOOTER + `</body></html>\n`;
   write(u.slice(1) + 'index.html', html); urls.push(u);
