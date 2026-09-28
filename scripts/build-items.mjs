@@ -11,7 +11,6 @@ const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..')
 const SITE = 'https://zncsolutions.com';
 const LASTMOD = process.env.LASTMOD || new Date().toISOString().slice(0, 10);
 const PHONE = '917-536-1245', TEL = '+19175361245';
-const PRICE_NOTE = 'Pricing depends on your event date, item count and delivery town.';
 
 const ctx = { window: {} };
 vm.runInNewContext(fs.readFileSync(path.join(ROOT, 'catalog.js'), 'utf8'), ctx);
@@ -101,7 +100,7 @@ for (const it of ITEMS) {
     (photos.length > 1 ? `<div class="thumbs">${photos.map((p, i) => `<button type="button" data-photo="${imgSized(p, 800, it.slug)}" aria-label="Show photo ${i + 1} of ${esc(n)}"><img loading="lazy" src="${imgSized(p, 160, it.slug, 'webp')}" alt="${esc(n)} photo ${i + 1}"></button>`).join('')}</div>` : '') +
     `</div><div class="item-info"><div class="ey">${esc(c.label)}</div><h1>${esc(it.name)}</h1>${it.variant ? `<p class="variant">${esc(it.variant)}</p>` : ''}<p class="lead">${esc(c.blurb)}</p>` +
     (specs.length ? `<dl class="spec-list">${specs.map(([l, v]) => `<dt>${esc(l)}</dt><dd>${esc(v)}</dd>`).join('')}</dl>` : '') +
-    `<p class="price-note">${PRICE_NOTE} Add it to your quote list or call <a href="tel:${TEL}">${PHONE}</a>.</p>${addBtn(it, 'ql-add-lg')}` +
+    `${addBtn(it, 'ql-add-lg')}` +
     `<p class="item-cta"><a class="btn" href="/contact.html">Request a quote</a> <a class="btn btn-o" href="tel:${TEL}">Call ${PHONE}</a></p>` +
     `<p class="small">Delivered from Wayne, NJ across North Jersey, New York City and Connecticut.${landing ? ` See also <a href="${landing[0]}">${esc(landing[1])}</a>.` : ''}</p></div></div></section>` +
     (pairs.length ? `<section class="related"><div class="w"><h2>Pairs well with</h2><div class="grid">${pairs.map(p => card(p, true)).join('')}</div></div></section>` : '') +
@@ -120,7 +119,7 @@ for (const c of cats) {
   const itemList = { '@type': 'ItemList', name: `${c.label} rentals`, numberOfItems: list.length, itemListElement: list.map((it, i) => ({ '@type': 'ListItem', position: i + 1, url: SITE + it.url, name: fullName(it) })) };
   const landing = CAT_LANDING[c.key];
   const html = head({ title, desc, canonical: SITE + u, ogImage: imgSized(list[0].img, 1000, list[0].slug), ld: { '@context': 'https://schema.org', '@graph': [bc.ld, itemList] } }) + HEADER +
-    `<main>${bc.html}<section class="cat-head"><div class="w"><div class="ey">ZNC Rentals</div><h1>${esc(catTitle(c))}</h1><p class="lead">${esc(c.blurb)}</p><p class="price-note">${PRICE_NOTE} Add items to your quote list, then send it with your quote request.</p>${landing ? `<p class="small">See also <a href="${landing[0]}">${esc(landing[1])}</a>.</p>` : ''}</div></section>` +
+    `<main>${bc.html}<section class="cat-head"><div class="w"><div class="ey">ZNC Rentals</div><h1>${esc(catTitle(c))}</h1><p class="lead">${esc(c.blurb)}</p><p class="price-note">Add items to your quote list, then send it with your quote request.</p>${landing ? `<p class="small">See also <a href="${landing[0]}">${esc(landing[1])}</a>.</p>` : ''}</div></section>` +
     `<section class="related"><div class="w"><div class="grid">${list.map(it => card(it, true)).join('')}</div></div></section>` +
     `<section class="related"><div class="w"><h2>Other rental categories</h2><p class="cat-links">${cats.filter(o => o !== c && itemsOf(o).length).map(o => `<a href="/rentals/${o.slug}/">${esc(o.label)}</a>`).join('')}</p></div></section></main>` + FOOTER + `</body></html>\n`;
   write(u.slice(1) + 'index.html', html); urls.push(u);
@@ -131,7 +130,7 @@ for (const c of cats) {
   const u = '/rentals/';
   const bc = crumbs([['Home', '/'], ['Rentals', u]]);
   const html = head({ title: 'Party Rental Catalog | ZNC Solutions Wayne NJ', desc: `Browse ${ITEMS.length} party rental items from ZNC Solutions in Wayne, NJ: chairs, tables, lounge, bars, tabletop, kitchen gear and gallery walls. Call ${PHONE}.`, canonical: SITE + u, ld: { '@context': 'https://schema.org', '@graph': [bc.ld, { '@type': 'ItemList', name: 'Rental categories', itemListElement: cats.filter(c => itemsOf(c).length).map((c, i) => ({ '@type': 'ListItem', position: i + 1, url: `${SITE}/rentals/${c.slug}/`, name: c.label })) }] } }) + HEADER +
-    `<main>${bc.html}<section class="cat-head"><div class="w"><div class="ey">ZNC Rentals</div><h1>Rental Catalog</h1><p class="lead">Every item we rent, by category. Add items to your quote list and send it with your quote request.</p><p class="price-note">${PRICE_NOTE}</p></div></section>` +
+    `<main>${bc.html}<section class="cat-head"><div class="w"><div class="ey">ZNC Rentals</div><h1>Rental Catalog</h1><p class="lead">Every item we rent, by category. Add items to your quote list and send it with your quote request.</p></div></section>` +
     cats.filter(c => itemsOf(c).length).map(c => `<section class="related"><div class="w"><h2><a href="/rentals/${c.slug}/">${esc(c.label)}</a></h2><p class="lead">${esc(c.blurb)}</p><ul class="item-links">${itemsOf(c).map(it => `<li><a href="${it.url}">${esc(fullName(it))}</a></li>`).join('')}</ul></div></section>`).join('') +
     `</main>` + FOOTER + `</body></html>\n`;
   write('rentals/index.html', html); urls.push(u);
@@ -149,7 +148,7 @@ for (const [file, cfg] of Object.entries(LANDINGS)) {
   const block = `<section class="related item-index"><div class="w"><h2>${esc(cfg.title)}</h2>` +
     cfg.cats.map(k => cats.find(c => c.key === k)).filter(Boolean).map(c => `<h3><a href="/rentals/${c.slug}/">${esc(c.label)}</a></h3><ul class="item-links">${itemsOf(c).map(it => `<li><a href="${it.url}">${esc(fullName(it))}</a></li>`).join('')}</ul>`).join('') +
     (cfg.extra ? `<p class="cat-links">${cfg.extra.map(k => cats.find(c => c.key === k)).filter(Boolean).map(c => `<a href="/rentals/${c.slug}/">${esc(c.label)}</a>`).join('')}</p>` : '') +
-    `<p class="price-note">${PRICE_NOTE}</p></div></section>`;
+    `</div></section>`;
   inject(file, 'items', block, '</main>');
 }
 inject('index.html', 'catlinks', `<p class="cat-links home-cat-links"><span>Browse by category:</span>${cats.filter(c => itemsOf(c).length).map(c => `<a href="/rentals/${c.slug}/">${esc(c.label)}</a>`).join('')}<a href="/rentals/">All rentals</a></p>`, '</section>\n\n<section class="feature faq">');
@@ -167,7 +166,7 @@ inject('index.html', 'catlinks', `<p class="cat-links home-cat-links"><span>Brow
 
 /* vercel.json: 301s from old Wix product URLs whose slug matches an item (manual aliases below). */
 {
-  const ALIAS = { 'white-chiavari-chair-1': 'white-chiavari-chair-2', 'bar-kitcken-towel': 'bar-kitchen-towel', 'chome-ice-bucket': 'chrome-ice-bucket', 'white-icetub': 'white-ice-tub', 'rectangular-table': 'rectangular-tables', 'round-cocktail-table': 'round-cocktail-tables', 'swing-bottle': 'swing-bottle-34oz', 'pop-corn-machine': 'popcorn-machine', 'stainless-steel-bar-scoop': 'bar-scoop', 'copy-of-angle-platter-18-x12': 'angle-platter-18-x12', '72-round-foldingtable': 'round-folding-table', 'half-baker-rack-1': 'half-baker-rack', 'samovar': 'stainless-steel-samovar', 'silver-creamer': 'silver-creamer-20-oz', 'coupe-cup': 'coupe-coffee-cup', 'large-serving-bowl': 'large-serving-salad-bowl' };
+  const ALIAS = { 'white-chiavari-chair': 'white-chiavari-barstool', 'white-chiavari-chair-1': 'white-chiavari-chair', 'bar-kitcken-towel': 'bar-kitchen-towel', 'chome-ice-bucket': 'chrome-ice-bucket', 'white-icetub': 'white-ice-tub', 'rectangular-table': 'rectangular-tables', 'round-cocktail-table': 'round-cocktail-tables', 'swing-bottle': 'swing-bottle-34oz', 'pop-corn-machine': 'popcorn-machine', 'stainless-steel-bar-scoop': 'bar-scoop', 'copy-of-angle-platter-18-x12': 'angle-platter-18-x12', '72-round-foldingtable': 'round-folding-table', 'half-baker-rack-1': 'half-baker-rack', 'samovar': 'stainless-steel-samovar', 'silver-creamer': 'silver-creamer-20-oz', 'coupe-cup': 'coupe-coffee-cup', 'large-serving-bowl': 'large-serving-salad-bowl' };
   const f = path.join(ROOT, 'vercel.json'); const v = JSON.parse(fs.readFileSync(f, 'utf8'));
   const wixFile = path.join(ROOT, 'scripts/wix-product-slugs.txt');
   const wix = fs.existsSync(wixFile) ? fs.readFileSync(wixFile, 'utf8').split(/\s+/).filter(Boolean) : [];

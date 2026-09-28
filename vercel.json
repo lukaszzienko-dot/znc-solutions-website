@@ -1,6 +1,16 @@
 {
  "redirects": [
   {
+   "source": "/rentals/chairs-barstools/white-chiavari-chair-2.html",
+   "destination": "/rentals/chairs-barstools/white-chiavari-chair.html",
+   "statusCode": 301
+  },
+  {
+   "source": "/rentals/chairs-barstools/white-chiavari-chair-2",
+   "destination": "/rentals/chairs-barstools/white-chiavari-chair.html",
+   "statusCode": 301
+  },
+  {
    "source": "/gallery-wall-rentals-nyc",
    "destination": "/wall-panels.html",
    "permanent": true
@@ -807,12 +817,12 @@
   },
   {
    "source": "/product-page/white-chiavari-chair",
-   "destination": "/rentals/chairs-barstools/white-chiavari-chair.html",
+   "destination": "/rentals/chairs-barstools/white-chiavari-barstool.html",
    "statusCode": 301
   },
   {
    "source": "/product-page/white-chiavari-chair-1",
-   "destination": "/rentals/chairs-barstools/white-chiavari-chair-2.html",
+   "destination": "/rentals/chairs-barstools/white-chiavari-chair.html",
    "statusCode": 301
   },
   {

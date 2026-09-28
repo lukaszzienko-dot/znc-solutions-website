@@ -54,7 +54,7 @@
     var foot = el("div", "ql-foot");
     var send = el("button", "btn ql-send", "Send with quote request"); send.type = "button"; send.onclick = qSend;
     var clr = el("button", "ql-clear", "Clear list"); clr.type = "button"; clr.onclick = function () { qSave([]); };
-    foot.append(el("p", "ql-note", "Pricing depends on your date, item count and delivery town."), send, clr);
+    foot.append(send, clr);
     qpanel.append(head, qbody, foot);
     document.body.append(qpanel, pill);
     document.addEventListener("keydown", function (e) { if (e.key === "Escape" && qpanel.classList.contains("on")) qClose(); });
