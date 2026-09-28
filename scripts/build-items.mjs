@@ -176,7 +176,7 @@ inject('index.html', 'catlinks', `<p class="cat-links home-cat-links"><span>Brow
     const t = BY_SLUG[ALIAS[w] || w];
     if (!t || t.hidden) { unmatched.push(w); continue; }
     if (seen.has(w)) continue; seen.add(w);
-    v.redirects.push({ source: '/product-page/' + w, destination: t.url, permanent: true });
+    v.redirects.push({ source: '/product-page/' + w, destination: t.url, statusCode: 301 });
   }
   fs.writeFileSync(f, JSON.stringify(v, null, 1) + '\n');
   console.log(`wix redirects: ${seen.size}, unmatched: ${unmatched.length} (${unmatched.join(' ')})`);
