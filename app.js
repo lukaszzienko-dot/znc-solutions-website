@@ -220,7 +220,7 @@
   /* ---------- Footer year + hero rotation ---------- */
   var y = $("year"); if (y) y.textContent = new Date().getFullYear();
   var hero = document.querySelector(".hero img");
-  if (hero && ["/", "/index.html", "/wall-panels.html"].indexOf(location.pathname) > -1) {
+  if (hero && ["/", "/index.html"].indexOf(location.pathname) > -1) {
     var M = "https://static.wixstatic.com/media/", slides = [[M + "e06c28_bbba71eec96f4bec842418a79189b67e~mv2.jpg", "Wooden bar and event rental setting by ZNC Solutions"], [M + "e06c28_fe3a504cd4644d88b0ecd0c3ee54a27b~mv2.png", "Gallery walls with lighting by ZNC Solutions"], [M + "e06c28_fe2f6271d2474dd88315d9e3ce490e91~mv2.png", "Modular gallery wall panels by ZNC Solutions"], [M + "e06c28_8a2059f55dec4eea82cc6e43ab48fc60~mv2.png", "Gallery wall panels set up by ZNC Solutions"], [M + "e06c28_43074cfa6677487b8115be11d9908bfa~mv2.jpg", "Stationary gallery walls by ZNC Solutions"]];
     slides.forEach(function (s) { new Image().src = s[0]; });
     var si = 0;
