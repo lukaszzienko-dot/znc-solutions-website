@@ -6,6 +6,8 @@
             homepage category links, and vercel.json redirects for old Wix /product-page/<slug> URLs
             listed in scripts/wix-product-slugs.txt that match an item slug. */
 import fs from 'fs'; import path from 'path'; import vm from 'vm';
+import { FOOTER_HTML, applyFooters } from './site-chrome.mjs';
+import { itemDetailHtml, catGuideHtml } from './item-copy.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const SITE = 'https://zncsolutions.com';
@@ -45,7 +47,8 @@ for (const c of cats) for (const it of Z[c.key]) {
 for (const k of Object.keys(Z)) if (!cats.find(c => c.key === k) && Z[k].length) throw new Error('Category missing from __ZNC_CATS: ' + k);
 const itemsOf = c => ITEMS.filter(i => i.cat === c);
 const catTitle = c => c.title || `${c.label} Rentals`;
-const fullName = it => it.name + (it.variant ? ` (${it.variant})` : '');
+const pretty = t => String(t).replace(/(\d)\s*(?:''|")/g, '$1″').replace(/(\d)'/g, '$1′').replace(/\s+/g, ' ').trim();
+const fullName = it => pretty(it.name + (it.variant ? ` (${it.variant})` : ''));
 
 function titleFor(n) {
   for (const t of [`${n} Rental | ZNC Solutions NJ/NY`, `${n} Rental | ZNC Solutions`, `${n} Rental | ZNC`]) if (t.length <= 60) return t;
@@ -59,8 +62,8 @@ function descFor(it) {
   return `Rent the ${n} from ZNC Solutions in Wayne, NJ.`;
 }
 
-const HEADER = `<header><div class="w"><nav><a class="brand" href="/">ZNC SOLUTIONS</a><div class="nav"><a href="/rentals/">Rentals</a><a href="/wall-panels.html">Wall Panels</a><a class="btn" href="/contact.html">Quote</a></div></nav></div></header>`;
-const FOOTER = `<footer><div class="w fg"><div><strong>ZNC SOLUTIONS</strong><br>Party rentals from Wayne, NJ · NY · NJ · CT</div><div><a href="mailto:info@zncsolutions.com">info@zncsolutions.com</a> · <a href="tel:${TEL}">${PHONE}</a><br><a href="/rentals/">All rentals</a> · <a href="/contact.html">Request a quote</a></div></div></footer><a class="callbar" href="tel:${TEL}">${PHONE}</a><script src="/app.js"></script>`;
+const HEADER = `<header><div class="w"><nav><a class="brand" href="/">ZNC SOLUTIONS</a><div class="nav"><a href="/rentals/">Rentals</a><a href="/wall-panels.html">Wall Panels</a><a href="/testimonials">Testimonials</a><a class="btn" href="/contact.html">Quote</a></div></nav></div></header>`;
+const FOOTER = FOOTER_HTML + `<a class="callbar" href="tel:${TEL}">${PHONE}</a><script src="/app.js"></script>`;
 
 function head({ title, desc, canonical, ogImage, ogType, ld }) {
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title)}</title><meta name="description" content="${esc(desc)}"><link rel="canonical" href="${canonical}"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><meta name="theme-color" content="#0d4a34"><meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(desc)}"><meta property="og:url" content="${canonical}"><meta property="og:type" content="${ogType || 'website'}">${ogImage ? `<meta property="og:image" content="${esc(ogImage)}">` : ''}<link rel="stylesheet" href="/site.css"><script type="application/ld+json">${jsonld(ld)}</script></head><body>`;
@@ -79,6 +82,14 @@ function card(it, withAdd) {
 }
 function write(rel, html) { const f = path.join(ROOT, rel); fs.mkdirSync(path.dirname(f), { recursive: true }); fs.writeFileSync(f, html); }
 
+/* Snapshot previous output so sitemap lastmod only moves for pages whose HTML actually changed. */
+const OLD = {};
+(function snap(dir) { if (!fs.existsSync(dir)) return; for (const e of fs.readdirSync(dir, { withFileTypes: true })) { const p = path.join(dir, e.name); if (e.isDirectory()) snap(p); else if (e.name.endsWith('.html')) OLD['/' + path.relative(ROOT, p)] = fs.readFileSync(p, 'utf8'); } })(path.join(ROOT, 'rentals'));
+for (const f of fs.readdirSync(ROOT)) if (f.endsWith('.html')) OLD['/' + f] = fs.readFileSync(path.join(ROOT, f), 'utf8');
+const SM_OLD = {}; for (const m of fs.readFileSync(path.join(ROOT, 'sitemap.xml'), 'utf8').matchAll(/<loc>https:\/\/zncsolutions\.com([^<]*)<\/loc><lastmod>([^<]*)<\/lastmod>/g)) SM_OLD[m[1]] = m[2];
+const fileOf = u => u.endsWith('/') ? (u === '/' ? '/index.html' : u + 'index.html') : u;
+const lastmodFor = u => { const f = path.join(ROOT, fileOf(u)); const prev = OLD[fileOf(u)]; return (prev !== undefined && fs.existsSync(f) && fs.readFileSync(f, 'utf8') === prev && SM_OLD[u]) ? SM_OLD[u] : LASTMOD; };
+
 /* Clean previous output */
 fs.rmSync(path.join(ROOT, 'rentals'), { recursive: true, force: true });
 const urls = [];
@@ -96,13 +107,14 @@ for (const it of ITEMS) {
   const landing = CAT_LANDING[c.key];
   const title = titleFor(n), desc = descFor(it);
   const html = head({ title, desc, canonical: SITE + it.url, ogImage: imgSized(it.img, 1000, it.slug), ogType: 'product', ld: { '@context': 'https://schema.org', '@graph': [bc.ld, product] } }) + HEADER +
-    `<main>${bc.html}<section class="item"><div class="w item-g"><div class="item-media"><img id="itemPhoto" src="${imgSized(it.img, 800, it.slug)}" alt="${esc(n)} for rent from ZNC Solutions, Wayne NJ" width="800" height="800">` +
+    `<main>${bc.html}<section class="item"><div class="w item-g"><div class="item-media"><img id="itemPhoto" src="${imgSized(it.img, 800, it.slug, 'webp')}" alt="${esc(n)} for rent from ZNC Solutions, Wayne NJ" width="800" height="800" fetchpriority="high">` +
     (photos.length > 1 ? `<div class="thumbs">${photos.map((p, i) => `<button type="button" data-photo="${imgSized(p, 800, it.slug)}" aria-label="Show photo ${i + 1} of ${esc(n)}"><img loading="lazy" src="${imgSized(p, 160, it.slug, 'webp')}" alt="${esc(n)} photo ${i + 1}"></button>`).join('')}</div>` : '') +
-    `</div><div class="item-info"><div class="ey">${esc(c.label)}</div><h1>${esc(it.name)}</h1>${it.variant ? `<p class="variant">${esc(it.variant)}</p>` : ''}<p class="lead">${esc(c.blurb)}</p>` +
+    `</div><div class="item-info"><div class="ey">${esc(c.label)}</div><h1>${esc(pretty(it.name))}</h1>${it.variant ? `<p class="variant">${esc(it.variant)}</p>` : ''}<p class="lead">${esc(c.blurb)}</p>` +
     (specs.length ? `<dl class="spec-list">${specs.map(([l, v]) => `<dt>${esc(l)}</dt><dd>${esc(v)}</dd>`).join('')}</dl>` : '') +
     `${addBtn(it, 'ql-add-lg')}` +
     `<p class="item-cta"><a class="btn" href="/contact.html">Request a quote</a> <a class="btn btn-o" href="tel:${TEL}">Call ${PHONE}</a></p>` +
     `<p class="small">Delivered from Wayne, NJ across North Jersey, New York City and Connecticut.${landing ? ` See also <a href="${landing[0]}">${esc(landing[1])}</a>.` : ''}</p></div></div></section>` +
+    itemDetailHtml(it, { fullName, peers, specs, landing }) +
     (pairs.length ? `<section class="related"><div class="w"><h2>Pairs well with</h2><div class="grid">${pairs.map(p => card(p, true)).join('')}</div></div></section>` : '') +
     (related.length ? `<section class="related"><div class="w"><h2>More ${esc(c.label)}</h2><div class="grid">${related.map(p => card(p, true)).join('')}</div><p><a class="btn btn-o" href="/rentals/${c.slug}/">View all ${esc(c.label)}</a></p></div></section>` : '') +
     `</main>` + FOOTER + `</body></html>\n`;
@@ -120,7 +132,7 @@ for (const c of cats) {
   const landing = CAT_LANDING[c.key];
   const html = head({ title, desc, canonical: SITE + u, ogImage: imgSized(list[0].img, 1000, list[0].slug), ld: { '@context': 'https://schema.org', '@graph': [bc.ld, itemList] } }) + HEADER +
     `<main>${bc.html}<section class="cat-head"><div class="w"><div class="ey">ZNC Rentals</div><h1>${esc(catTitle(c))}</h1><p class="lead">${esc(c.blurb)}</p><p class="price-note">Add items to your quote list, then send it with your quote request.</p>${landing ? `<p class="small">See also <a href="${landing[0]}">${esc(landing[1])}</a>.</p>` : ''}</div></section>` +
-    `<section class="related"><div class="w"><div class="grid">${list.map(it => card(it, true)).join('')}</div></div></section>` +
+    `<section class="related"><div class="w"><div class="grid">${list.map(it => card(it, true)).join('')}</div></div></section>` + catGuideHtml(c) +
     `<section class="related"><div class="w"><h2>Other rental categories</h2><p class="cat-links">${cats.filter(o => o !== c && itemsOf(o).length).map(o => `<a href="/rentals/${o.slug}/">${esc(o.label)}</a>`).join('')}</p></div></section></main>` + FOOTER + `</body></html>\n`;
   write(u.slice(1) + 'index.html', html); urls.push(u);
 }
@@ -153,13 +165,16 @@ for (const [file, cfg] of Object.entries(LANDINGS)) {
 }
 inject('index.html', 'catlinks', `<p class="cat-links home-cat-links"><span>Browse by category:</span>${cats.filter(c => itemsOf(c).length).map(c => `<a href="/rentals/${c.slug}/">${esc(c.label)}</a>`).join('')}<a href="/rentals/">All rentals</a></p>`, '</section>\n\n<section class="feature faq">');
 
-/* sitemap.xml: keep non-rentals entries, replace rentals ones */
+/* sitemap.xml: keep non-rentals entries (hand-maintained lastmod), refresh touched landings, replace rentals ones */
+applyFooters(ROOT);
 {
   const f = path.join(ROOT, 'sitemap.xml'); let s = fs.readFileSync(f, 'utf8');
   s = s.replace(/<url><loc>https:\/\/zncsolutions\.com\/rentals\/[^<]*<\/loc><lastmod>[^<]*<\/lastmod><\/url>/g, '');
-  const touched = new Set(['/', ...Object.keys(LANDINGS).map(x => '/' + x)]);
-  s = s.replace(/<url><loc>https:\/\/zncsolutions\.com([^<]*)<\/loc><lastmod>[^<]*<\/lastmod><\/url>/g, (m, p) => touched.has(p) ? `<url><loc>${SITE}${p}</loc><lastmod>${LASTMOD}</lastmod></url>` : m);
-  const add = urls.sort((a, b) => a.split('/').length - b.split('/').length || a.localeCompare(b)).map(u => `<url><loc>${SITE}${u}</loc><lastmod>${LASTMOD}</lastmod></url>`).join('');
+  s = s.replace(/<url><loc>https:\/\/zncsolutions\.com([^<]*)<\/loc><lastmod>([^<]*)<\/lastmod><\/url>/g, (m, p, lm) => {
+    const prev = OLD[fileOf(p)], cur = fs.existsSync(path.join(ROOT, fileOf(p))) ? fs.readFileSync(path.join(ROOT, fileOf(p)), 'utf8') : null;
+    return (prev !== undefined && cur !== null && prev !== cur) ? `<url><loc>${SITE}${p}</loc><lastmod>${LASTMOD}</lastmod></url>` : m;
+  });
+  const add = urls.sort((a, b) => a.split('/').length - b.split('/').length || a.localeCompare(b)).map(u => `<url><loc>${SITE}${u}</loc><lastmod>${lastmodFor(u)}</lastmod></url>`).join('');
   s = s.replace('</urlset>', add + '</urlset>');
   fs.writeFileSync(f, s);
 }
