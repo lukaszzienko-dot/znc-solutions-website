@@ -222,8 +222,12 @@
   var hero = document.querySelector(".hero img");
   if (hero && ["/", "/index.html"].indexOf(location.pathname) > -1) {
     var M = "https://static.wixstatic.com/media/", slides = [[M + "e06c28_bbba71eec96f4bec842418a79189b67e~mv2.jpg", "Wooden bar and event rental setting by ZNC Solutions"], [M + "e06c28_fe3a504cd4644d88b0ecd0c3ee54a27b~mv2.png", "Gallery walls with lighting by ZNC Solutions"], [M + "e06c28_fe2f6271d2474dd88315d9e3ce490e91~mv2.png", "Modular gallery wall panels by ZNC Solutions"], [M + "e06c28_8a2059f55dec4eea82cc6e43ab48fc60~mv2.png", "Gallery wall panels set up by ZNC Solutions"], [M + "e06c28_43074cfa6677487b8115be11d9908bfa~mv2.jpg", "Stationary gallery walls by ZNC Solutions"]];
-    slides.forEach(function (s) { new Image().src = s[0]; });
-    var si = 0;
-    setInterval(function () { si = (si + 1) % slides.length; hero.style.opacity = "0"; setTimeout(function () { hero.src = slides[si][0]; hero.alt = slides[si][1]; hero.style.opacity = "1"; }, 400); }, 5000);
+    var sized = function (u) { return u.replace(/(~mv2\.\w+)$/, "$1/v1/fit/w_1600,h_1600,q_85/hero.webp"); };
+    slides = slides.map(function (s, i) { return i === 0 ? s : [sized(s[0]), s[1]]; });
+    var si = 0, warmed = false;
+    /* Warm the next slide only after the page has loaded, one image at a time, so large slide images never compete with the first paint. */
+    var warm = function (i) { new Image().src = slides[i][0]; };
+    window.addEventListener("load", function () { setTimeout(function () { warmed = true; warm(1); }, 2500); });
+    setInterval(function () { if (!warmed) return; si = (si + 1) % slides.length; warm((si + 1) % slides.length); hero.style.opacity = "0"; setTimeout(function () { hero.src = slides[si][0]; hero.alt = slides[si][1]; hero.style.opacity = "1"; }, 400); }, 5000);
   }
 })();
