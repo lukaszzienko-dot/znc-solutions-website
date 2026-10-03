@@ -1,6 +1,51 @@
 {
  "redirects": [
   {
+   "source": "/shop",
+   "destination": "/rentals/",
+   "statusCode": 301
+  },
+  {
+   "source": "/shop-2",
+   "destination": "/rentals/",
+   "statusCode": 301
+  },
+  {
+   "source": "/contact",
+   "destination": "/contact.html",
+   "statusCode": 301
+  },
+  {
+   "source": "/contact-us",
+   "destination": "/contact.html",
+   "statusCode": 301
+  },
+  {
+   "source": "/about",
+   "destination": "/about.html",
+   "statusCode": 301
+  },
+  {
+   "source": "/about-4",
+   "destination": "/about.html",
+   "statusCode": 301
+  },
+  {
+   "source": "/about-us",
+   "destination": "/about.html",
+   "statusCode": 301
+  },
+  {
+   "source": "/production",
+   "destination": "/",
+   "statusCode": 301
+  },
+  {
+   "source": "/category",
+   "destination": "/rentals/",
+   "statusCode": 301
+  },
+  {
    "source": "/rentals/chairs-barstools/white-chiavari-chair-2.html",
    "destination": "/rentals/chairs-barstools/white-chiavari-chair.html",
    "statusCode": 301
@@ -872,14 +917,6 @@
   }
  ],
  "rewrites": [
-  {
-   "source": "/category",
-   "destination": "/index.html"
-  },
-  {
-   "source": "/production",
-   "destination": "/index.html"
-  },
   {
    "source": "/wall-panels",
    "destination": "/wall-panels.html"
