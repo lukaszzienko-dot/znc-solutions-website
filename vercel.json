@@ -940,6 +940,10 @@
   {
    "source": "/product-page/:path*",
    "destination": "/index.html"
+  },
+  {
+   "source": "/testimonials",
+   "destination": "/testimonials.html"
   }
  ]
 }
