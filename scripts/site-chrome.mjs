@@ -26,6 +26,12 @@ export const FOOTER_HTML = `<footer><div class="w fnav"><div class="fcol"><stron
   GROUPS.map(([h, l]) => `<div class="fcol"><p class="fh">${esc(h)}</p><ul>${l.map(([u, t]) => `<li><a href="${u}">${esc(t)}</a></li>`).join('')}</ul></div>`).join('') +
   `</div><div class="w fcopy">© <span id="year"></span> ZNC Solutions · Wayne, NJ</div></footer>`;
 
+/* Homepage footer: no town / city / area lists on the main page (location landings stay linked from every other page). */
+const HOME_GROUPS = GROUPS.filter(([h]) => h === 'Rentals' || h === 'Company');
+export const HOME_FOOTER_HTML = `<footer><div class="w fnav fnav-home"><div class="fcol"><strong>ZNC SOLUTIONS</strong><br>Party rentals, gallery walls and event equipment<br><a href="mailto:info@zncsolutions.com">info@zncsolutions.com</a><br><a href="tel:${TEL}">${PHONE}</a></div>` +
+  HOME_GROUPS.map(([h, l]) => `<div class="fcol"><p class="fh">${esc(h)}</p><ul>${l.map(([u, t]) => `<li><a href="${u}">${esc(t)}</a></li>`).join('')}</ul></div>`).join('') +
+  `</div><div class="w fcopy">© <span id="year"></span> ZNC Solutions</div></footer>`;
+
 /* Add the Testimonials link to the header nav of a page (idempotent). */
 export function navify(html) {
   return html.replace(/<div class="?nav"?>([\s\S]*?)<\/div>/, (m, inner) => {
@@ -42,7 +48,8 @@ export function applyFooters(root) {
   for (const f of fs.readdirSync(root)) {
     if (!f.endsWith('.html')) continue;
     const p = path.join(root, f); const s = fs.readFileSync(p, 'utf8');
-    let n = /<footer[\s>]/.test(s) ? s.replace(/<footer[\s\S]*?<\/footer>/, () => FOOTER_HTML) : s.replace(/(<a class="?callbar|<script src="?\/app\.js|<\/body>)/, m => FOOTER_HTML + m);
+    const foot = f === 'index.html' ? HOME_FOOTER_HTML : FOOTER_HTML;
+    let n = /<footer[\s>]/.test(s) ? s.replace(/<footer[\s\S]*?<\/footer>/, () => foot) : s.replace(/(<a class="?callbar|<script src="?\/app\.js|<\/body>)/, m => foot + m);
     n = navify(n);
     if (n !== s) { fs.writeFileSync(p, n); out.push(f); }
   }
