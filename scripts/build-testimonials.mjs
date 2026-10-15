@@ -5,7 +5,7 @@
 import fs from 'fs'; import path from 'path';
 import { FOOTER_HTML, navify } from './site-chrome.mjs';
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
-const SITE = 'https://zncsolutions.com', URL_PATH = '/testimonials';
+const SITE = 'https://www.zncsolutions.com', URL_PATH = '/testimonials';
 const PHONE = '917-536-1245', TEL = '+19175361245', GOOGLE = 'https://maps.google.com/?cid=13399259066193707839';
 const R = JSON.parse(fs.readFileSync(path.join(ROOT, 'scripts/google-reviews.json'), 'utf8'));
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');

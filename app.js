@@ -122,7 +122,7 @@
   function card(it, opts) {
     opts = opts || {};
     var d = el("div", "p"), gal = !opts.gallery && it.gallery && it.gallery.length;
-    var im = el("img"); im.loading = "lazy"; im.src = img(opts.img || it.img); im.alt = fullName(it) + " rental";
+    var im = el("img"); im.loading = "lazy"; im.src = img(opts.img || it.img); im.alt = fullName(it) + (LABELS[it.cat] ? " (" + LABELS[it.cat] + ")" : "") + " rental from ZNC Solutions";
     var nm = el("b", null, fullName(it));
     if (it.url && !gal && !opts.gallery) { var a = el("a", "p-link"); a.href = it.url; a.append(im, nm); d.appendChild(a); } else d.append(im, nm);
     var lines = specLines(it);
@@ -155,7 +155,7 @@
     ORDER.forEach(function (k) {
       var list = CAT[k]; if (!list || !list.length) return;
       var t = el("div", "cat" + (k === "walls" ? " walls" : "")); t.tabIndex = 0;
-      var im = el("img"); im.alt = LABELS[k];
+      var im = el("img"); im.alt = LABELS[k] + " rentals from ZNC Solutions";
       var vis = itemsIn(k); if (!vis.length) return;
       var src = vis[0].img; if (k === "walls") { var w = vis.filter(function (r) { return r.name === "Wall Panel System"; })[0]; if (w) src = w.img; }
       im.src = img(src);
@@ -166,7 +166,7 @@
     });
     var LS = "https://rentallinenswatches.com/fabrics/texture/rattan/";
     var lt = el("div", "cat"); lt.tabIndex = 0;
-    var li = el("img"); li.alt = "Linen Swatches"; li.src = "https://rentallinenswatches.com/wp-content/uploads/sites/45/2019/04/Rattan-Mint-797.jpg";
+    var li = el("img"); li.alt = "Rattan mint linen swatch sample for event table linens"; li.src = "https://rentallinenswatches.com/wp-content/uploads/sites/45/2019/04/Rattan-Mint-797.jpg";
     lt.append(li, el("strong", null, "Linen Swatches"));
     lt.onclick = function () { location.href = LS; };
     lt.onkeydown = function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); location.href = LS; } };
