@@ -6,7 +6,7 @@
             homepage category links, and vercel.json redirects for old Wix /product-page/<slug> URLs
             listed in scripts/wix-product-slugs.txt that match an item slug. */
 import fs from 'fs'; import path from 'path'; import vm from 'vm';
-import { FOOTER_HTML, applyFooters } from './site-chrome.mjs';
+import { FOOTER_HTML, applyFooters, navify } from './site-chrome.mjs';
 import { itemDetailHtml, catGuideHtml } from './item-copy.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
@@ -83,7 +83,7 @@ function card(it, withAdd) {
   const sp = filledSpecs(it).filter(([l]) => l !== 'Notes').map(([, v]) => esc(v)).join('<br>');
   return `<div class="p"><a class="p-link" href="${it.url}"><img loading="lazy" src="${imgSized(it.img, 500, it.slug, 'webp')}" alt="${esc(fullName(it))}, ${esc(it.cat.label)} rental from ZNC Solutions"><b>${esc(fullName(it))}</b></a>${sp ? `<span>${sp}</span>` : ''}${withAdd ? addBtn(it) : ''}<a class="p-more" href="${it.url}">View details</a></div>`;
 }
-function write(rel, html) { const f = path.join(ROOT, rel); fs.mkdirSync(path.dirname(f), { recursive: true }); fs.writeFileSync(f, html); }
+function write(rel, html) { const f = path.join(ROOT, rel); fs.mkdirSync(path.dirname(f), { recursive: true }); fs.writeFileSync(f, navify(html)); }
 
 /* Snapshot previous output so sitemap lastmod only moves for pages whose HTML actually changed. */
 const OLD = {};

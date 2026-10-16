@@ -3,7 +3,7 @@
    Relative dates ("3 weeks ago") are dropped; entries whose text is the placeholder "no text" show name and stars only.
    Run from the repo root:  node scripts/build-testimonials.mjs   (build-items.mjs re-applies the shared nav/footer afterwards) */
 import fs from 'fs'; import path from 'path';
-import { FOOTER_HTML, navify } from './site-chrome.mjs';
+import { FOOTER_HTML, navify, deliverify } from './site-chrome.mjs';
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const SITE = 'https://zncsolutions.com', URL_PATH = '/testimonials';
 const PHONE = '917-536-1245', TEL = '+19175361245', GOOGLE = 'https://maps.google.com/?cid=13399259066193707839';

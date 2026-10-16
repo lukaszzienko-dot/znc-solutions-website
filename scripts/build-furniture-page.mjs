@@ -3,7 +3,7 @@
    Run from the repo root:  node scripts/build-furniture-page.mjs
    Does NOT touch sitemap.xml: build-items.mjs keeps non-/rentals/ sitemap entries, so the page's entry survives reruns. */
 import fs from 'fs'; import path from 'path'; import vm from 'vm';
-import { FOOTER_HTML, navify } from './site-chrome.mjs';
+import { FOOTER_HTML, navify, deliverify } from './site-chrome.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const SITE = 'https://zncsolutions.com', PAGE = '/furniture-lounge-rentals.html';
@@ -59,5 +59,5 @@ const html = `<!doctype html><html lang=en><head><meta charset=utf-8><meta name=
 <section class="feature faq"><div class=w><h2>FAQ: Event Furniture &amp; Lounge Rentals</h2>${faqs.map(([q, a]) => `<h3>${esc(q)}</h3><p>${esc(a).replace('917-536-1245', '<a href=tel:+19175361245>917-536-1245</a>').replace('info@zncsolutions.com', '<a href=mailto:info@zncsolutions.com>info@zncsolutions.com</a>')}</p>`).join('')}</div></section>
 <section id=contact class=contact><div class="w cg"><div><h2>Tell us about the event.</h2><p><a href=mailto:info@zncsolutions.com>info@zncsolutions.com</a><br><a href=tel:${TEL}>${PHONE}</a><br>Quoted from Wayne, NJ</p><p><a class=btn href=/contact.html>Request a quote</a></p></div><form id=quoteForm class=form><input id=n placeholder="Your name" required><input id=e type=email placeholder=Email required><input id=p type=tel placeholder=Phone required><input id=d type=date aria-label="Event date"><input id=l placeholder="Venue / neighborhood"><textarea id=x placeholder="Furniture, bars and tables you need, quantities, date, load-in"></textarea><button type=submit>Send Quote Request</button><p id=formStatus class=form-status>We will email and call you back.</p></form></div></section></main>${FOOTER_HTML}<a class=callbar href=tel:${TEL}>${PHONE}</a><script src=/app.js></script></body></html>
 `;
-fs.writeFileSync(path.join(ROOT, PAGE.slice(1)), navify(html));
+fs.writeFileSync(path.join(ROOT, PAGE.slice(1)), deliverify(navify(html), PAGE.slice(1)));
 console.log('wrote', PAGE, 'title', title.length, 'desc', desc.length);

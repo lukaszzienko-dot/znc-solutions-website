@@ -7,7 +7,7 @@
    TODO(prices): no prices are shown anywhere. Pending Lukasz's price list; do not add placeholder prices.
    TODO(delivery-timing): no order cut-off or delivery-timing promise. Add only after Lukasz confirms the exact policy. */
 import fs from 'fs'; import path from 'path'; import vm from 'vm';
-import { FOOTER_HTML, navify } from './site-chrome.mjs';
+import { FOOTER_HTML, navify, deliverify } from './site-chrome.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const SITE = 'https://zncsolutions.com';
@@ -178,7 +178,7 @@ for (const P of PAGES) {
     `<section class="related"><div class="w"><h2>Related rentals</h2><p class="cat-links">${P.related.map(([u, t]) => `<a href="${u}">${esc(t)}</a>`).join('')}</p></div></section>` +
     `<section id="contact" class="contact"><div class="w cg"><div><h2>Tell us about the event.</h2><p><a href="mailto:info@zncsolutions.com">info@zncsolutions.com</a><br><a href="tel:${TEL}">${PHONE}</a><br>Quoted from Wayne, NJ</p><p><a class="btn" href="tel:${TEL}">Call ${PHONE}</a></p></div><form id="quoteForm" class="form"><input id="n" placeholder="Your name" required><input id="e" type="email" placeholder="Email" required><input id="p" type="tel" placeholder="Phone" required><input id="d" type="date" aria-label="Event date"><input id="l" placeholder="Venue / neighborhood"><textarea id="x" placeholder="${esc(P.form)}"></textarea><button type="submit">Send Quote Request</button><p id="formStatus" class="form-status">We will email and call you back.</p></form></div></section></main>` +
     `${FOOTER_HTML}<a class="callbar" href="tel:${TEL}">${PHONE}</a><script src="/app.js"></script></body></html>\n`;
-  fs.writeFileSync(path.join(ROOT, P.file), navify(html));
+  fs.writeFileSync(path.join(ROOT, P.file), deliverify(navify(html), P.file));
   console.log('wrote', P.file, 'title', P.title.length, 'desc', P.desc.length);
 }
 /* Sitemap: add missing entries (build-items.mjs preserves them and bumps lastmod when the file changes). */
