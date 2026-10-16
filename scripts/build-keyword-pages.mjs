@@ -10,7 +10,7 @@ import fs from 'fs'; import path from 'path'; import vm from 'vm';
 import { FOOTER_HTML, navify } from './site-chrome.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
-const SITE = 'https://www.zncsolutions.com';
+const SITE = 'https://zncsolutions.com';
 const LASTMOD = process.env.LASTMOD || new Date().toISOString().slice(0, 10);
 const PHONE = '917-536-1245', TEL = '+19175361245';
 const ctx = { window: {} };
