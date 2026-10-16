@@ -8,7 +8,8 @@ const GROUPS = [
   ['Rentals', [
     ['/rentals/', 'All rentals'], ['/table-chair-rentals.html', 'Table & chair rentals'], ['/furniture-lounge-rentals.html', 'Event furniture & lounge'],
     ['/linen-rentals.html', 'Linen rentals'], ['/rentals/bars/', 'Bar rentals'], ['/tabletop-glassware-rentals.html', 'Tabletop & glassware'],
-    ['/kitchen-equipment-rentals.html', 'Kitchen equipment'], ['/wall-panels.html', 'Gallery wall panels']]],
+    ['/kitchen-equipment-rentals.html', 'Kitchen equipment'], ['/glassware-rental-nyc.html', 'Glassware rental'], ['/catering-equipment-rental.html', 'Catering equipment'],
+    ['/bar-rental.html', 'Bar setups & barware'], ['/chair-rental.html', 'Chair rental'], ['/wall-panels.html', 'Gallery wall panels']]],
   ['New Jersey', [
     ['/event-rentals-wayne-nj.html', 'Wayne'], ['/party-rentals-north-jersey.html', 'North Jersey'], ['/party-rentals-paterson.html', 'Paterson'],
     ['/party-rentals-montclair.html', 'Montclair'], ['/party-rentals-morristown.html', 'Morristown'], ['/party-rentals-hoboken.html', 'Hoboken'],
@@ -19,7 +20,7 @@ const GROUPS = [
   ['Gallery walls', [
     ['/wall-panels.html', 'Gallery wall rentals'], ['/gallery-walls-chelsea.html', 'Chelsea'], ['/gallery-walls-manhattan.html', 'Manhattan'],
     ['/gallery-walls-brooklyn.html', 'Brooklyn'], ['/gallery-walls-hoboken-jersey-city.html', 'Hoboken & Jersey City']]],
-  ['Company', [['/about.html', 'About ZNC Solutions'], ['/testimonials', 'Testimonials'], ['/contact.html', 'Request a quote']]],
+  ['Company', [['/about.html', 'About ZNC Solutions'], ['/testimonials', 'Testimonials'], ['/trade-accounts.html', 'Trade accounts'], ['/contact.html', 'Request a quote']]],
 ];
 const esc = s => s.replace(/&/g, '&amp;');
 export const FOOTER_HTML = `<footer><div class="w fnav"><div class="fcol"><strong>ZNC SOLUTIONS</strong><br>Party rentals from Wayne, NJ<br>NY · NJ · CT<br><a href="mailto:info@zncsolutions.com">info@zncsolutions.com</a><br><a href="tel:${TEL}">${PHONE}</a></div>` +

@@ -46,3 +46,7 @@
 .tm-more a{color:#0d4a34;font-weight:700;font-size:14px}
 @media(max-width:1000px){.tm-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:620px){.tm-grid{grid-template-columns:1fr}}
+
+/* Keyword landing pages (build-keyword-pages.mjs): small eyebrow, smaller H1 */
+.hero .kw-ey{font-size:11px;line-height:1.4;letter-spacing:.16em;text-transform:uppercase;color:#0d4a34;margin:0 0 10px}
+.kw-hero h1{font-size:clamp(34px,4.6vw,60px);line-height:1}

@@ -25,6 +25,9 @@ const LANDINGS = {
   'tabletop-glassware-rentals.html': { title: 'Tabletop, glassware & silverware we rent', cats: ['china', 'glass', 'silver'], extra: ['coffee', 'display'] },
 };
 const CAT_LANDING = { chairs: ['/table-chair-rentals.html', 'Table & Chair Rentals'], tables: ['/table-chair-rentals.html', 'Table & Chair Rentals'], kitchen: ['/kitchen-equipment-rentals.html', 'Kitchen Equipment Rentals'], china: ['/tabletop-glassware-rentals.html', 'Tabletop & Glassware Rentals'], glass: ['/tabletop-glassware-rentals.html', 'Tabletop & Glassware Rentals'], silver: ['/tabletop-glassware-rentals.html', 'Tabletop & Glassware Rentals'], coffee: ['/tabletop-glassware-rentals.html', 'Tabletop & Glassware Rentals'], display: ['/tabletop-glassware-rentals.html', 'Tabletop & Glassware Rentals'], walls: ['/wall-panels.html', 'Gallery Wall Panels'] };
+/* Keyword landing pages (scripts/build-keyword-pages.mjs) linked from category pages and their related hand-written landings. */
+const CAT_KEYWORD = { glass: ['/glassware-rental-nyc.html', 'Glassware Rental NYC'], barware: ['/bar-rental.html', 'Bar Rental'], bars: ['/bar-rental.html', 'Bar Rental'], chairs: ['/chair-rental.html', 'Chair Rental'], kitchen: ['/catering-equipment-rental.html', 'Catering Equipment Rental'], display: ['/catering-equipment-rental.html', 'Catering Equipment Rental'], coffee: ['/catering-equipment-rental.html', 'Catering Equipment Rental'] };
+const LANDING_KEYWORD = { 'tabletop-glassware-rentals.html': [['/glassware-rental-nyc.html', 'Glassware Rental NYC', 'drinking glasses for bar and toast service'], ['/catering-equipment-rental.html', 'Catering Equipment Rental', 'chafers, buffet displays and coffee service']], 'table-chair-rentals.html': [['/chair-rental.html', 'Chair Rental', 'every chair and bar stool we rent, by event type']], 'kitchen-equipment-rentals.html': [['/catering-equipment-rental.html', 'Catering Equipment Rental', 'front-of-house chafers, buffet displays and coffee service'], ['/trade-accounts.html', 'Trade Accounts', 'for caterers who rent regularly']], 'furniture-lounge-rentals.html': [['/bar-rental.html', 'Bar Rental', 'bars, barware and bar stools'], ['/trade-accounts.html', 'Trade Accounts', 'for caterers, venues and galleries']], 'wall-panels.html': [['/trade-accounts.html', 'Trade Accounts', 'for galleries and venues that rent walls regularly']] };
 const SPEC_LABELS = [['dimensions', 'Dimensions'], ['seats', 'Seating'], ['colors', 'Colors'], ['material', 'Material'], ['stackable', 'Stackable'], ['minOrder', 'Minimum order'], ['notes', 'Notes']];
 
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -78,7 +81,7 @@ function addBtn(it, cls) {
 }
 function card(it, withAdd) {
   const sp = filledSpecs(it).filter(([l]) => l !== 'Notes').map(([, v]) => esc(v)).join('<br>');
-  return `<div class="p"><a class="p-link" href="${it.url}"><img loading="lazy" src="${imgSized(it.img, 500, it.slug, 'webp')}" alt="${esc(fullName(it))} rental"><b>${esc(fullName(it))}</b></a>${sp ? `<span>${sp}</span>` : ''}${withAdd ? addBtn(it) : ''}<a class="p-more" href="${it.url}">View details</a></div>`;
+  return `<div class="p"><a class="p-link" href="${it.url}"><img loading="lazy" src="${imgSized(it.img, 500, it.slug, 'webp')}" alt="${esc(fullName(it))}, ${esc(it.cat.label)} rental from ZNC Solutions"><b>${esc(fullName(it))}</b></a>${sp ? `<span>${sp}</span>` : ''}${withAdd ? addBtn(it) : ''}<a class="p-more" href="${it.url}">View details</a></div>`;
 }
 function write(rel, html) { const f = path.join(ROOT, rel); fs.mkdirSync(path.dirname(f), { recursive: true }); fs.writeFileSync(f, html); }
 
@@ -86,7 +89,7 @@ function write(rel, html) { const f = path.join(ROOT, rel); fs.mkdirSync(path.di
 const OLD = {};
 (function snap(dir) { if (!fs.existsSync(dir)) return; for (const e of fs.readdirSync(dir, { withFileTypes: true })) { const p = path.join(dir, e.name); if (e.isDirectory()) snap(p); else if (e.name.endsWith('.html')) OLD['/' + path.relative(ROOT, p)] = fs.readFileSync(p, 'utf8'); } })(path.join(ROOT, 'rentals'));
 for (const f of fs.readdirSync(ROOT)) if (f.endsWith('.html')) OLD['/' + f] = fs.readFileSync(path.join(ROOT, f), 'utf8');
-const SM_OLD = {}; for (const m of fs.readFileSync(path.join(ROOT, 'sitemap.xml'), 'utf8').matchAll(/<loc>https:\/\/zncsolutions\.com([^<]*)<\/loc><lastmod>([^<]*)<\/lastmod>/g)) SM_OLD[m[1]] = m[2];
+const SM_OLD = {}; for (const m of fs.readFileSync(path.join(ROOT, 'sitemap.xml'), 'utf8').matchAll(/<loc>https:\/\/(?:www\.)?zncsolutions\.com([^<]*)<\/loc><lastmod>([^<]*)<\/lastmod>/g)) SM_OLD[m[1]] = m[2];
 const fileOf = u => u.endsWith('/') ? (u === '/' ? '/index.html' : u + 'index.html') : u;
 const lastmodFor = u => { const f = path.join(ROOT, fileOf(u)); const prev = OLD[fileOf(u)]; return (prev !== undefined && fs.existsSync(f) && fs.readFileSync(f, 'utf8') === prev && SM_OLD[u]) ? SM_OLD[u] : LASTMOD; };
 
@@ -108,7 +111,7 @@ for (const it of ITEMS) {
   const title = titleFor(n), desc = descFor(it);
   const html = head({ title, desc, canonical: SITE + it.url, ogImage: imgSized(it.img, 1000, it.slug), ogType: 'product', ld: { '@context': 'https://schema.org', '@graph': [bc.ld, product] } }) + HEADER +
     `<main>${bc.html}<section class="item"><div class="w item-g"><div class="item-media"><img id="itemPhoto" src="${imgSized(it.img, 800, it.slug, 'webp')}" alt="${esc(n)} for rent from ZNC Solutions, Wayne NJ" width="800" height="800" fetchpriority="high">` +
-    (photos.length > 1 ? `<div class="thumbs">${photos.map((p, i) => `<button type="button" data-photo="${imgSized(p, 800, it.slug)}" aria-label="Show photo ${i + 1} of ${esc(n)}"><img loading="lazy" src="${imgSized(p, 160, it.slug, 'webp')}" alt="${esc(n)} photo ${i + 1}"></button>`).join('')}</div>` : '') +
+    (photos.length > 1 ? `<div class="thumbs">${photos.map((p, i) => `<button type="button" data-photo="${imgSized(p, 800, it.slug)}" aria-label="Show photo ${i + 1} of ${esc(n)}"><img loading="lazy" src="${imgSized(p, 160, it.slug, 'webp')}" alt="${esc(n)} rental, photo ${i + 1} of ${photos.length}"></button>`).join('')}</div>` : '') +
     `</div><div class="item-info"><div class="ey">${esc(c.label)}</div><h1>${esc(pretty(it.name))}</h1>${it.variant ? `<p class="variant">${esc(it.variant)}</p>` : ''}<p class="lead">${esc(c.blurb)}</p>` +
     (specs.length ? `<dl class="spec-list">${specs.map(([l, v]) => `<dt>${esc(l)}</dt><dd>${esc(v)}</dd>`).join('')}</dl>` : '') +
     `${addBtn(it, 'ql-add-lg')}` +
@@ -131,7 +134,7 @@ for (const c of cats) {
   const itemList = { '@type': 'ItemList', name: `${c.label} rentals`, numberOfItems: list.length, itemListElement: list.map((it, i) => ({ '@type': 'ListItem', position: i + 1, url: SITE + it.url, name: fullName(it) })) };
   const landing = CAT_LANDING[c.key];
   const html = head({ title, desc, canonical: SITE + u, ogImage: imgSized(list[0].img, 1000, list[0].slug), ld: { '@context': 'https://schema.org', '@graph': [bc.ld, itemList] } }) + HEADER +
-    `<main>${bc.html}<section class="cat-head"><div class="w"><div class="ey">ZNC Rentals</div><h1>${esc(catTitle(c))}</h1><p class="lead">${esc(c.blurb)}</p><p class="price-note">Add items to your quote list, then send it with your quote request.</p>${landing ? `<p class="small">See also <a href="${landing[0]}">${esc(landing[1])}</a>.</p>` : ''}</div></section>` +
+    `<main>${bc.html}<section class="cat-head"><div class="w"><div class="ey">ZNC Rentals</div><h1>${esc(catTitle(c))}</h1><p class="lead">${esc(c.blurb)}</p><p class="price-note">Add items to your quote list, then send it with your quote request.</p>${landing || CAT_KEYWORD[c.key] ? `<p class="small">See also ${[landing, CAT_KEYWORD[c.key]].filter(Boolean).map(l => `<a href="${l[0]}">${esc(l[1])}</a>`).join(' and ')}.</p>` : ''}</div></section>` +
     `<section class="related"><div class="w"><div class="grid">${list.map(it => card(it, true)).join('')}</div></div></section>` + catGuideHtml(c) +
     `<section class="related"><div class="w"><h2>Other rental categories</h2><p class="cat-links">${cats.filter(o => o !== c && itemsOf(o).length).map(o => `<a href="/rentals/${o.slug}/">${esc(o.label)}</a>`).join('')}</p></div></section></main>` + FOOTER + `</body></html>\n`;
   write(u.slice(1) + 'index.html', html); urls.push(u);
@@ -163,14 +166,15 @@ for (const [file, cfg] of Object.entries(LANDINGS)) {
     `</div></section>`;
   inject(file, 'items', block, '</main>');
 }
+for (const [file, links] of Object.entries(LANDING_KEYWORD)) inject(file, 'kwlinks', `<section class="related"><div class="w"><h2>More ways to browse</h2><ul class="item-links">${links.map(([u, t, d]) => `<li><a href="${u}">${esc(t)}</a>: ${esc(d)}</li>`).join('')}</ul></div></section>`, '</main>');
 inject('index.html', 'catlinks', `<p class="cat-links home-cat-links"><span>Browse by category:</span>${cats.filter(c => itemsOf(c).length).map(c => `<a href="/rentals/${c.slug}/">${esc(c.label)}</a>`).join('')}<a href="/rentals/">All rentals</a></p>`, '</section>\n\n<section class="feature faq">');
 
 /* sitemap.xml: keep non-rentals entries (hand-maintained lastmod), refresh touched landings, replace rentals ones */
 applyFooters(ROOT);
 {
   const f = path.join(ROOT, 'sitemap.xml'); let s = fs.readFileSync(f, 'utf8');
-  s = s.replace(/<url><loc>https:\/\/zncsolutions\.com\/rentals\/[^<]*<\/loc><lastmod>[^<]*<\/lastmod><\/url>/g, '');
-  s = s.replace(/<url><loc>https:\/\/zncsolutions\.com([^<]*)<\/loc><lastmod>([^<]*)<\/lastmod><\/url>/g, (m, p, lm) => {
+  s = s.replace(/<url><loc>https:\/\/(?:www\.)?zncsolutions\.com\/rentals\/[^<]*<\/loc><lastmod>[^<]*<\/lastmod><\/url>/g, '');
+  s = s.replace(/<url><loc>https:\/\/(?:www\.)?zncsolutions\.com([^<]*)<\/loc><lastmod>([^<]*)<\/lastmod><\/url>/g, (m, p, lm) => {
     const prev = OLD[fileOf(p)], cur = fs.existsSync(path.join(ROOT, fileOf(p))) ? fs.readFileSync(path.join(ROOT, fileOf(p)), 'utf8') : null;
     return (prev !== undefined && cur !== null && prev !== cur) ? `<url><loc>${SITE}${p}</loc><lastmod>${LASTMOD}</lastmod></url>` : m;
   });
