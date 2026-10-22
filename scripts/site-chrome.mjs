@@ -19,7 +19,7 @@ const GROUPS = [
     ['/party-rentals-stamford-ct.html', 'Stamford, CT'], ['/party-rentals-greenwich-ct.html', 'Greenwich, CT'], ['/tri-state-event-rentals.html', 'Tri-state overview']]],
   ['Gallery walls', [
     ['/wall-panels.html', 'Gallery wall rentals'], ['/gallery-walls-chelsea.html', 'Chelsea'], ['/gallery-walls-manhattan.html', 'Manhattan'],
-    ['/gallery-walls-brooklyn.html', 'Brooklyn'], ['/gallery-walls-hoboken-jersey-city.html', 'Hoboken & Jersey City'], ['/exhibition-wall-rental.html', 'Exhibition wall rental'], ['/portable-gallery-walls.html', 'Portable gallery walls']]],
+    ['/gallery-walls-brooklyn.html', 'Brooklyn'], ['/gallery-walls-hoboken-jersey-city.html', 'Hoboken & Jersey City'], ['/portable-gallery-walls.html', 'Portable gallery walls']]],
   ['Company', [['/about.html', 'About ZNC Solutions'], ['/testimonials', 'Testimonials'], ['/trade-accounts.html', 'Trade accounts'], ['/contact.html', 'Request a quote']]],
 ];
 const esc = s => s.replace(/&/g, '&amp;');

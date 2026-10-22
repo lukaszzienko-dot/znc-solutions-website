@@ -154,28 +154,6 @@ const PAGES = [
   form: 'Your business, the events you run, how often',
 },
 {
-  file: 'exhibition-wall-rental.html', crumb: 'Exhibition Wall Rental', h1: 'Exhibition Wall Rental in NYC, NJ & CT',
-  title: 'Exhibition Wall Rental NYC, NJ & CT | 4x7 Panels | ZNC',
-  desc: 'Exhibition wall rental for art fairs, gallery shows and pop-ups: freestanding white 4x7 ft panels delivered across NYC, NJ and CT. Call 917-536-1245.',
-  ey: 'Exhibition walls · 4′ × 7′ panels', hero: 'wall-panel-system',
-  heroAlt: 'Freestanding white 4 by 7 foot exhibition wall panels rented by ZNC Solutions',
-  intro: `Freestanding white exhibition walls for art fairs, gallery shows, brand activations, trade events and pop-ups in New York City, New Jersey and Connecticut. Every panel is a standard 4′ wide × 7′ tall, so you can plan a run of wall by counting panels, then build a quote list below.`,
-  specs: ['Standard panel: 4′ wide × 7′ tall', '20-ft run = 5 panels', 'Modular or stationary layouts', 'Delivery across NYC, NJ & CT'],
-  sections: [
-    ['Exhibition wall panels', 'Clean white panels that stand on their own to create booths, corridors and hanging walls inside any event space.', ['wall-panel-system', 'room-divider']],
-  ],
-  guide: `<h2>How to plan an exhibition wall layout</h2><p>Measure the wall you want in feet and divide by 4: each panel adds 4′ of width at 7′ tall, so a 20-ft wall is 5 panels and a 40-ft run is 10. Straight runs suit a single hanging wall, L and U shapes make booth-style bays, and back-to-back runs give you hanging space on both sides. Send your floor plan, show dates and venue with the quote request and we will confirm the panel count. See also <a href="/portable-gallery-walls.html">portable gallery walls</a> and the main <a href="/wall-panels.html">gallery wall panels</a> page.</p>`,
-  faqs: [
-    ['What size are the exhibition wall panels?', "Every panel is a standard 4' wide x 7' tall."],
-    ['How many panels do I need?', "Divide the wall length you want in feet by 4. A 20-ft run of wall takes 5 panels, a 40-ft run takes 10."],
-    ['Where do you deliver exhibition walls?', 'We deliver across New York City, New Jersey and Connecticut. ZNC Solutions is based in Wayne, NJ.'],
-    ['How do I get an exhibition wall quote?', 'Add panels to your quote list on this page and send it with your dates, venue and layout, or call 917-536-1245 or email info@zncsolutions.com.'],
-  ],
-  reviews: ['Kathleen Reddington', 'Tiyé Bazzey'],
-  related: [['/wall-panels.html', 'Gallery Wall Panels'], ['/portable-gallery-walls.html', 'Portable Gallery Walls'], ['/gallery-walls-chelsea.html', 'Gallery walls Chelsea'], ['/gallery-walls-manhattan.html', 'Gallery walls Manhattan'], ['/furniture-lounge-rentals.html', 'Event Furniture & Lounge'], ['/trade-accounts.html', 'Trade Accounts']],
-  form: 'Wall length or panel count, dates, venue',
-},
-{
   file: 'portable-gallery-walls.html', crumb: 'Portable Gallery Walls', h1: 'Portable Gallery Walls & Art Display Panel Rental in NYC',
   title: 'Portable Gallery Walls | Art Display Panel Rental NYC | ZNC',
   desc: 'Portable gallery walls and art display panel rental in NYC, NJ and CT: freestanding white 4x7 ft panels for shows, openings and pop-ups. Call 917-536-1245.',
@@ -186,7 +164,7 @@ const PAGES = [
   sections: [
     ['Art display panels', 'White panels for hanging artwork, photography and graphics, plus a room divider for screening off back-of-house space.', ['wall-panel-system', 'room-divider']],
   ],
-  guide: `<h2>Planning portable gallery walls</h2><p>Count the works you want to hang and how much space each one needs, then add up the wall length. Each panel gives you 4′ of width, so 5 panels make a 20-ft hanging wall. Panels can run in a straight line, turn corners to make bays, or stand back to back for double-sided display. Pair the walls with <a href="/furniture-lounge-rentals.html">lounge furniture</a> for an opening night. See also <a href="/exhibition-wall-rental.html">exhibition wall rental</a> and the main <a href="/wall-panels.html">gallery wall panels</a> page.</p>`,
+  guide: `<h2>Planning portable gallery walls</h2><p>Count the works you want to hang and how much space each one needs, then add up the wall length. Each panel gives you 4′ of width, so 5 panels make a 20-ft hanging wall. Panels can run in a straight line, turn corners to make bays, or stand back to back for double-sided display. Pair the walls with <a href="/furniture-lounge-rentals.html">lounge furniture</a> for an opening night. See also the main <a href="/wall-panels.html">gallery wall panels</a> page.</p>`,
   faqs: [
     ['What size are the portable gallery wall panels?', "Every panel is a standard 4' wide x 7' tall."],
     ['Do you rent art display panels in NYC?', 'Yes. We deliver art display panels across New York City, New Jersey and Connecticut.'],
@@ -194,7 +172,7 @@ const PAGES = [
     ['How do I get a quote for portable gallery walls?', 'Add panels to your quote list on this page and send it with your dates, venue and layout, or call 917-536-1245 or email info@zncsolutions.com.'],
   ],
   reviews: ['Kathleen Reddington', 'Tiyé Bazzey'],
-  related: [['/wall-panels.html', 'Gallery Wall Panels'], ['/exhibition-wall-rental.html', 'Exhibition Wall Rental'], ['/gallery-walls-brooklyn.html', 'Gallery walls Brooklyn'], ['/gallery-walls-hoboken-jersey-city.html', 'Gallery walls Hoboken & Jersey City'], ['/furniture-lounge-rentals.html', 'Event Furniture & Lounge']],
+  related: [['/wall-panels.html', 'Gallery Wall Panels'], ['/gallery-walls-brooklyn.html', 'Gallery walls Brooklyn'], ['/gallery-walls-hoboken-jersey-city.html', 'Gallery walls Hoboken & Jersey City'], ['/furniture-lounge-rentals.html', 'Event Furniture & Lounge']],
   form: 'Wall length or panel count, dates, venue',
 },
 ];
