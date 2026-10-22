@@ -116,7 +116,7 @@ for (const it of ITEMS) {
     (specs.length ? `<dl class="spec-list">${specs.map(([l, v]) => `<dt>${esc(l)}</dt><dd>${esc(v)}</dd>`).join('')}</dl>` : '') +
     `${addBtn(it, 'ql-add-lg')}` +
     `<p class="item-cta"><a class="btn" href="/contact.html">Request a quote</a> <a class="btn btn-o" href="tel:${TEL}">Call ${PHONE}</a></p>` +
-    `<p class="small">Delivered from Wayne, NJ across North Jersey, New York City and Connecticut.${landing ? ` See also <a href="${landing[0]}">${esc(landing[1])}</a>.` : ''}</p></div></div></section>` +
+    `<p class="small">Delivered across North Jersey, New York City and Connecticut.${landing ? ` See also <a href="${landing[0]}">${esc(landing[1])}</a>.` : ''}</p></div></div></section>` +
     itemDetailHtml(it, { fullName, peers, specs, landing }) +
     (pairs.length ? `<section class="related"><div class="w"><h2>Pairs well with</h2><div class="grid">${pairs.map(p => card(p, true)).join('')}</div></div></section>` : '') +
     (related.length ? `<section class="related"><div class="w"><h2>More ${esc(c.label)}</h2><div class="grid">${related.map(p => card(p, true)).join('')}</div><p><a class="btn btn-o" href="/rentals/${c.slug}/">View all ${esc(c.label)}</a></p></div></section>` : '') +

@@ -23,7 +23,7 @@ const GROUPS = [
   ['Company', [['/about.html', 'About ZNC Solutions'], ['/testimonials', 'Testimonials'], ['/trade-accounts.html', 'Trade accounts'], ['/contact.html', 'Request a quote']]],
 ];
 const esc = s => s.replace(/&/g, '&amp;');
-export const FOOTER_HTML = `<footer><div class="w fnav"><div class="fcol"><strong>ZNC SOLUTIONS</strong><br>Party rentals from Wayne, NJ<br>NY · NJ · CT<br><a href="mailto:info@zncsolutions.com">info@zncsolutions.com</a><br><a href="tel:${TEL}">${PHONE}</a></div>` +
+export const FOOTER_HTML = `<footer><div class="w fnav"><div class="fcol"><strong>ZNC SOLUTIONS</strong><br>Party rentals<br>Delivery across NYC, NJ &amp; CT<br><a href="mailto:info@zncsolutions.com">info@zncsolutions.com</a><br><a href="tel:${TEL}">${PHONE}</a></div>` +
   GROUPS.map(([h, l]) => `<div class="fcol"><p class="fh">${esc(h)}</p><ul>${l.map(([u, t]) => `<li><a href="${u}">${esc(t)}</a></li>`).join('')}</ul></div>`).join('') +
   `</div><div class="w fcopy">© <span id="year"></span> ZNC Solutions · Wayne, NJ</div></footer>`;
 

@@ -42,7 +42,7 @@ const PAGES = [
   desc: 'Glassware rental for NYC, NJ and CT events: wine, flute, coupe, martini, rocks and highball glasses plus pitchers. Build a quote list or call 917-536-1245.',
   ey: 'Glassware · Bar service', hero: 'paris-coupe-glass-8-oz',
   heroAlt: 'Paris coupe glass, a glassware rental from ZNC Solutions for NYC, NJ and CT events',
-  intro: `Wine, champagne, cocktail and spirits glasses for receptions, gallery openings, launches and dinners in New York City, New Jersey and Connecticut, delivered from Wayne, NJ. Pick glasses by drink menu below and add each one to your quote list.`,
+  intro: `Wine, champagne, cocktail and spirits glasses for receptions, gallery openings, launches and dinners in New York City, New Jersey and Connecticut, delivered. Pick glasses by drink menu below and add each one to your quote list.`,
   specs: ['Stemmed and stemless wine glasses', 'Flutes and two coupe styles', 'Martini, rocks, highball and shot glasses', 'Pitchers, carafes and a beverage dispenser'],
   sections: [
     ['Wine &amp; champagne glasses', 'Red and white wine glasses in stemmed and stemless shapes, a flute for toasts and two coupe styles for champagne or cocktails served up.', ['red-wine-glass-16-oz', 'a-p-white-wine-glass-12-oz', 'stemless-red-wine-glass-17-oz', 'stemless-white-wine-glass-12-oz', 'flute-glass-7-oz', 'elegance-coupe-10-oz', 'paris-coupe-glass-8-oz']],
@@ -52,7 +52,7 @@ const PAGES = [
   guide: `<h2>How to plan glassware for an event</h2><p>Start from the drink menu. A wine-and-champagne reception needs wine glasses and flutes or coupes. A full cocktail bar adds rocks and highball glasses, and a martini or coupe if drinks are served up. Water service at seated tables needs a water glass at each place plus pitchers or carafes.</p><p>Guests often take a fresh glass for each drink, so plan extras beyond your headcount, especially for a long cocktail hour without glass collection. Tell us the guest count, the length of the event and the drink menu, and we will help you settle the quantities on the quote.</p><h3>Glassware rental or full tabletop?</h3><p>This page is about drinking glasses for bar and toast service. For plates, bowls, platters, flatware and a complete place setting, see <a href="/tabletop-glassware-rentals.html">Tabletop &amp; Glassware Rentals</a>. To set up the bar itself, see <a href="/bar-rental.html">Bar Rental</a>.</p>`,
   faqs: [
     ['What glassware can I rent?', 'Red and white wine glasses (stemmed and stemless), a champagne flute, two coupe styles, a stemless martini glass, old fashioned, double old fashioned, highball, shot and sherbet glasses, plus a glass pitcher, carafe and beverage dispenser.'],
-    ['Do you deliver glassware in New York City?', 'Yes. We deliver from Wayne, NJ to events across New York City, New Jersey and Connecticut. Share your venue and load-in details with the quote request.'],
+    ['Do you deliver glassware in New York City?', 'Yes. We deliver to events across New York City, New Jersey and Connecticut. Share your venue and load-in details with the quote request.'],
     ['How do I get a glassware quote?', 'Add glasses to your quote list on this page and send it with your date, venue and quantities, or call 917-536-1245 or email info@zncsolutions.com.'],
   ],
   reviews: ['UK Mission Press Office', 'Camillya Lima'],
@@ -65,7 +65,7 @@ const PAGES = [
   desc: 'Catering equipment rental for NYC, NJ and CT: chafing dishes, food pans, heat lamps, buffet risers, trays, servers and coffee urns. Call 917-536-1245.',
   ey: 'Buffet · Hot holding · Coffee', hero: 'chafing-dish-8-qt',
   heroAlt: 'Chafing dish, a catering equipment rental from ZNC Solutions for NYC, NJ and CT events',
-  intro: `Front-of-house catering equipment for buffets, family-style service and coffee stations: chafing dishes and food pans, hot-holding gear, display risers, trays, serving utensils and coffee makers, delivered from Wayne, NJ across New York, New Jersey and Connecticut.`,
+  intro: `Front-of-house catering equipment for buffets, family-style service and coffee stations: chafing dishes and food pans, hot-holding gear, display risers, trays, serving utensils and coffee makers, delivered across New York, New Jersey and Connecticut.`,
   specs: ['Chafing dishes, food pans and fuel', 'Heat lamp, bain-marie and warming cabinet', 'Buffet risers, trays and serving utensils', 'Coffee makers and a samovar'],
   sections: [
     ['Chafers &amp; hot holding', 'Keep food hot on the buffet line and behind it.', ['chafing-dish-8-qt', 'full-size-chafer-food-pan-8-qt', 'sterno-can-or-case', 'heat-lamp', 'bain-marie', 'warming-electric-cabinet']],
@@ -89,7 +89,7 @@ const PAGES = [
   desc: 'Event bar rental for NYC, NJ and CT: an 8′ wooden bar, a fabric bar screen, ice tubs, shakers, coolers, bar stools and cocktail tables. Call 917-536-1245.',
   ey: 'Bars · Barware · Stools', hero: '8-wooden-bar',
   heroAlt: '8 foot wooden bar, an event bar rental from ZNC Solutions for NYC, NJ and CT events',
-  intro: `Everything to set up a working bar for a reception, opening, launch or private party: the bar itself, the tools behind it, and the stools and cocktail tables around it, delivered from Wayne, NJ across New York, New Jersey and Connecticut.`,
+  intro: `Everything to set up a working bar for a reception, opening, launch or private party: the bar itself, the tools behind it, and the stools and cocktail tables around it, delivered across New York, New Jersey and Connecticut.`,
   specs: ['8′ wooden bar or custom fabric bar screen', 'Ice tubs, buckets and a 150 qt cooler', 'Shakers, jiggers, scoops, mats and caddies', 'Bar stools and cocktail tables'],
   sections: [
     ['The bar', 'A wooden bar gives bartenders a proper station. A fabric-wrapped bar screen hides coolers and supplies.', ['8-wooden-bar', 'custom-fabric-bar-screen']],
@@ -113,7 +113,7 @@ const PAGES = [
   desc: 'Event chair rental for NYC, NJ and CT: Chiavari chairs in six finishes, white and black folding chairs, X-back chairs and bar stools. Call 917-536-1245.',
   ey: 'Chiavari · Folding · Bar stools', hero: 'gold-chiavari-chair',
   heroAlt: 'Gold Chiavari chair, an event chair rental from ZNC Solutions for NYC, NJ and CT events',
-  intro: `Chairs for weddings, ceremonies, seated dinners, galas and big headcounts: Chiavari chairs in several finishes, folding chairs, a rustic X-back chair and bar stools, delivered from Wayne, NJ across New York, New Jersey and Connecticut.`,
+  intro: `Chairs for weddings, ceremonies, seated dinners, galas and big headcounts: Chiavari chairs in several finishes, folding chairs, a rustic X-back chair and bar stools, delivered across New York, New Jersey and Connecticut.`,
   specs: ['Chiavari chairs: white, black, gold, natural wood, dark wood, transparent', 'White and black folding chairs', 'X-back rustic chair', 'Bar stools for high-top tables'],
   sections: [
     ['Chiavari chairs', 'The classic choice for weddings and seated dinners. Pick the finish to match your linens.', ['white-chiavari-chair', 'black-chiavari-chair', 'gold-chiavari-chair', 'natural-wood-chiavari-chair', 'dark-wood-chiavari-chair', 'transparent-chiavari-chair']],
@@ -136,8 +136,8 @@ const PAGES = [
   desc: 'Trade accounts for caterers, venues and galleries in NYC, NJ and CT: one rental partner for kitchen gear, tabletop, bars, furniture and gallery walls.',
   ey: 'Trade · Repeat orders', hero: 'wall-panel-system',
   heroAlt: 'Modular 4 by 7 foot gallery wall panel system, rented by ZNC Solutions to galleries and venues',
-  intro: `If you run events every month, not once a year, talk to us about a trade account. ZNC Solutions supplies caterers, venues and galleries across New York, New Jersey and Connecticut from Wayne, NJ, with kitchen equipment, tabletop and glassware, bars, furniture and 4′ × 7′ gallery wall panels on one quote.`,
-  specs: ['For caterers, venues, galleries and planners', 'Kitchen, tabletop, bars, furniture and walls on one quote', 'Talk to Lukasz directly: 917-536-1245', 'Delivered from Wayne, NJ'],
+  intro: `If you run events every month, not once a year, talk to us about a trade account. ZNC Solutions supplies caterers, venues and galleries across New York, New Jersey and Connecticut, with kitchen equipment, tabletop and glassware, bars, furniture and 4′ × 7′ gallery wall panels on one quote.`,
+  specs: ['For caterers, venues, galleries and planners', 'Kitchen, tabletop, bars, furniture and walls on one quote', 'Talk to Lukasz directly: 917-536-1245', 'Delivery across NYC, NJ & CT'],
   /* TODO(trade-terms): billing terms, any trade pricing and ordering cut-offs are pending Lukasz. Do not publish terms until he confirms them. */
   sections: [
     ['For caterers', 'Hot holding, buffet service and on-site cooking equipment. See <a href="/catering-equipment-rental.html">Catering Equipment Rental</a> and <a href="/kitchen-equipment-rentals.html">Kitchen Equipment Rentals</a>.', ['chafing-dish-8-qt', 'warming-electric-cabinet', 'single-deck-full-size-electric-convection-oven', 'red-wine-glass-16-oz']],
@@ -176,7 +176,7 @@ for (const P of PAGES) {
     teaser(P.reviews) +
     `<section class="feature faq"><div class="w"><h2>FAQ</h2>${P.faqs.map(([q, a]) => `<h3>${esc(q)}</h3><p>${link(a)}</p>`).join('')}</div></section>` +
     `<section class="related"><div class="w"><h2>Related rentals</h2><p class="cat-links">${P.related.map(([u, t]) => `<a href="${u}">${esc(t)}</a>`).join('')}</p></div></section>` +
-    `<section id="contact" class="contact"><div class="w cg"><div><h2>Tell us about the event.</h2><p><a href="mailto:info@zncsolutions.com">info@zncsolutions.com</a><br><a href="tel:${TEL}">${PHONE}</a><br>Quoted from Wayne, NJ</p><p><a class="btn" href="tel:${TEL}">Call ${PHONE}</a></p></div><form id="quoteForm" class="form"><input id="n" placeholder="Your name" required><input id="e" type="email" placeholder="Email" required><input id="p" type="tel" placeholder="Phone" required><input id="d" type="date" aria-label="Event date"><input id="l" placeholder="Venue / neighborhood"><textarea id="x" placeholder="${esc(P.form)}"></textarea><button type="submit">Send Quote Request</button><p id="formStatus" class="form-status">We will email and call you back.</p></form></div></section></main>` +
+    `<section id="contact" class="contact"><div class="w cg"><div><h2>Tell us about the event.</h2><p><a href="mailto:info@zncsolutions.com">info@zncsolutions.com</a><br><a href="tel:${TEL}">${PHONE}</a><br>Delivery across NYC, NJ &amp; CT</p><p><a class="btn" href="tel:${TEL}">Call ${PHONE}</a></p></div><form id="quoteForm" class="form"><input id="n" placeholder="Your name" required><input id="e" type="email" placeholder="Email" required><input id="p" type="tel" placeholder="Phone" required><input id="d" type="date" aria-label="Event date"><input id="l" placeholder="Venue / neighborhood"><textarea id="x" placeholder="${esc(P.form)}"></textarea><button type="submit">Send Quote Request</button><p id="formStatus" class="form-status">We will email and call you back.</p></form></div></section></main>` +
     `${FOOTER_HTML}<a class="callbar" href="tel:${TEL}">${PHONE}</a><script src="/app.js"></script></body></html>\n`;
   fs.writeFileSync(path.join(ROOT, P.file), deliverify(navify(html), P.file));
   console.log('wrote', P.file, 'title', P.title.length, 'desc', P.desc.length);

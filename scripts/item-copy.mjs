@@ -43,7 +43,7 @@ export function itemDetailHtml(it, ctx) {
   const { fullName, peers, byFamily, landing } = ctx;
   const n = fullName(it), c = it.cat, fam = familyOf(it);
   const sibs = fam ? peers.filter(p => p !== it && familyOf(p) === fam) : [];
-  const bits = [`The ${n} is one of ${peers.length} items in the ${c.label} category that ZNC Solutions rents from Wayne, NJ for events in New Jersey, New York City and Connecticut.`];
+  const bits = [`The ${n} is one of ${peers.length} items in the ${c.label} category that ZNC Solutions rents for events in New Jersey, New York City and Connecticut.`];
   if (fam && sibs.length) bits.push(`In the catalog it sits with ${sibs.length} other ${fam}, listed below so you can compare sizes, finishes and styles before you build a quote list.`);
   const spec = ctx.specs.map(([l, v]) => `${l.toLowerCase()}: ${v}`).join('; ');
   if (spec) bits.push(`Listed details — ${spec}.`);
@@ -57,7 +57,7 @@ export function itemDetailHtml(it, ctx) {
   const f3 = FAQ3[c.key] ? FAQ3[c.key]({ ...it, fn: n }) : [`Can I combine the ${n} with other rentals?`, `Yes. One quote list can include furniture, tabletop, bar and kitchen items from the same inventory${landing ? `; see <a href="${landing[0]}">${esc(landing[1])}</a> for related items` : ''}.`];
   const faqs = [
     [`How do I rent the ${n}?`, 'Add it to your quote list from this page, then send the list with your event date, city and quantity. We reply with availability and a quote.'],
-    [`Does ZNC deliver the ${n}?`, `ZNC delivers rentals from Wayne, NJ across North Jersey, New York City and Connecticut. Include the venue and load-in details in your request, or call <a href="tel:+19175361245">${PHONE}</a>.`],
+    [`Does ZNC deliver the ${n}?`, `ZNC delivers rentals across North Jersey, New York City and Connecticut. Include the venue and load-in details in your request, or call <a href="tel:+19175361245">${PHONE}</a>.`],
     f3,
   ];
   return `<section class="feature item-detail"><div class="w"><h2>About the ${esc(n)}</h2><p>${esc(bits.join(' '))}</p>${diffHtml}<p>${esc(use)}</p>${sibHtml}</div></section>` +
@@ -81,5 +81,5 @@ const GUIDE = {
 };
 export function catGuideHtml(c) {
   const g = GUIDE[c.key]; if (!g) return '';
-  return `<section class="feature item-detail"><div class="w"><h2>Planning ${esc(c.label.toLowerCase())} for your event</h2>${g.map(p => `<p>${p.includes('<a') ? p : esc(p)}</p>`).join('')}<p>To rent, add items to your quote list and send it with your date, city and guest count, or call <a href="tel:+19175361245">${PHONE}</a>. ZNC delivers from Wayne, NJ across North Jersey, New York City and Connecticut.</p></div></section>`;
+  return `<section class="feature item-detail"><div class="w"><h2>Planning ${esc(c.label.toLowerCase())} for your event</h2>${g.map(p => `<p>${p.includes('<a') ? p : esc(p)}</p>`).join('')}<p>To rent, add items to your quote list and send it with your date, city and guest count, or call <a href="tel:+19175361245">${PHONE}</a>. ZNC delivers across North Jersey, New York City and Connecticut.</p></div></section>`;
 }
