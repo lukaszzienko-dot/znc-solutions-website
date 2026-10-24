@@ -8,7 +8,7 @@
   Object.keys(CAT).forEach(function (k) { if (ORDER.indexOf(k) < 0) { ORDER.push(k); LABELS[k] = LABELS[k] || k; } });
   var SPEC_KEYS = [["dimensions", ""], ["seats", ""], ["colors", "Colors: "], ["material", ""], ["stackable", ""], ["minOrder", "Min. order: "], ["notes", ""]];
   function $(id) { return document.getElementById(id); }
-  function img(id) { return "https://static.wixstatic.com/media/e06c28_" + id; }
+  function img(id) { return id.charAt(0) === "/" ? id.replace(/\.webp$/, "-800.webp") : "https://static.wixstatic.com/media/e06c28_" + id; }
   function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
   function fullName(it) { return it.name + (it.variant ? " (" + it.variant + ")" : ""); }
   function specLines(it) {
@@ -124,6 +124,7 @@
     var d = el("div", "p"), gal = !opts.gallery && it.gallery && it.gallery.length;
     var im = el("img"); im.loading = "lazy"; im.src = img(opts.img || it.img); im.alt = fullName(it) + (LABELS[it.cat] ? " (" + LABELS[it.cat] + ")" : "") + " rental from ZNC Solutions";
     var nm = el("b", null, fullName(it));
+    if (/wall-styling/.test(opts.img || "")) { nm = el("b", null, fullName(it) + " (styling concept)"); }
     if (it.url && !gal && !opts.gallery) { var a = el("a", "p-link"); a.href = it.url; a.append(im, nm); d.appendChild(a); } else d.append(im, nm);
     var lines = specLines(it);
     if (lines.length) { var sp = el("span"); lines.forEach(function (l, i) { if (i) sp.appendChild(el("br")); sp.appendChild(document.createTextNode(l)); }); d.appendChild(sp); }
@@ -213,7 +214,7 @@
 
   /* Item page photo thumbnails */
   var photo = $("itemPhoto");
-  if (photo) document.querySelectorAll("[data-photo]").forEach(function (b) { b.addEventListener("click", function () { photo.src = b.getAttribute("data-photo"); }); });
+  if (photo) document.querySelectorAll("[data-photo]").forEach(function (b) { b.addEventListener("click", function () { photo.src = b.getAttribute("data-photo"); var cap = $("itemPhotoCap"); if (cap) cap.textContent = b.getAttribute("data-cap") || ""; }); });
 
   qBuildUI(); qRender();
   window.addEventListener("storage", function (e) { if (e.key === QKEY) qRender(); });
