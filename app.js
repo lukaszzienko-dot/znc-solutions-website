@@ -205,7 +205,7 @@
       window.__lastQuotePayload = payload;
       btn.disabled = true; btn.textContent = "Sending…";
       fetch("https://formsubmit.co/ajax/info@zncsolutions.com", { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify(payload) })
-        .then(function (r) { if (!r.ok) throw 0; $("formStatus").textContent = "Thanks. We got your quote request and will call or email you back."; quoteForm.reset(); if (list.length) qSave([]); })
+        .then(function (r) { if (!r.ok) throw 0; return r.json().catch(function () { return {}; }); }).then(function (j) { if (j && String(j.success) === "false") throw 0; $("formStatus").textContent = "Thanks. We got your quote request and will call or email you back."; quoteForm.reset(); if (list.length) qSave([]); })
         .catch(function () { $("formStatus").textContent = "Could not send. Call 917-536-1245 or email info@zncsolutions.com."; })
         .then(function () { btn.disabled = false; btn.textContent = $("np") ? "Send Booking Request" : "Send Quote Request"; });
     });
