@@ -116,6 +116,7 @@ for (const it of ITEMS) {
     (specs.length ? `<dl class="spec-list">${specs.map(([l, v]) => `<dt>${esc(l)}</dt><dd>${esc(v)}</dd>`).join('')}</dl>` : '') +
     `${addBtn(it, 'ql-add-lg')}` +
     `<p class="item-cta"><a class="btn" href="/contact.html">Request a quote</a> <a class="btn btn-o" href="tel:${TEL}">Call ${PHONE}</a></p>` +
+    (it.slug === 'wall-panel-system' ? `<p class="item-cta wall-tools"><a class="btn" href="/wall-builder.html">Plan Your Wall Online</a> <a href="/wall-visualizer.html">See it in your space</a></p>` : '') +
     `<p class="small">Delivered across North Jersey, New York City and Connecticut.${landing ? ` See also <a href="${landing[0]}">${esc(landing[1])}</a>.` : ''}</p></div></div></section>` +
     itemDetailHtml(it, { fullName, peers, specs, landing }) +
     (pairs.length ? `<section class="related"><div class="w"><h2>Pairs well with</h2><div class="grid">${pairs.map(p => card(p, true)).join('')}</div></div></section>` : '') +
