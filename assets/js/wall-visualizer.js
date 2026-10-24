@@ -1,0 +1,14 @@
+(function(){var img=new Image(),cs=document.getElementById('cs'),cp=document.getElementById('cp'),A={x:.4,y:.3},B={x:.4,y:.8},P=[],sel=-1;
+function fit(c){var w=Math.min(1400,img.naturalWidth);c.width=w;c.height=w*img.naturalHeight/img.naturalWidth}
+document.getElementById('file').onchange=function(e){var f=e.target.files[0];if(!f)return;document.getElementById('fname').textContent=f.name+' is ready.';img.onload=function(){fit(cs);fit(cp);document.getElementById('n0').disabled=false;ds()};img.src=URL.createObjectURL(f)};
+function dot(c,p){var x=c.getContext('2d');x.fillStyle='#19a96b';x.beginPath();x.arc(p.x*c.width,p.y*c.height,c.width/45,0,7);x.fill();x.strokeStyle='#fff';x.lineWidth=3;x.stroke()}
+function ds(){var x=cs.getContext('2d');x.drawImage(img,0,0,cs.width,cs.height);x.strokeStyle='#19a96b';x.lineWidth=cs.width/250;x.beginPath();x.moveTo(A.x*cs.width,A.y*cs.height);x.lineTo(B.x*cs.width,B.y*cs.height);x.stroke();dot(cs,A);dot(cs,B)}
+function rel(c,p){return{x:p.x/c.width,y:p.y/c.height}}
+WTdrag(cs,function(p){p=rel(cs,p);var a=Math.hypot(p.x-A.x,p.y-A.y),b=Math.hypot(p.x-B.x,p.y-B.y);return Math.min(a,b)<.08?(a<b?A:B):null},function(d,p){p=rel(cs,p);d.x=Math.max(0,Math.min(1,p.x));d.y=Math.max(0,Math.min(1,p.y));ds()});
+function ppf(){var ft=parseFloat(document.getElementById('ft').value)||7;return Math.hypot((A.x-B.x)*cs.width,(A.y-B.y)*cs.height)/ft}
+function dp(){var x=cp.getContext('2d'),k=ppf();x.drawImage(img,0,0,cp.width,cp.height);P.forEach(function(p,i){x.fillStyle=i==sel?'rgba(13,74,52,.35)':'rgba(255,255,255,.55)';x.strokeStyle='#0d4a34';x.lineWidth=Math.max(2,cp.width/300);x.fillRect(p.x,p.y,4*k,7*k);x.strokeRect(p.x,p.y,4*k,7*k)});document.getElementById('vc').textContent=P.length;document.getElementById('vw').textContent=P.length?(P.length*4)+' (if in one row)':'–'}
+WTdrag(cp,function(pt){var k=ppf();for(var i=P.length-1;i>=0;i--){var p=P[i];if(pt.x>=p.x&&pt.x<=p.x+4*k&&pt.y>=p.y&&pt.y<=p.y+7*k){sel=i;dp();return{p:p,dx:pt.x-p.x,dy:pt.y-p.y}}}sel=-1;dp();return null},function(d,pt){d.p.x=pt.x-d.dx;d.p.y=pt.y-d.dy;dp()});
+function row(){var k=ppf(),y=Math.max(0,cp.height-7*k)/2,x0=Math.max(0,(cp.width-P.length*4*k)/2);P.forEach(function(p,i){p.x=x0+i*4*k;p.y=y});dp()}
+document.getElementById('vadd').onclick=function(){var k=ppf();P.push({x:cp.width/2-2*k,y:cp.height/2-3.5*k});sel=P.length-1;dp()};document.getElementById('vdel').onclick=function(){if(sel>-1){P.splice(sel,1);sel=-1;dp()}};document.getElementById('vrow').onclick=row;
+function summary(){return P.length+' x 4ft W x 7ft H panels placed on client photo (about '+P.length*4+' ft of wall if in one row); photo not attached'}
+var send=WT('visualizer',function(i){if(i==1)ds();if(i==2){if(!P.length){P=[{},{},{}];row()}else dp()}if(i==3)document.getElementById('sum').textContent='Your request: '+summary().replace('; photo not attached','')+'.'});send('visualizer',summary);})();
