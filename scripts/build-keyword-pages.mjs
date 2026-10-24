@@ -39,13 +39,13 @@ const PAGES = [
 {
   file: 'glassware-rental-nyc.html', crumb: 'Glassware Rental NYC', h1: 'Glassware Rental for NYC Events',
   title: 'Glassware Rental NYC | Wine, Coupe & Cocktail Glasses | ZNC',
-  desc: 'Glassware rental for NYC, NJ and CT events: wine, flute, coupe, martini, rocks and highball glasses plus pitchers. Build a quote list or call 917-536-1245.',
+  desc: 'Glassware rental for NYC, NJ and CT events: wine glasses, champagne flutes, coupes, martini, rocks and highball glasses. Call 917-536-1245.',
   ey: 'Glassware · Bar service', hero: 'paris-coupe-glass-8-oz',
   heroAlt: 'Paris coupe glass, a glassware rental from ZNC Solutions for NYC, NJ and CT events',
   intro: `Wine, champagne, cocktail and spirits glasses for receptions, gallery openings, launches and dinners in New York City, New Jersey and Connecticut, delivered. Pick glasses by drink menu below and add each one to your quote list.`,
   specs: ['Stemmed and stemless wine glasses', 'Flutes and two coupe styles', 'Martini, rocks, highball and shot glasses', 'Pitchers, carafes and a beverage dispenser'],
   sections: [
-    ['Wine &amp; champagne glasses', 'Red and white wine glasses in stemmed and stemless shapes, a flute for toasts and two coupe styles for champagne or cocktails served up.', ['red-wine-glass-16-oz', 'a-p-white-wine-glass-12-oz', 'stemless-red-wine-glass-17-oz', 'stemless-white-wine-glass-12-oz', 'flute-glass-7-oz', 'elegance-coupe-10-oz', 'paris-coupe-glass-8-oz']],
+    ['Wine glasses &amp; champagne flutes', 'Red and white wine glasses in stemmed and stemless shapes, a 7 oz champagne flute for toasts and two coupe styles for champagne or cocktails served up. Delivered across NYC, North Jersey (including Bergen County) and CT.', ['red-wine-glass-16-oz', 'a-p-white-wine-glass-12-oz', 'stemless-red-wine-glass-17-oz', 'stemless-white-wine-glass-12-oz', 'flute-glass-7-oz', 'elegance-coupe-10-oz', 'paris-coupe-glass-8-oz']],
     ['Cocktail &amp; spirits glasses', 'Rocks, double rocks and highball glasses cover most bar menus. A stemless martini glass, a shot glass and a small sherbet glass handle the rest.', ['martini-glass-13-5-oz-stemless', 'old-fashioned-glass-8-oz', 'double-old-fashioned-13-oz', 'double-highball-glass-12-oz', 'charisma-glass-12-oz', 'shot-glass', 'sherbet-glass-5-oz']],
     ['Pitchers, carafes &amp; dispensers', 'For water service on the tables and batched drinks at the bar.', ['azul-glass-pitcher-53-oz', 'glass-carafe-24-oz', 'glass-beverage-dispenser-2-gal']],
   ],

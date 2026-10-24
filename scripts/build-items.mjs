@@ -53,6 +53,11 @@ const catTitle = c => c.title || `${c.label} Rentals`;
 const pretty = t => String(t).replace(/(\d)\s*(?:''|")/g, '$1″').replace(/(\d)'/g, '$1′').replace(/\s+/g, ' ').trim();
 const fullName = it => pretty(it.name + (it.variant ? ` (${it.variant})` : ''));
 
+const SEO_OVERRIDES = {
+  'flute-glass-7-oz': { title: 'Champagne Flute Rental NJ & NYC | 7 oz Flute | ZNC', desc: 'Rent 7 oz champagne flutes for toasts and weddings. Delivered across North Jersey, including Bergen County, plus NYC and CT. Call 917-536-1245.' },
+  'portable-stage-unit-4-x4': { title: '4x4 Portable Stage Rental NY & NJ | ZNC Solutions', desc: 'Rent a 4′x4′ portable stage unit for speeches, DJs and small performances. Delivered across NYC, including Brooklyn, plus NJ and CT. Call 917-536-1245.' },
+  'blender': { title: 'Blender Rental for Events & Bars | ZNC Solutions NJ/NY', desc: 'Rent a blender for frozen drinks and bar service at your event. Barware rentals delivered across NJ, NYC and CT. Call 917-536-1245.' },
+};
 function titleFor(n) {
   for (const t of [`${n} Rental | ZNC Solutions NJ/NY`, `${n} Rental | ZNC Solutions`, `${n} Rental | ZNC`]) if (t.length <= 60) return t;
   return n.slice(0, 54).trim() + ' | ZNC';
@@ -108,7 +113,8 @@ for (const it of ITEMS) {
   const product = { '@type': 'Product', '@id': SITE + it.url + '#product', name: n, url: SITE + it.url, image: photos.map(p => imgSized(p, 1000, it.slug)), description: `${n} available to rent from ZNC Solutions in Wayne, NJ, for events across New York, New Jersey and Connecticut.`, brand: { '@type': 'Brand', name: 'ZNC Solutions' }, category: c.label };
   if (specs.length) product.additionalProperty = specs.map(([l, v]) => ({ '@type': 'PropertyValue', name: l, value: v }));
   const landing = CAT_LANDING[c.key];
-  const title = titleFor(n), desc = descFor(it);
+  const ov = SEO_OVERRIDES[it.slug] || {};
+  const title = ov.title || titleFor(n), desc = ov.desc || descFor(it);
   const html = head({ title, desc, canonical: SITE + it.url, ogImage: imgSized(it.img, 1000, it.slug), ogType: 'product', ld: { '@context': 'https://schema.org', '@graph': [bc.ld, product] } }) + HEADER +
     `<main>${bc.html}<section class="item"><div class="w item-g"><div class="item-media"><img id="itemPhoto" src="${imgSized(it.img, 800, it.slug, 'webp')}" alt="${esc(n)} for rent from ZNC Solutions, Wayne NJ" width="800" height="800" fetchpriority="high">` +
     (photos.length > 1 ? `<div class="thumbs">${photos.map((p, i) => `<button type="button" data-photo="${imgSized(p, 800, it.slug)}" aria-label="Show photo ${i + 1} of ${esc(n)}"><img loading="lazy" src="${imgSized(p, 160, it.slug, 'webp')}" alt="${esc(n)} rental, photo ${i + 1} of ${photos.length}"></button>`).join('')}</div>` : '') +
