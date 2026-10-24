@@ -53,7 +53,9 @@ export function itemDetailHtml(it, ctx) {
   };
   const diffHtml = DIFF[it.slug] ? `<p>${esc(DIFF[it.slug])}${it.slug === 'white-chiavari-chair' ? ' <a href="/rentals/chairs-barstools/white-chiavari-barstool.html">White Chiavari Barstool</a>.' : ' <a href="/rentals/chairs-barstools/white-chiavari-chair.html">White Chiavari Chair</a>.'}</p>` : '';
   const use = (USE[c.key] || USE.event)(n);
-  const sibHtml = sibs.length ? `<h2>Other ${esc(fam)} we rent</h2><ul class="item-links">${sibs.map(p => `<li><a href="${p.url}">${esc(fullName(p))}</a></li>`).join('')}</ul>` : '';
+  const sibHtml = sibs.length ? `<h2>Other ${esc(fam)} we rent</h2><details class="see-all"><summary>See all ${sibs.length}</summary><ul class="item-links">${sibs.map(p => `<li><a href="${p.url}">${esc(fullName(p))}</a></li>`).join('')}</ul></details>` : '';
+  if (c.key === 'walls') return `<section class="feature item-detail"><div class="w"><h2>About the ${esc(n)}</h2><p>4′ × 7′ panels; a 20-foot wall uses five. Send your wall length and venue for a quote.</p></div></section>` +
+    `<section class="feature faq"><div class="w"><h2>${esc(n)} rental questions</h2><h3>How do I rent the ${esc(n)}?</h3><p>Add it to your quote list or call <a href="tel:+19175361245">${PHONE}</a>.</p><h3>Does ZNC deliver the ${esc(n)}?</h3><p>Yes, across North Jersey, New York City and Connecticut.</p></div></section>`;
   const f3 = FAQ3[c.key] ? FAQ3[c.key]({ ...it, fn: n }) : [`Can I combine the ${n} with other rentals?`, `Yes. One quote list can include furniture, tabletop, bar and kitchen items from the same inventory${landing ? `; see <a href="${landing[0]}">${esc(landing[1])}</a> for related items` : ''}.`];
   const faqs = [
     [`How do I rent the ${n}?`, 'Add it to your quote list from this page, then send the list with your event date, city and quantity. We reply with availability and a quote.'],
