@@ -35,6 +35,7 @@ window.__ZNC = {
   {"name":"Outdoor Umbrella","img":"9416a14f499047428d04a8b3d1182d5f~mv2.png","slug":"outdoor-umbrella"}
  ],
  "event": [
+  {"name":"Room Divider","img":"96aab14665fb47078166131fcb7a1ad3~mv2.jpg","slug":"room-divider","specs":{"material":"You can choose any fabric to cover the panel"}},
   {"name":"Hangers","img":"cd93fdf37c0149e9a1d8656b0c1a425e~mv2.png","slug":"hangers"},
   {"name":"Coat Check Ticket Numbers","img":"41d34d6ffea94df09db5d3c72218cd87~mv2.png","slug":"coat-check-ticket-numbers"},
   {"name":"Coat Rack","img":"0d6b97e279a04959ac9e75f1a075d9eb~mv2.jpg","slug":"coat-rack"},
@@ -155,7 +156,6 @@ window.__ZNC = {
   {"name":"French Press 32 oz.","img":"922b62bdb9d94bb881e46c3e36e42b4e~mv2.png","slug":"french-press-32-oz"}
  ],
  "walls": [
-  {"name":"Room Divider","img":"96aab14665fb47078166131fcb7a1ad3~mv2.jpg","slug":"room-divider","specs":{"material":"You can choose any fabric to cover the panel"}},
   {"name":"Wall Panel System","img":"fe3a504cd4644d88b0ecd0c3ee54a27b~mv2.png","slug":"wall-panel-system","specs":{"dimensions":"4′ × 7′ per panel","notes":"Modular or stationary gallery walls"},"gallery":["fe3a504cd4644d88b0ecd0c3ee54a27b~mv2.png","fe2f6271d2474dd88315d9e3ce490e91~mv2.png","8a2059f55dec4eea82cc6e43ab48fc60~mv2.png","43074cfa6677487b8115be11d9908bfa~mv2.jpg","/assets/img/wall-styling/gallery-run.webp","/assets/img/wall-styling/loft-braced.webp","/assets/img/wall-styling/lounge-backdrop.webp"]}
  ],
  "china": [
