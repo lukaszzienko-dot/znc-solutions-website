@@ -81,8 +81,9 @@ function addBtn(it, cls) {
 }
 function card(it, withAdd) {
   const sp = filledSpecs(it).filter(([l]) => l !== 'Notes').map(([, v]) => esc(v)).join('<br>');
-  return `<div class="p"><a class="p-link" href="${it.url}"><img loading="lazy" src="${imgSized(it.img, 500, it.slug, 'webp')}" alt="${esc(fullName(it))}, ${esc(it.cat.label)} rental from ZNC Solutions"><b>${esc(fullName(it))}</b></a>${sp ? `<span>${sp}</span>` : ''}${withAdd ? addBtn(it) : ''}<a class="p-more" href="${it.url}">View details</a></div>`;
+  return `<div class="p"><a class="p-link" href="${it.url}"><img loading="lazy" src="${imgSized(it.img, 500, it.slug, 'webp')}" alt="${esc(fullName(it))}, ${esc(it.cat.label)} rental from ZNC Solutions"><b>${esc(pretty(it.name))}</b></a>${sp ? `<span>${sp}</span>` : ''}${withAdd ? addBtn(it) : ''}<a class="p-more" href="${it.url}">View details</a></div>`;
 }
+const seeAll = list => `<details class="see-all"><summary>See all ${list.length} items</summary><ul class="item-links">${list.map(it => `<li><a href="${it.url}">${esc(fullName(it))}</a></li>`).join('')}</ul></details>`;
 function write(rel, html) { const f = path.join(ROOT, rel); fs.mkdirSync(path.dirname(f), { recursive: true }); fs.writeFileSync(f, navify(html)); }
 
 /* Snapshot previous output so sitemap lastmod only moves for pages whose HTML actually changed. */
@@ -112,7 +113,7 @@ for (const it of ITEMS) {
   const html = head({ title, desc, canonical: SITE + it.url, ogImage: imgSized(it.img, 1000, it.slug), ogType: 'product', ld: { '@context': 'https://schema.org', '@graph': [bc.ld, product] } }) + HEADER +
     `<main>${bc.html}<section class="item"><div class="w item-g"><div class="item-media"><img id="itemPhoto" src="${imgSized(it.img, 800, it.slug, 'webp')}" alt="${esc(n)} for rent from ZNC Solutions, Wayne NJ" width="800" height="800" fetchpriority="high">` +
     (photos.some(p => p.startsWith('/')) ? `<p id="itemPhotoCap" class="small" style="margin:.3rem 0 0;color:#888;font-size:.75rem"></p>` : '') + (photos.length > 1 ? `<div class="thumbs">${photos.map((p, i) => `<button type="button" data-photo="${imgSized(p, 800, it.slug)}"${p.startsWith('/') ? ' data-cap="Styling concept" title="Styling concept"' : ''} aria-label="Show photo ${i + 1} of ${esc(n)}${p.startsWith('/') ? ' (styling concept)' : ''}"><img loading="lazy" src="${imgSized(p, 160, it.slug, 'webp')}" alt="${esc(n)} rental, photo ${i + 1} of ${photos.length}"></button>`).join('')}</div>` : '') +
-    `</div><div class="item-info"><div class="ey">${esc(c.label)}</div><h1>${esc(pretty(it.name))}</h1>${it.variant ? `<p class="variant">${esc(it.variant)}</p>` : ''}<p class="lead">${esc(c.blurb)}</p>` +
+    `</div><div class="item-info"><div class="ey">${esc(c.label)}</div><h1>${esc(pretty(it.name))}</h1>${it.variant ? `<p class="variant">${esc(it.variant)}</p>` : ''}<p class="lead">${esc(c.key === 'walls' ? (c.short || c.blurb.split('. ')[0] + '.') : c.blurb)}</p>` +
     (specs.length ? `<dl class="spec-list">${specs.map(([l, v]) => `<dt>${esc(l)}</dt><dd>${esc(v)}</dd>`).join('')}</dl>` : '') +
     `${addBtn(it, 'ql-add-lg')}` +
     `<p class="item-cta"><a class="btn" href="/contact.html">Request a quote</a> <a class="btn btn-o" href="tel:${TEL}">Call ${PHONE}</a></p>` +
@@ -136,8 +137,8 @@ for (const c of cats) {
   const itemList = { '@type': 'ItemList', name: `${c.label} rentals`, numberOfItems: list.length, itemListElement: list.map((it, i) => ({ '@type': 'ListItem', position: i + 1, url: SITE + it.url, name: fullName(it) })) };
   const landing = CAT_LANDING[c.key];
   const html = head({ title, desc, canonical: SITE + u, ogImage: imgSized(list[0].img, 1000, list[0].slug), ld: { '@context': 'https://schema.org', '@graph': [bc.ld, itemList] } }) + HEADER +
-    `<main>${bc.html}<section class="cat-head"><div class="w"><div class="ey">ZNC Rentals</div><h1>${esc(catTitle(c))}</h1><p class="lead">${esc(c.blurb)}</p><p class="price-note">Add items to your quote list, then send it with your quote request.</p>${c.key === 'walls' ? `<p class="item-cta"><a class="btn" href="/wall-panels.html#book">Book wall panels</a> <a class="btn btn-o" href="/wall-panels.html">Wall panel rental details</a></p>` : ''}${landing || CAT_KEYWORD[c.key] ? `<p class="small">See also ${[landing, CAT_KEYWORD[c.key]].filter(Boolean).map(l => `<a href="${l[0]}">${esc(l[1])}</a>`).join(' and ')}.</p>` : ''}</div></section>` +
-    `<section class="related"><div class="w"><div class="grid">${list.map(it => card(it, true)).join('')}</div></div></section>` + (c.key === 'walls' ? WALL_STYLING : '') + catGuideHtml(c) +
+    `<main>${bc.html}<section class="cat-head"><div class="w"><div class="ey">ZNC Rentals</div><h1>${esc(catTitle(c))}</h1><p class="lead">${esc(c.blurb)}</p><p class="price-note">Add items to your quote list, then send it.</p>${c.key === 'walls' ? `<p class="item-cta"><a class="btn" href="/wall-panels.html#book">Book wall panels</a> <a class="btn btn-o" href="/wall-panels.html">Wall panel rental details</a></p>` : ''}${landing || CAT_KEYWORD[c.key] ? `<p class="small">See also ${[landing, CAT_KEYWORD[c.key]].filter(Boolean).map(l => `<a href="${l[0]}">${esc(l[1])}</a>`).join(' and ')}.</p>` : ''}</div></section>` +
+    `<section class="related"><div class="w"><div class="grid">${list.map(it => card(it, true)).join('')}</div>${seeAll(list)}</div></section>` + (c.key === 'walls' ? WALL_STYLING : '') + catGuideHtml(c) +
     `<section class="related"><div class="w"><h2>Other rental categories</h2><p class="cat-links">${cats.filter(o => o !== c && itemsOf(o).length).map(o => `<a href="/rentals/${o.slug}/">${esc(o.label)}</a>`).join('')}</p></div></section></main>` + FOOTER + `</body></html>\n`;
   write(u.slice(1) + 'index.html', html); urls.push(u);
 }
@@ -147,8 +148,8 @@ for (const c of cats) {
   const u = '/rentals/';
   const bc = crumbs([['Home', '/'], ['Rentals', u]]);
   const html = head({ title: 'Party Rental Catalog | ZNC Solutions Wayne NJ', desc: `Browse ${ITEMS.length} party rental items from ZNC Solutions in Wayne, NJ: chairs, tables, lounge, bars, tabletop, kitchen gear and gallery walls. Call ${PHONE}.`, canonical: SITE + u, ld: { '@context': 'https://schema.org', '@graph': [bc.ld, { '@type': 'ItemList', name: 'Rental categories', itemListElement: cats.filter(c => itemsOf(c).length).map((c, i) => ({ '@type': 'ListItem', position: i + 1, url: `${SITE}/rentals/${c.slug}/`, name: c.label })) }] } }) + HEADER +
-    `<main>${bc.html}<section class="cat-head"><div class="w"><div class="ey">ZNC Rentals</div><h1>Rental Catalog</h1><p class="lead">Every item we rent, by category. Add items to your quote list and send it with your quote request.</p></div></section>` +
-    cats.filter(c => itemsOf(c).length).map(c => `<section class="related"><div class="w"><h2><a href="/rentals/${c.slug}/">${esc(c.label)}</a></h2><p class="lead">${esc(c.blurb)}</p><ul class="item-links">${itemsOf(c).map(it => `<li><a href="${it.url}">${esc(fullName(it))}</a></li>`).join('')}</ul></div></section>`).join('') +
+    `<main>${bc.html}<section class="cat-head"><div class="w"><div class="ey">ZNC Rentals</div><h1>Rental Catalog</h1><p class="lead">Every item we rent, by category.</p></div></section>` +
+    cats.filter(c => itemsOf(c).length).map(c => `<section class="related"><div class="w"><h2><a href="/rentals/${c.slug}/">${esc(c.label)}</a></h2><div class="grid">${itemsOf(c).slice(0, 4).map(it => card(it, false)).join('')}</div>${seeAll(itemsOf(c))}<p><a class="btn btn-o" href="/rentals/${c.slug}/">View all ${esc(c.label)}</a></p></div></section>`).join('') +
     `</main>` + FOOTER + `</body></html>\n`;
   write('rentals/index.html', html); urls.push(u);
 }
@@ -163,7 +164,7 @@ function inject(file, name, block, before) {
 }
 for (const [file, cfg] of Object.entries(LANDINGS)) {
   const block = `<section class="related item-index"><div class="w"><h2>${esc(cfg.title)}</h2>` +
-    cfg.cats.map(k => cats.find(c => c.key === k)).filter(Boolean).map(c => `<h3><a href="/rentals/${c.slug}/">${esc(c.label)}</a></h3><ul class="item-links">${itemsOf(c).map(it => `<li><a href="${it.url}">${esc(fullName(it))}</a></li>`).join('')}</ul>`).join('') +
+    cfg.cats.map(k => cats.find(c => c.key === k)).filter(Boolean).map(c => `<h3><a href="/rentals/${c.slug}/">${esc(c.label)}</a></h3>${seeAll(itemsOf(c))}`).join('') +
     (cfg.extra ? `<p class="cat-links">${cfg.extra.map(k => cats.find(c => c.key === k)).filter(Boolean).map(c => `<a href="/rentals/${c.slug}/">${esc(c.label)}</a>`).join('')}</p>` : '') +
     `</div></section>`;
   inject(file, 'items', block, '</main>');
