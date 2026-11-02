@@ -77,7 +77,7 @@ const PAGES = [
   faqs: [
     ['What catering equipment do you rent?', 'Chafing dishes, full-size food pans, chafing fuel, a heat lamp, bain-marie, electric warming cabinet, buffet risers and displays, trays, serving utensils, 30- and 100-cup coffee makers and a samovar, plus ovens and other kitchen equipment on our kitchen equipment page.'],
     ['Do you work with caterers on repeat events?', 'Yes. See our trade accounts page, or call 917-536-1245 to talk about recurring orders.'],
-    ['Where do you deliver catering equipment?', 'From Wayne, NJ across New York City, New Jersey and Connecticut. Share the venue and load-in details with your quote request.'],
+    ['Where do you deliver catering equipment?', 'We deliver across New York City, New Jersey and Connecticut. Share the venue and load-in details with your quote request.'],
   ],
   reviews: ['Annie Gonzalez', 'Kathleen Reddington'],
   related: [['/kitchen-equipment-rentals.html', 'Kitchen Equipment Rentals'], ['/rentals/serving-display/', 'Serving & display'], ['/rentals/coffee-tea-service/', 'Coffee & tea service'], ['/tabletop-glassware-rentals.html', 'Tabletop & Glassware Rentals'], ['/glassware-rental-nyc.html', 'Glassware Rental NYC'], ['/trade-accounts.html', 'Trade Accounts']],
