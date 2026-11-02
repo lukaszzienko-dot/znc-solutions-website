@@ -172,13 +172,59 @@ const PAGES = [
     ['How do I get a quote for portable gallery walls?', 'Add panels to your quote list on this page and send it with your dates, venue and layout, or call 917-536-1245 or email info@zncsolutions.com.'],
   ],
   reviews: ['Kathleen Reddington', 'Tiyé Bazzey'],
-  related: [['/wall-panels.html', 'Gallery Wall Panels'], ['/gallery-walls-brooklyn.html', 'Gallery walls Brooklyn'], ['/gallery-walls-hoboken-jersey-city.html', 'Gallery walls Hoboken & Jersey City'], ['/furniture-lounge-rentals.html', 'Event Furniture & Lounge']],
+  related: [['/wall-panels.html', 'Gallery Wall Panels'], ['/art-fair-wall-panel-rental-nyc.html', 'Art Fair & Exhibition Wall Panels'], ['/room-divider-rental-nyc.html', 'Room Divider Rental NYC'], ['/gallery-walls-brooklyn.html', 'Gallery walls Brooklyn'], ['/gallery-walls-hoboken-jersey-city.html', 'Gallery walls Hoboken & Jersey City'], ['/furniture-lounge-rentals.html', 'Event Furniture & Lounge']],
   form: 'Wall length or panel count, dates, venue',
+},
+{
+  file: 'art-fair-wall-panel-rental-nyc.html', crumb: 'Art Fair & Exhibition Wall Panels', h1: 'Exhibition Wall Panel Rental for New York Art Fairs',
+  title: 'Art Fair & Exhibition Wall Panel Rental NYC | ZNC',
+  desc: 'Double-sided 4x7 ft exhibition wall panels for New York art fair booths, gallery shows and exhibitions. Delivery across NYC, NJ & CT. Call 917-536-1245.',
+  ey: 'Art fairs · Exhibitions · Booth walls', hero: 'wall-panel-system', contactPage: true,
+  heroAlt: 'Double-sided white exhibition wall panels for an art fair booth, rented from ZNC Solutions',
+  intro: `Art fair booths and exhibitions need clean hanging walls that arrive on time and leave without a trace. ZNC Solutions rents freestanding exhibition wall panels for fairs, gallery shows and satellite exhibitions in New York. Every panel is double-sided and measures 4′ wide × 7′ tall, so one run of walls gives you two hanging faces.`,
+  specs: ['Every panel is double-sided', 'Each panel: 4′ wide × 7′ tall', 'Freestanding booth and partition walls', 'Delivery across NYC, NJ & CT'],
+  sections: [
+    ['Exhibition walls and booth extras', 'Double-sided wall panels for hanging the work, a fabric-covered room divider for a storage or packing corner, and seating for the booth.', ['wall-panel-system', 'room-divider', 'sculptural-glass-coffee-table', 'mustard-velvet-tufted-couch']],
+  ],
+  extra: `<section class="feature"><div class="w"><h2>Why double-sided panels suit fair booths</h2><p>Because both faces of every ZNC panel can take work, a single spine of panels down the middle of a booth or exhibition hall doubles the hanging surface. Five panels in a line make a 20-ft wall with 20 ft of hanging space on each side. Panels can also stand along the booth edges as back and side walls, or turn corners to make bays for smaller works.</p></div></section>`,
+  guide: `<h2>Planning walls for an art fair booth</h2><p>Start from the booth plan the fair sends you. Add up the length of every wall you need in feet and divide by 4 to get the panel count. A booth with a 12-ft back wall and two 8-ft side walls takes 7 panels; a 20-ft center spine takes 5 more and adds hanging space on both faces. Check the fair's rules on wall height against the 7-ft panel height.</p><p>When you request a quote, send the fair name and venue, booth number and size, the load-in and load-out windows, and any dock or freight elevator details. You can also sketch a layout with our <a href="/wall-builder.html">online wall planner</a>. For gallery shows and pop-ups outside a fair, see <a href="/portable-gallery-walls.html">portable gallery walls</a>, and for galleries in the neighborhood see <a href="/gallery-walls-chelsea.html">Chelsea gallery walls</a>.</p>`,
+  faqs: [
+    ['Are your exhibition wall panels double-sided?', 'Yes. Every ZNC wall panel is double-sided, so you can hang work on both faces of a run.'],
+    ['What size is each exhibition wall panel?', 'Each panel is 4 feet wide by 7 feet tall. A 20-foot wall uses 5 panels.'],
+    ['How many panels do I need for an art fair booth?', 'Add up the length of the walls you need in feet and divide by 4. A 12-ft back wall with two 8-ft side walls takes 7 panels.'],
+    ['Do you deliver to art fairs in New York City?', 'Yes. We deliver across NYC, NJ & CT. Include the venue, booth number and load-in and load-out windows with your request.'],
+    ['How do I get a quote for exhibition wall panels?', 'Use the quote form on our contact page with your fair dates, venue and panel count, call 917-536-1245, or email info@zncsolutions.com.'],
+  ],
+  reviews: ['shauna saneinejad', 'Annie Gonzalez'],
+  related: [['/wall-panels.html', 'Gallery Wall Panels'], ['/portable-gallery-walls.html', 'Portable Gallery Walls'], ['/rentals/gallery-walls/wall-panel-system.html', 'Wall Panel System'], ['/gallery-walls-manhattan.html', 'Gallery walls Manhattan'], ['/room-divider-rental-nyc.html', 'Room Divider Rental NYC'], ['/furniture-lounge-rentals.html', 'Event Furniture & Lounge']],
+},
+{
+  file: 'room-divider-rental-nyc.html', crumb: 'Room Divider Rental NYC', h1: 'Room Divider Rental in NYC',
+  title: 'Room Divider Rental NYC | Fabric-Covered Panels | ZNC',
+  desc: 'Rent fabric-covered room dividers for NYC events: screen off catering prep, coat check and back-of-house space. Delivery across NYC, NJ & CT. Call 917-536-1245.',
+  ey: 'Room dividers · Event equipment', hero: 'room-divider', contactPage: true,
+  heroAlt: 'Fabric-covered room divider panel for events, rented from ZNC Solutions',
+  intro: `A room divider turns one open room into the spaces an event actually needs. ZNC Solutions rents room dividers for events in New York City, covered in the fabric of your choice, so you can screen off catering prep, coat check, storage or a quiet green room without building anything permanent.`,
+  specs: ['Covered in the fabric you choose', 'Screens prep, storage and coat check', 'On the same quote as tables, bars and linens', 'Delivery across NYC, NJ & CT'],
+  sections: [
+    ['Room dividers and back-of-house gear', 'The room divider plus the event equipment that usually goes behind it: coat racks, hangers and numbered coat check tickets.', ['room-divider', 'coat-rack', 'hangers', 'coat-check-ticket-numbers']],
+  ],
+  extra: `<section class="feature"><div class="w"><h2>Where a room divider helps</h2><p>Lofts, ballrooms, galleries and offices rarely come with a back room in the right place. A divider screens the caterer's prep and plating area from guests, hides cases, crates and empty boxes, closes off a coat check, or splits a large floor into a reception side and a dinner side. Because you pick the fabric, the divider can match the linens or the brand colors instead of looking like an afterthought.</p></div></section>`,
+  guide: `<h2>Planning a room divider rental</h2><p>Measure the opening or area you want to screen and note where guests will walk. Tell us the fabric or color you want, the venue, the event date and the load-in window, and add the divider to your quote list with the rest of the order. See the <a href="/rentals/event-equipment/room-divider.html">room divider</a> in our Event Equipment catalog for the listing.</p><p>Need a solid surface to hang art, photos or signage instead? Our <a href="/wall-panels.html">gallery wall panels</a> are double-sided and 4′ wide × 7′ tall, and work well as partition walls at <a href="/art-fair-wall-panel-rental-nyc.html">art fairs and exhibitions</a>.</p>`,
+  faqs: [
+    ['What is the room divider covered with?', 'You choose the fabric that covers the panel. Tell us the color or fabric when you request a quote.'],
+    ['What can I use a room divider for at an event?', 'Screening catering prep, storage or coat check from guests, making a green room, or splitting a large room into separate areas.'],
+    ['Room divider or wall panel: which do I need?', 'A fabric room divider is for screening space. For a solid surface to hang art or signage, use our double-sided 4x7 ft wall panels.'],
+    ['Do you deliver room dividers in New York City?', 'Yes. We deliver across NYC, NJ & CT. Include the venue and load-in window with your request.'],
+    ['How do I get a quote for a room divider?', 'Add it to your quote list and send it from our contact page, call 917-536-1245, or email info@zncsolutions.com.'],
+  ],
+  reviews: ['Annie Gonzalez', 'Hannah McCarthy'],
+  related: [['/rentals/event-equipment/room-divider.html', 'Room Divider'], ['/rentals/event-equipment/', 'Event Equipment'], ['/art-fair-wall-panel-rental-nyc.html', 'Art Fair & Exhibition Wall Panels'], ['/wall-panels.html', 'Gallery Wall Panels'], ['/party-rentals-nyc.html', 'NYC Party Rentals'], ['/catering-equipment-rental.html', 'Catering Equipment Rental']],
 },
 ];
 
 for (const P of PAGES) {
-  const URL = '/' + P.file, hero = get(P.hero), heroSrc = imgSized(hero.img, 1000, hero.slug, 'webp');
+  const URL = '/' + P.file, CB = P.contactPage ? callBtns.replace('href="#contact"', 'href="/contact.html"') : callBtns, hero = get(P.hero), heroSrc = imgSized(hero.img, 1000, hero.slug, 'webp');
   if (P.title.length > 60) throw new Error(P.file + ' title ' + P.title.length);
   if (P.desc.length < 120 || P.desc.length > 160) throw new Error(P.file + ' desc ' + P.desc.length);
   const ld = { '@context': 'https://schema.org', '@graph': [BUSINESS,
@@ -190,15 +236,15 @@ for (const P of PAGES) {
   const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(P.title)}</title><meta name="description" content="${esc(P.desc)}"><link rel="canonical" href="${SITE + URL}"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><meta name="theme-color" content="#0d4a34"><meta property="og:title" content="${esc(P.title)}"><meta property="og:description" content="${esc(P.desc)}"><meta property="og:url" content="${SITE + URL}"><meta property="og:type" content="website"><meta property="og:image" content="${heroSrc}"><link rel="stylesheet" href="/site.css"><script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script></head><body>` +
     `<header><div class="w"><nav><a class="brand" href="/">ZNC SOLUTIONS</a><div class="nav"><a href="/rentals/">Rentals</a><a href="/wall-panels.html">Wall Panels</a><a href="/testimonials">Testimonials</a><a class="btn" href="/contact.html">Quote</a></div></nav></div></header>` +
     `<main><div class="w"><nav aria-label="Breadcrumb"><ol class="bc"><li><a href="/">Home</a></li><li aria-current="page">${esc(P.crumb)}</li></ol></nav></div>` +
-    `<section class="hero kw-hero"><div class="w hg"><div><div class="ey kw-ey">${P.ey}</div><h1>${esc(P.h1)}</h1><p>${P.intro}</p><p>${callBtns}</p><ul class="specs">${P.specs.map(s => `<li>${esc(s)}</li>`).join('')}</ul></div><div class="hero-pic"><img src="${heroSrc}" alt="${esc(P.heroAlt)}" width="1000" height="1000" fetchpriority="high"></div></div></section>` +
+    `<section class="hero kw-hero"><div class="w hg"><div><div class="ey kw-ey">${P.ey}</div><h1>${esc(P.h1)}</h1><p>${P.intro}</p><p>${CB}</p><ul class="specs">${P.specs.map(s => `<li>${esc(s)}</li>`).join('')}</ul></div><div class="hero-pic"><img src="${heroSrc}" alt="${esc(P.heroAlt)}" width="1000" height="1000" fetchpriority="high"></div></div></section>` +
     (P.extra || '') + `<!-- TODO(prices): prices pending Lukasz's price list. Do not render placeholder prices. -->` +
     `<!-- TODO(delivery-timing): any order cut-off or delivery-timing line awaits Lukasz's confirmation. Not shown until confirmed. -->` +
     P.sections.map(([h, lead, slugs]) => `<section class="related"><div class="w"><h2>${h}</h2><p class="lead">${lead}</p>${cards(slugs)}</div></section>`).join('') +
-    `<section class="feature"><div class="w">${P.guide}<p>${callBtns}</p></div></section>` +
+    `<section class="feature"><div class="w">${P.guide}<p>${CB}</p></div></section>` +
     (P.noReviews ? '' : teaser(P.reviews)) +
     `<section class="feature faq"><div class="w"><h2>FAQ</h2>${P.faqs.map(([q, a]) => `<h3>${esc(q)}</h3><p>${link(a)}</p>`).join('')}</div></section>` +
     `<section class="related"><div class="w"><h2>Related rentals</h2><p class="cat-links">${P.related.map(([u, t]) => `<a href="${u}">${esc(t)}</a>`).join('')}</p></div></section>` +
-    `<section id="contact" class="contact"><div class="w cg"><div><h2>Tell us about the event.</h2><p><a href="mailto:info@zncsolutions.com">info@zncsolutions.com</a><br><a href="tel:${TEL}">${PHONE}</a><br>Delivery across NYC, NJ &amp; CT</p><p><a class="btn" href="tel:${TEL}">Call ${PHONE}</a></p></div><form id="quoteForm" class="form"><input id="n" placeholder="Your name" required><input id="e" type="email" placeholder="Email" required><input id="p" type="tel" placeholder="Phone" required><input id="d" type="date" aria-label="Event date"><input id="l" placeholder="Venue / neighborhood"><textarea id="x" placeholder="${esc(P.form)}"></textarea><button type="submit">Send Quote Request</button><p id="formStatus" class="form-status">We will email and call you back.</p></form></div></section></main>` +
+    (P.contactPage ? `<section id="contact" class="contact"><div class="w"><h2>Request a quote</h2><p>Send your date, venue and what you need on our <a href="/contact.html">quote form</a>, email <a href="mailto:info@zncsolutions.com">info@zncsolutions.com</a> or call <a href="tel:${TEL}">${PHONE}</a>.<br>Delivery across NYC, NJ &amp; CT</p><p><a class="btn" href="/contact.html">Request a Quote</a> <a class="btn btn-o" href="tel:${TEL}">Call ${PHONE}</a></p></div></section>` : `<section id="contact" class="contact"><div class="w cg"><div><h2>Tell us about the event.</h2><p><a href="mailto:info@zncsolutions.com">info@zncsolutions.com</a><br><a href="tel:${TEL}">${PHONE}</a><br>Delivery across NYC, NJ &amp; CT</p><p><a class="btn" href="tel:${TEL}">Call ${PHONE}</a></p></div><form id="quoteForm" class="form"><input id="n" placeholder="Your name" required><input id="e" type="email" placeholder="Email" required><input id="p" type="tel" placeholder="Phone" required><input id="d" type="date" aria-label="Event date"><input id="l" placeholder="Venue / neighborhood"><textarea id="x" placeholder="${esc(P.form)}"></textarea><button type="submit">Send Quote Request</button><p id="formStatus" class="form-status">We will email and call you back.</p></form></div></section></main>`) +
     `${FOOTER_HTML}<a class="callbar" href="tel:${TEL}">${PHONE}</a><script src="/app.js"></script></body></html>\n`;
   fs.writeFileSync(path.join(ROOT, P.file), deliverify(navify(html), P.file));
   console.log('wrote', P.file, 'title', P.title.length, 'desc', P.desc.length);
