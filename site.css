@@ -61,3 +61,12 @@
 .fcol li a,.fcol>a{display:inline-block;padding:5px 0}
 .svc h2{font-size:18px;letter-spacing:-.02em;margin:22px 0 6px}
 .contact p a{display:inline-block;padding:5px 0}
+
+/* Quote form v2: labelled fields, 16px inputs (no iOS zoom), thank-you panel */
+.qf .fld{display:grid;gap:4px;font-size:13px;font-weight:700;color:#24302a}.qf .fld em{font-style:normal;font-weight:400;color:#68716c}.qf .fld.full{grid-column:1/-1}
+.qf input,.qf select,.qf textarea{width:100%;padding:12px;border:1px solid #c9d0ca;border-radius:10px;font:16px Arial;background:#fff;color:#111;min-height:46px}
+.qf input:focus,.qf select:focus,.qf textarea:focus{outline:2px solid #0d4a34;outline-offset:1px;border-color:#0d4a34}
+.qf textarea{min-height:96px}.qf .ql-form-list{grid-column:1/-1}
+.qf-done{padding:22px;border:2px solid #0d4a34;border-radius:16px;background:#eef3ef;color:#0d4a34}.qf-done strong{font-size:20px;display:block;margin-bottom:6px}.qf-done p{margin:0 0 14px;color:#24302a}
+.nf{padding:72px 0 88px}.nf h1{font-size:44px;letter-spacing:-.03em;margin:8px 0 10px}.nf-btns .btn{margin:6px 6px 0 0;display:inline-block}
+@media(max-width:560px){.nf{padding:40px 0 56px}.nf h1{font-size:30px}}

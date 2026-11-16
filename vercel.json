@@ -121,6 +121,16 @@
       "permanent": true
     },
     {
+      "source": "/product-page/0",
+      "destination": "/rentals/",
+      "statusCode": 301
+    },
+    {
+      "source": "/product-page/0-1",
+      "destination": "/rentals/",
+      "statusCode": 301
+    },
+    {
       "source": "/product-page/10-5-round-platter",
       "destination": "/rentals/china-tabletop/10-5-round-platter.html",
       "statusCode": 301
@@ -168,6 +178,11 @@
     {
       "source": "/product-page/12-wooden-round-tray",
       "destination": "/rentals/serving-display/12-wooden-round-tray.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/product-page/14-round-wooden-tray",
+      "destination": "/rentals/serving-display/",
       "statusCode": 301
     },
     {
@@ -356,6 +371,11 @@
       "statusCode": 301
     },
     {
+      "source": "/product-page/chiavari-chair",
+      "destination": "/rentals/chairs-barstools/",
+      "statusCode": 301
+    },
+    {
       "source": "/product-page/chome-ice-bucket",
       "destination": "/rentals/barware/chrome-ice-bucket.html",
       "statusCode": 301
@@ -396,6 +416,11 @@
       "statusCode": 301
     },
     {
+      "source": "/product-page/couch",
+      "destination": "/rentals/lounge-furniture/",
+      "statusCode": 301
+    },
+    {
       "source": "/product-page/countertop-deep-fryer",
       "destination": "/rentals/kitchen-equipment/countertop-deep-fryer.html",
       "statusCode": 301
@@ -431,6 +456,11 @@
       "statusCode": 301
     },
     {
+      "source": "/product-page/double-old-fashion-14-oz",
+      "destination": "/rentals/glassware/double-old-fashioned-13-oz.html",
+      "statusCode": 301
+    },
+    {
       "source": "/product-page/eclipse-flatware",
       "destination": "/rentals/silverware/eclipse-flatware.html",
       "statusCode": 301
@@ -461,6 +491,11 @@
       "statusCode": 301
     },
     {
+      "source": "/product-page/french-press-64-oz",
+      "destination": "/rentals/coffee-tea-service/",
+      "statusCode": 301
+    },
+    {
       "source": "/product-page/full-size-chafer-food-pan-8-qt",
       "destination": "/rentals/kitchen-equipment/full-size-chafer-food-pan-8-qt.html",
       "statusCode": 301
@@ -483,6 +518,11 @@
     {
       "source": "/product-page/glass-cubes",
       "destination": "/rentals/barware/glass-cubes.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/product-page/glass-pitcher-32-oz",
+      "destination": "/rentals/glassware/",
       "statusCode": 301
     },
     {
@@ -606,6 +646,11 @@
       "statusCode": 301
     },
     {
+      "source": "/product-page/oval-platter",
+      "destination": "/rentals/china-tabletop/",
+      "statusCode": 301
+    },
+    {
       "source": "/product-page/oval-platter-11-5",
       "destination": "/rentals/china-tabletop/oval-platter-11-5.html",
       "statusCode": 301
@@ -693,6 +738,11 @@
     {
       "source": "/product-page/round-cocktail-table",
       "destination": "/rentals/tables/round-cocktail-tables.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/product-page/round-elegance-tray-15",
+      "destination": "/rentals/serving-display/",
       "statusCode": 301
     },
     {
@@ -934,6 +984,11 @@
       "source": "/product-page/x-back-rustic-chair",
       "destination": "/rentals/chairs-barstools/x-back-rustic-chair.html",
       "statusCode": 301
+    },
+    {
+      "source": "/product-page/:path*",
+      "destination": "/rentals/",
+      "statusCode": 301
     }
   ],
   "rewrites": [
@@ -956,10 +1011,6 @@
     {
       "source": "/quote.html",
       "destination": "/contact.html"
-    },
-    {
-      "source": "/product-page/:path*",
-      "destination": "/index.html"
     },
     {
       "source": "/testimonials",

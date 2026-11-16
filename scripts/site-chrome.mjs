@@ -9,7 +9,7 @@ const GROUPS = [
     ['/rentals/', 'All rentals'], ['/table-chair-rentals.html', 'Table & chair rentals'], ['/furniture-lounge-rentals.html', 'Event furniture & lounge'],
     ['/linen-rentals.html', 'Linen rentals'], ['/rentals/bars/', 'Bar rentals'], ['/tabletop-glassware-rentals.html', 'Tabletop & glassware'],
     ['/kitchen-equipment-rentals.html', 'Kitchen equipment'], ['/glassware-rental-nyc.html', 'Glassware rental'], ['/catering-equipment-rental.html', 'Catering equipment'],
-    ['/bar-rental.html', 'Bar setups & barware'], ['/chair-rental.html', 'Chair rental'], ['/wall-panels.html', 'Gallery wall panels']]],
+    ['/bar-rental.html', 'Bar setups & barware'], ['/chair-rental.html', 'Chair rental'], ['/wall-panels.html', 'Gallery wall panels'], ['/holiday-party-rentals.html', 'Holiday party & NYE rentals']]],
   ['New Jersey', [
     ['/event-rentals-wayne-nj.html', 'Wayne'], ['/party-rentals-north-jersey.html', 'North Jersey'], ['/party-rentals-paterson.html', 'Paterson'],
     ['/party-rentals-montclair.html', 'Montclair'], ['/party-rentals-morristown.html', 'Morristown'], ['/party-rentals-hoboken.html', 'Hoboken'],
@@ -32,6 +32,33 @@ const HOME_GROUPS = GROUPS.filter(([h]) => h === 'Rentals' || h === 'Company');
 export const HOME_FOOTER_HTML = `<footer><div class="w fnav fnav-home"><div class="fcol"><strong>ZNC SOLUTIONS</strong><br>Party rentals, gallery walls and event equipment<br><a href="mailto:info@zncsolutions.com">info@zncsolutions.com</a><br><a href="tel:${TEL}">${PHONE}</a></div>` +
   HOME_GROUPS.map(([h, l]) => `<div class="fcol"><p class="fh">${esc(h)}</p><ul>${l.map(([u, t]) => `<li><a href="${u}">${esc(t)}</a></li>`).join('')}</ul></div>`).join('') +
   `</div><div class="w fcopy">© <span id="year"></span> ZNC Solutions</div></footer>`;
+
+
+/* Standard quote form (same FormSubmit fields + event type and guests). Keeps each page's own location/needs placeholders.
+   Only name, email and phone are required, as before. The wall-panel booking form (#np) is left as is. Idempotent. */
+const EVENT_TYPES = ['Holiday party / NYE', 'Birthday or private party', 'Wedding or engagement', 'Corporate or office event', 'Gallery, art show or exhibit', 'Other'];
+export function quoteFormHtml(locPh, needsPh) {
+  const fld = (lab, inner, full) => `<label class="fld${full ? ' full' : ''}"><span>${lab}</span>${inner}</label>`;
+  return `<form id="quoteForm" class="form qf" data-qf="2">` +
+    fld('Name', `<input id="n" name="name" autocomplete="name" placeholder="Your name" required>`) +
+    fld('Email', `<input id="e" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" required>`) +
+    fld('Phone', `<input id="p" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="Best number to reach you" required>`) +
+    fld('Event date <em>(optional)</em>', `<input id="d" name="date" type="date">`) +
+    fld('Event type <em>(optional)</em>', `<select id="t" name="event_type"><option value="">Choose one</option>${EVENT_TYPES.map(t => `<option>${t}</option>`).join('')}</select>`) +
+    fld('Guest count <em>(optional)</em>', `<input id="g" name="guests" inputmode="numeric" placeholder="e.g. 60 or 50-80">`) +
+    fld('Delivery town or venue <em>(optional)</em>', `<input id="l" name="location" autocomplete="address-level2" placeholder="${locPh}">`, true) +
+    fld('What do you need? <em>(optional)</em>', `<textarea id="x" name="needs" placeholder="${needsPh}"></textarea>`, true) +
+    `<button type="submit">Send Quote Request</button><p id="formStatus" class="form-status" role="status" aria-live="polite">We will email and call you back.</p></form>`;
+}
+export function formify(html) {
+  return html.replace(/<form id="?quoteForm"?[\s\S]*?<\/form>/, m => {
+    if (/id="?np"?[\s>]/.test(m) || /data-qf="2"/.test(m)) return m;
+    const ph = re => { const r = m.match(re); return r ? r[1].replace(/^"|"$/g, '') : ''; };
+    const loc = ph(/id="?l"?[^>]*?placeholder=("[^"]*"|[^\s>]+)/) || 'Town, venue or neighborhood';
+    const needs = ph(/<textarea[^>]*?placeholder=("[^"]*"|[^\s>]+)/) || 'Items, quantities and anything we should know';
+    return quoteFormHtml(loc, needs);
+  });
+}
 
 /* Header nav: Testimonials link + a prominent "Call" link (desktop), and the sticky mobile call bar. Idempotent. */
 const NAV_CALL = `<a class="nav-call" href="tel:${TEL}" data-track="call_click">Call ${PHONE}</a>`;
@@ -63,7 +90,7 @@ export function navify(html) {
   const QB = /id="?contact"?[\s>]/.test(html) ? QUOTEBAR.replace('href="/contact.html"', 'href="#contact"') : QUOTEBAR;
   html = html.replace(/<a class="quotebar"[^>]*>[^<]*<\/a>/, '');
   html = html.replace(CALLBAR, CALLBAR + QB);
-  return ogify(html);
+  return ogify(formify(html));
 }
 
 /* Honest delivery line below the hero (never inside it) on the homepage and key rental pages. No setup claim, no prices. */

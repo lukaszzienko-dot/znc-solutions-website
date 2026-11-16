@@ -189,17 +189,25 @@ applyFooters(ROOT);
 /* vercel.json: 301s from old Wix product URLs whose slug matches an item (manual aliases below). */
 {
   const ALIAS = { 'white-chiavari-chair': 'white-chiavari-barstool', 'white-chiavari-chair-1': 'white-chiavari-chair', 'bar-kitcken-towel': 'bar-kitchen-towel', 'chome-ice-bucket': 'chrome-ice-bucket', 'white-icetub': 'white-ice-tub', 'rectangular-table': 'rectangular-tables', 'round-cocktail-table': 'round-cocktail-tables', 'swing-bottle': 'swing-bottle-34oz', 'pop-corn-machine': 'popcorn-machine', 'stainless-steel-bar-scoop': 'bar-scoop', 'copy-of-angle-platter-18-x12': 'angle-platter-18-x12', '72-round-foldingtable': 'round-folding-table', 'half-baker-rack-1': 'half-baker-rack', 'samovar': 'stainless-steel-samovar', 'silver-creamer': 'silver-creamer-20-oz', 'coupe-cup': 'coupe-coffee-cup', 'large-serving-bowl': 'large-serving-salad-bowl' };
+  /* Old Wix slugs with no exact item: send to the closest item (same product, typo/size label) or its category page. */
+  const TO_URL = { '0': '/rentals/', '0-1': '/rentals/', 'chiavari-chair': '/rentals/chairs-barstools/', 'couch': '/rentals/lounge-furniture/',
+    'double-old-fashion-14-oz': '/rentals/glassware/double-old-fashioned-13-oz.html', 'french-press-64-oz': '/rentals/coffee-tea-service/',
+    'glass-pitcher-32-oz': '/rentals/glassware/', 'oval-platter': '/rentals/china-tabletop/', 'round-elegance-tray-15': '/rentals/serving-display/',
+    '14-round-wooden-tray': '/rentals/serving-display/' };
   const f = path.join(ROOT, 'vercel.json'); const v = JSON.parse(fs.readFileSync(f, 'utf8'));
   const wixFile = path.join(ROOT, 'scripts/wix-product-slugs.txt');
   const wix = fs.existsSync(wixFile) ? fs.readFileSync(wixFile, 'utf8').split(/\s+/).filter(Boolean) : [];
   v.redirects = (v.redirects || []).filter(r => !r.source.startsWith('/product-page/'));
   const seen = new Set(), unmatched = [];
   for (const w of wix) {
-    const t = BY_SLUG[ALIAS[w] || w];
+    const t = BY_SLUG[ALIAS[w] || w] || (TO_URL[w] ? { url: TO_URL[w] } : null);
     if (!t || t.hidden) { unmatched.push(w); continue; }
     if (seen.has(w)) continue; seen.add(w);
     v.redirects.push({ source: '/product-page/' + w, destination: t.url, statusCode: 301 });
   }
+  /* Any other old /product-page/* URL goes to the catalog (was a homepage rewrite = soft 404). Must stay last. */
+  v.redirects.push({ source: '/product-page/:path*', destination: '/rentals/', statusCode: 301 });
+  v.rewrites = (v.rewrites || []).filter(r => !r.source.startsWith('/product-page/'));
   fs.writeFileSync(f, JSON.stringify(v, null, 1) + '\n');
   console.log(`wix redirects: ${seen.size}, unmatched: ${unmatched.length} (${unmatched.join(' ')})`);
 }

@@ -195,19 +195,28 @@
   var quoteForm = $("quoteForm");
   if (quoteForm) {
     var ta = $("x");
-    if (ta && !$("qlFormList")) { var fl = el("div", "ql-form-list"); fl.id = "qlFormList"; fl.style.display = "none"; ta.parentNode.insertBefore(fl, ta); }
+    if (ta && !$("qlFormList")) { var fl = el("div", "ql-form-list"); fl.id = "qlFormList"; fl.style.display = "none"; var tw = (ta.closest && ta.closest(".fld")) || ta; tw.parentNode.insertBefore(fl, tw); }
+    /* Visible thank-you panel after a successful send (form stays in the page; "Send another" brings it back). */
+    var qDone = function () {
+      var d = $("qfDone");
+      if (!d) { d = el("div", "qf-done"); d.id = "qfDone"; d.setAttribute("role", "status"); d.tabIndex = -1;
+        d.append(el("strong", null, "Thank you, your quote request is in."), el("p", null, "We will call or email you back. Need to add something? Call 917-536-1245 or email info@zncsolutions.com."));
+        var again = el("button", "btn btn-o", "Send another request"); again.type = "button"; again.onclick = function () { d.style.display = "none"; quoteForm.style.display = ""; };
+        d.appendChild(again); quoteForm.parentNode.insertBefore(d, quoteForm.nextSibling); }
+      quoteForm.style.display = "none"; d.style.display = ""; d.focus();
+    };
     quoteForm.addEventListener("submit", function (e) {
       e.preventDefault();
       var btn = quoteForm.querySelector("[type=submit]");
       function v(id) { var f = $(id); return f ? f.value : ""; }
       var list = qLoad();
-      var payload = { name: v("n"), email: v("e"), phone: v("p"), date: v("d"), location: v("l"), needs: v("x"), _subject: "ZNC Solutions website quote request", _template: "table", _captcha: "false", _source: location.pathname + (sessionStorage.getItem("znc_call_click") ? " (call link clicked earlier)" : "") };
+      var payload = { name: v("n"), email: v("e"), phone: v("p"), date: v("d"), event_type: v("t"), guests: v("g"), location: v("l"), needs: v("x"), _subject: "ZNC Solutions website quote request", _template: "table", _captcha: "false", _source: location.pathname + (sessionStorage.getItem("znc_call_click") ? " (call link clicked earlier)" : "") };
       if ($("np")) { payload.panels = v("np"); payload._subject = "ZNC wall panel booking request"; }
       if (list.length) { payload.quote_list = qText(list); payload.quote_list_count = String(list.length); }
       window.__lastQuotePayload = payload;
       btn.disabled = true; btn.textContent = "Sending…";
       fetch("https://formsubmit.co/ajax/info@zncsolutions.com", { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify(payload) })
-        .then(function (r) { if (!r.ok) throw 0; return r.json().catch(function () { return {}; }); }).then(function (j) { if (j && String(j.success) === "false") throw 0; $("formStatus").textContent = "Thanks. We got your quote request and will call or email you back."; quoteForm.reset(); if (list.length) qSave([]); })
+        .then(function (r) { if (!r.ok) throw 0; return r.json().catch(function () { return {}; }); }).then(function (j) { if (j && String(j.success) === "false") throw 0; $("formStatus").textContent = "Thanks. We got your quote request and will call or email you back."; quoteForm.reset(); if (list.length) qSave([]); qDone(); })
         .catch(function () { $("formStatus").textContent = "Could not send. Call 917-536-1245 or email info@zncsolutions.com."; })
         .then(function () { btn.disabled = false; btn.textContent = $("np") ? "Send Booking Request" : "Send Quote Request"; });
     });
