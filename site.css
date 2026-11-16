@@ -102,13 +102,15 @@ body{padding-bottom:calc(92px + env(safe-area-inset-bottom))!important}
 }
 @media(max-width:380px){.brand{font-size:17px;letter-spacing:.05em}.nav .btn{padding:8px 11px}}
 @media(min-width:561px){body{padding-bottom:72px}}
-/* Seasonal: Santa's sleigh after the logo text + tiny reindeer nav separators (aria-hidden, no layout shift) */
+/* Seasonal: Santa's sleigh + five reindeer (header beside the logo on desktop; across the hero photo on the homepage at <=900px) and tiny reindeer nav separators. aria-hidden, absolutely positioned: no layout shift. */
 .s-sleigh,.s-sep{display:none}
-.seasonal .s-sleigh{display:block;position:absolute;left:calc(100% + 10px);top:50%;margin-top:-12px;width:66px;height:22px;pointer-events:none;animation:s-bob 3.6s ease-in-out infinite}
-@keyframes s-bob{50%{transform:translateY(-3px) rotate(-3deg)}}
+.seasonal .s-sleigh{display:block;position:absolute;left:calc(100% + 14px);top:50%;translate:0 -50%;width:clamp(0px,calc(100vw - 900px),250px);height:auto;aspect-ratio:5/1;pointer-events:none;animation:s-bob 3.6s ease-in-out infinite}
+@keyframes s-bob{50%{transform:translateY(-3px) rotate(-2deg)}}
+.seasonal .s-sleigh-hero{display:none}
 .seasonal .s-sep{display:inline-block;width:15px;height:13px;margin:0 -6px 0 12px;vertical-align:-2px;pointer-events:none}
-@media(max-width:900px){.seasonal .s-sep{display:none}}@media(min-width:561px) and (max-width:900px){.seasonal .s-sleigh{display:none}}
-@media(max-width:560px){.seasonal .s-sleigh{left:auto;right:-14px;top:-17px;margin-top:0;width:48px;height:16px}}
-@media(max-width:380px){.seasonal .s-sleigh{width:40px;height:13px;right:-10px;top:-14px}}
-@media(max-width:340px){.seasonal .s-sleigh{display:none}}
+@media(max-width:900px){.seasonal .s-sep{display:none}.seasonal .brand .s-sleigh{left:auto;right:-14px;top:-21px;translate:none;width:110px}
+.seasonal .hero-pic .s-sleigh-hero{display:block;left:14px;top:16px;translate:none;width:min(66%,300px);z-index:1;filter:drop-shadow(0 0 1.5px #fff) drop-shadow(0 0 1.5px #fff)}
+.seasonal:has(.s-sleigh-hero) .brand .s-sleigh{display:none}}
+@media(min-width:561px) and (max-width:900px){.seasonal .brand .s-sleigh{display:none}}
+@media(max-width:380px){.seasonal .brand .s-sleigh{width:100px;right:-10px;top:-19px}}
 @media(prefers-reduced-motion:reduce){.seasonal .s-sleigh{animation:none}}
