@@ -70,3 +70,23 @@
 .qf-done{padding:22px;border:2px solid #0d4a34;border-radius:16px;background:#eef3ef;color:#0d4a34}.qf-done strong{font-size:20px;display:block;margin-bottom:6px}.qf-done p{margin:0 0 14px;color:#24302a}
 .nf{padding:72px 0 88px}.nf h1{font-size:44px;letter-spacing:-.03em;margin:8px 0 10px}.nf-btns .btn{margin:6px 6px 0 0;display:inline-block}
 @media(max-width:560px){.nf{padding:40px 0 56px}.nf h1{font-size:30px}}
+
+/* ===== Seasonal (holiday 2026): everything below is scoped to html.seasonal. Switch off via SEASONAL in scripts/site-chrome.mjs. ===== */
+.s-hat,.s-ribbon{display:none}
+.seasonal .brand{position:relative}
+.seasonal .s-hat{display:block;position:absolute;left:-13px;top:-11px;width:32px;height:25px;transform:rotate(-22deg);transform-origin:60% 80%;pointer-events:none}
+.seasonal header::after{content:"";position:absolute;left:0;right:0;top:100%;height:14px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='14' viewBox='0 0 96 14'%3E%3Cpath d='M0 2Q12 8 24 2T48 2T72 2T96 2' fill='none' stroke='%232f4f3f' stroke-width='1.2'/%3E%3Cg%3E%3Crect x='10.5' y='5' width='3' height='2' fill='%232f4f3f'/%3E%3Cellipse cx='12' cy='9.5' rx='2.6' ry='3.6' fill='%23c8102e'/%3E%3Crect x='34.5' y='5' width='3' height='2' fill='%232f4f3f'/%3E%3Cellipse cx='36' cy='9.5' rx='2.6' ry='3.6' fill='%23d4a017'/%3E%3Crect x='58.5' y='5' width='3' height='2' fill='%232f4f3f'/%3E%3Cellipse cx='60' cy='9.5' rx='2.6' ry='3.6' fill='%231f7a45'/%3E%3Crect x='82.5' y='5' width='3' height='2' fill='%232f4f3f'/%3E%3Cellipse cx='84' cy='9.5' rx='2.6' ry='3.6' fill='%23d4a017'/%3E%3C/g%3E%3C/svg%3E") repeat-x 0 0/96px 14px;pointer-events:none}
+.seasonal .s-ribbon{display:block;background:#a50d26;color:#fff;text-align:center;font:700 14px/1.2 Arial,sans-serif;padding:16px 16px 9px;text-decoration:none;letter-spacing:.02em;border-bottom:2px solid #d4a017}
+.seasonal .s-ribbon:hover,.seasonal .s-ribbon:focus-visible{background:#8c0b20;text-decoration:underline}
+.seasonal .s-star{color:#f3d27a}
+.seasonal main section.feature{position:relative}
+.seasonal main section.feature::before{content:"";position:absolute;left:50%;top:-12px;width:44px;height:24px;margin-left:-22px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='24' viewBox='0 0 44 24'%3E%3Cpath d='M21 13C15 4 6 3 1 6c3 1 3 4 6 4-2 2 0 5 3 5 0 3 3 3 5 2 2 0 4-2 6-4z' fill='%231f6b3a'/%3E%3Cpath d='M23 13c6-9 15-10 20-7-3 1-3 4-6 4 2 2 0 5-3 5 0 3-3 3-5 2-2 0-4-2-6-4z' fill='%232a7f47'/%3E%3Ccircle cx='19' cy='15' r='3' fill='%23c8102e'/%3E%3Ccircle cx='25' cy='15' r='3' fill='%23b00d28'/%3E%3Ccircle cx='22' cy='19.5' r='3' fill='%23d4172f'/%3E%3C/svg%3E") no-repeat center/44px 24px;pointer-events:none}
+.seasonal .hero-pic{position:relative}
+.seasonal .hero-pic::after{content:"";position:absolute;right:14px;top:0;width:64px;height:64px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cpath d='M32 0v10' stroke='%23b8901c' stroke-width='1.5'/%3E%3Ccircle cx='32' cy='22' r='12' fill='%23c8102e'/%3E%3Crect x='28' y='8' width='8' height='4' rx='1' fill='%23d4a017'/%3E%3Cpath d='M21 20q11 6 22 0' stroke='%23f3d27a' stroke-width='1.6' fill='none'/%3E%3Ccircle cx='27' cy='17' r='2.4' fill='%23fff' opacity='.55'/%3E%3Cpath d='M50 0v22' stroke='%23b8901c' stroke-width='1.2'/%3E%3Ccircle cx='50' cy='29' r='7' fill='%23d4a017'/%3E%3Crect x='47.5' y='20' width='5' height='3' rx='1' fill='%23b8901c'/%3E%3C/svg%3E") no-repeat center/64px 64px;pointer-events:none;z-index:1}
+.seasonal .nav .btn,.seasonal .qf button[type=submit]{box-shadow:inset 0 0 0 2px #d4a017}
+.seasonal .quotebar{color:#a50d26;border-color:#a50d26;box-shadow:0 0 0 2px #f3d27a,0 4px 14px #0002}
+.seasonal .s-snow{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:2}
+.seasonal .s-snow i{position:absolute;top:-12px;border-radius:50%;background:#fff;box-shadow:0 0 3px 1px rgba(70,100,130,.45);will-change:transform;animation:s-fall 12s linear infinite}
+@keyframes s-fall{0%{transform:translate3d(0,0,0)}25%{transform:translate3d(12px,26vh,0)}50%{transform:translate3d(-10px,52vh,0)}75%{transform:translate3d(10px,78vh,0)}100%{transform:translate3d(-4px,105vh,0)}}
+@media(prefers-reduced-motion:reduce){.seasonal .s-snow{display:none}}
+@media(max-width:560px){.seasonal .s-hat{left:-11px;top:-4px;width:28px;height:22px}.seasonal .s-ribbon{font-size:13px;padding:15px 12px 8px}.seasonal .hero-pic::after{width:48px;height:48px;background-size:48px 48px;right:10px}}

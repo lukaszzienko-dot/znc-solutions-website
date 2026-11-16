@@ -60,6 +60,24 @@ export function formify(html) {
   });
 }
 
+
+/* ---------- Seasonal look (holiday 2026) ----------
+   ONE switch: set SEASONAL = false and rerun the generators (build-keyword-pages, build-items, build-testimonials, build-furniture-page)
+   to strip everything: <html class="seasonal">, the Santa hat SVG in the logo, the Holiday ribbon under the header and /seasonal.js.
+   All seasonal CSS in site.css is scoped to html.seasonal, so it goes inert on its own. */
+export const SEASONAL = true;
+const S_HAT = `<svg class="s-hat" aria-hidden="true" focusable="false" viewBox="0 0 40 32" width="28" height="22"><path d="M5 25C9 12 18 3 31 6c-4 3-5 9-4 17z" fill="#c8102e"/><path d="M27 23c-1-6 0-12 4-17 3 2 4 6 3 10" fill="#a50d26"/><rect x="2" y="22" width="29" height="7" rx="3.5" fill="#fff" stroke="#e3e3e3"/><circle cx="34" cy="17" r="4" fill="#fff" stroke="#e3e3e3"/></svg>`;
+const S_RIBBON = `<a class="s-ribbon" href="/holiday-party-rentals.html"><span class="s-star" aria-hidden="true">✦</span> Holiday Party &amp; NYE Rentals <span aria-hidden="true">→</span></a>`;
+export function seasonify(html) {
+  html = html.replace(/<a class="s-ribbon"[^>]*>[\s\S]*?<\/a>/g, '').replace(/<svg class="s-hat"[\s\S]*?<\/svg>/g, '')
+    .replace(/<script src="\/seasonal\.js" defer><\/script>/g, '').replace(/<html lang="?en"?(?: class="seasonal")?>/, '<html lang="en">');
+  if (!SEASONAL) return html;
+  html = html.replace('<html lang="en">', '<html lang="en" class="seasonal">');
+  html = html.replace(/(<a class="?brand"? href="?\/"?>)/, '$1' + S_HAT);
+  html = html.replace('</header>', '</header>' + S_RIBBON);
+  return html.replace('</body>', '<script src="/seasonal.js" defer></script></body>');
+}
+
 /* Header nav: Testimonials link + a prominent "Call" link (desktop), and the sticky mobile call bar. Idempotent. */
 const NAV_CALL = `<a class="nav-call" href="tel:${TEL}" data-track="call_click">Call ${PHONE}</a>`;
 const CALLBAR = `<a class="callbar" href="tel:${TEL}" data-track="call_click">Call ${PHONE}</a>`;
@@ -90,7 +108,7 @@ export function navify(html) {
   const QB = /id="?contact"?[\s>]/.test(html) ? QUOTEBAR.replace('href="/contact.html"', 'href="#contact"') : QUOTEBAR;
   html = html.replace(/<a class="quotebar"[^>]*>[^<]*<\/a>/, '');
   html = html.replace(CALLBAR, CALLBAR + QB);
-  return ogify(formify(html));
+  return seasonify(ogify(formify(html)));
 }
 
 /* Honest delivery line below the hero (never inside it) on the homepage and key rental pages. No setup claim, no prices. */
