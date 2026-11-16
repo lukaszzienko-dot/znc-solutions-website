@@ -19,7 +19,7 @@ const CATS = ctx.window.__ZNC_CATS, Z = ctx.window.__ZNC;
 const R = JSON.parse(fs.readFileSync(path.join(ROOT, 'scripts/google-reviews.json'), 'utf8'));
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const ext = img => (img.match(/\.(\w+)$/) || [, 'jpg'])[1];
-const imgSized = (img, w, name, fmt) => `https://static.wixstatic.com/media/e06c28_${img}/v1/fit/w_${w},h_${w},q_85/${name}.${fmt || ext(img)}`;
+const imgSized = (img, w, name, fmt) => `https://static.wixstatic.com/media/e06c28_${img}/v1/fit/w_${w},h_${w},q_80/${name}.${fmt || ext(img)}`;
 const pretty = t => String(t).replace(/(\d)\s*(?:''|")/g, '$1″').replace(/(\d)'/g, '$1′').replace(/\s+/g, ' ').trim();
 const catOf = {}; for (const c of CATS) for (const it of Z[c.key] || []) catOf[it.slug] = { c, it };
 const get = slug => { const o = catOf[slug]; if (!o || o.it.hidden) throw new Error('Not in catalog: ' + slug); return { ...o.it, cat: o.c, url: `/rentals/${o.c.slug}/${o.it.slug}.html` }; };
@@ -77,7 +77,7 @@ const PAGES = [
   faqs: [
     ['What catering equipment do you rent?', 'Chafing dishes, full-size food pans, chafing fuel, a heat lamp, bain-marie, electric warming cabinet, buffet risers and displays, trays, serving utensils, 30- and 100-cup coffee makers and a samovar, plus ovens and other kitchen equipment on our kitchen equipment page.'],
     ['Do you work with caterers on repeat events?', 'Yes. See our trade accounts page, or call 917-536-1245 to talk about recurring orders.'],
-    ['Where do you deliver catering equipment?', 'From Wayne, NJ across New York City, New Jersey and Connecticut. Share the venue and load-in details with your quote request.'],
+    ['Where do you deliver catering equipment?', 'Across New York City, New Jersey and Connecticut. Share the venue and load-in details with your quote request.'],
   ],
   reviews: ['Annie Gonzalez', 'Kathleen Reddington'],
   related: [['/kitchen-equipment-rentals.html', 'Kitchen Equipment Rentals'], ['/rentals/serving-display/', 'Serving & display'], ['/rentals/coffee-tea-service/', 'Coffee & tea service'], ['/tabletop-glassware-rentals.html', 'Tabletop & Glassware Rentals'], ['/glassware-rental-nyc.html', 'Glassware Rental NYC'], ['/trade-accounts.html', 'Trade Accounts']],

@@ -8,7 +8,8 @@
   Object.keys(CAT).forEach(function (k) { if (ORDER.indexOf(k) < 0) { ORDER.push(k); LABELS[k] = LABELS[k] || k; } });
   var SPEC_KEYS = [["dimensions", ""], ["seats", ""], ["colors", "Colors: "], ["material", ""], ["stackable", ""], ["minOrder", "Min. order: "], ["notes", ""]];
   function $(id) { return document.getElementById(id); }
-  function img(id) { return id.charAt(0) === "/" ? id.replace(/\.webp$/, "-800.webp") : "https://static.wixstatic.com/media/e06c28_" + id; }
+  /* Wix media ids are served through Wix's resize/WebP transform at the size actually shown (originals can be 10 MB+). */
+  function img(id, w) { if (id.charAt(0) === "/") return id.replace(/\.webp$/, "-800.webp"); w = w || 600; return "https://static.wixstatic.com/media/e06c28_" + id + "/v1/fit/w_" + w + ",h_" + w + ",q_80/rental.webp"; }
   function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
   function fullName(it) { return it.name + (it.variant ? " (" + it.variant + ")" : ""); }
   function specLines(it) {
@@ -122,7 +123,7 @@
   function card(it, opts) {
     opts = opts || {};
     var d = el("div", "p"), gal = !opts.gallery && it.gallery && it.gallery.length;
-    var im = el("img"); im.loading = "lazy"; im.src = img(opts.img || it.img); im.alt = fullName(it) + (LABELS[it.cat] ? " (" + LABELS[it.cat] + ")" : "") + " rental from ZNC Solutions";
+    var im = el("img"); im.loading = "lazy"; im.decoding = "async"; im.src = img(opts.img || it.img, 500); im.alt = fullName(it) + (LABELS[it.cat] ? " (" + LABELS[it.cat] + ")" : "") + " rental from ZNC Solutions";
     var nm = el("b", null, fullName(it));
     if (/wall-styling/.test(opts.img || "")) { nm = el("b", null, fullName(it) + " (styling concept)"); }
     if (it.url && !gal && !opts.gallery) { var a = el("a", "p-link"); a.href = it.url; a.append(im, nm); d.appendChild(a); } else d.append(im, nm);
@@ -156,10 +157,10 @@
     ORDER.forEach(function (k) {
       var list = CAT[k]; if (!list || !list.length) return;
       var t = el("div", "cat" + (k === "walls" ? " walls" : "")); t.tabIndex = 0;
-      var im = el("img"); im.alt = LABELS[k] + " rentals from ZNC Solutions";
+      var im = el("img"); im.alt = LABELS[k] + " rentals from ZNC Solutions"; im.loading = "lazy"; im.decoding = "async"; im.width = 44; im.height = 44;
       var vis = itemsIn(k); if (!vis.length) return;
       var src = vis[0].img; if (k === "walls") { var w = vis.filter(function (r) { return r.name === "Wall Panel System"; })[0]; if (w) src = w.img; }
-      im.src = img(src);
+      im.src = img(src, 120);
       t.append(im, el("strong", null, LABELS[k]));
       t.onclick = function () { showCat(k); };
       t.onkeydown = function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); showCat(k); } };
@@ -167,7 +168,7 @@
     });
     var LS = "https://rentallinenswatches.com/fabrics/texture/rattan/";
     var lt = el("div", "cat"); lt.tabIndex = 0;
-    var li = el("img"); li.alt = "Rattan mint linen swatch sample for event table linens"; li.src = "https://rentallinenswatches.com/wp-content/uploads/sites/45/2019/04/Rattan-Mint-797.jpg";
+    var li = el("img"); li.loading = "lazy"; li.decoding = "async"; li.width = 44; li.height = 44; li.alt = "Rattan mint linen swatch sample for event table linens"; li.src = "https://rentallinenswatches.com/wp-content/uploads/sites/45/2019/04/Rattan-Mint-797.jpg";
     lt.append(li, el("strong", null, "Linen Swatches"));
     lt.onclick = function () { location.href = LS; };
     lt.onkeydown = function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); location.href = LS; } };
@@ -214,7 +215,7 @@
 
   /* Item page photo thumbnails */
   var photo = $("itemPhoto");
-  if (photo) document.querySelectorAll("[data-photo]").forEach(function (b) { b.addEventListener("click", function () { photo.src = b.getAttribute("data-photo"); var cap = $("itemPhotoCap"); if (cap) cap.textContent = b.getAttribute("data-cap") || ""; }); });
+  if (photo) document.querySelectorAll("[data-photo]").forEach(function (b) { b.addEventListener("click", function () { photo.removeAttribute("srcset"); photo.removeAttribute("sizes"); photo.src = b.getAttribute("data-photo"); var cap = $("itemPhotoCap"); if (cap) cap.textContent = b.getAttribute("data-cap") || ""; }); });
 
   qBuildUI(); qRender();
   window.addEventListener("storage", function (e) { if (e.key === QKEY) qRender(); });
@@ -224,13 +225,13 @@
   var hero = document.querySelector(".hero img");
   if (hero && ["/", "/index.html"].indexOf(location.pathname) > -1) {
     var M = "https://static.wixstatic.com/media/", slides = [[M + "e06c28_bbba71eec96f4bec842418a79189b67e~mv2.jpg", "Wooden bar and event rental setting by ZNC Solutions"], [M + "e06c28_fe3a504cd4644d88b0ecd0c3ee54a27b~mv2.png", "Gallery walls with lighting by ZNC Solutions"], [M + "e06c28_fe2f6271d2474dd88315d9e3ce490e91~mv2.png", "Modular gallery wall panels by ZNC Solutions"], [M + "e06c28_8a2059f55dec4eea82cc6e43ab48fc60~mv2.png", "Gallery wall panels set up by ZNC Solutions"], [M + "e06c28_43074cfa6677487b8115be11d9908bfa~mv2.jpg", "Stationary gallery walls by ZNC Solutions"]];
-    var sized = function (u) { return u.replace(/(~mv2\.\w+)$/, "$1/v1/fit/w_1600,h_1600,q_85/hero.webp"); };
-    slides = slides.map(function (s, i) { return i === 0 ? s : [sized(s[0]), s[1]]; });
+    var sized = function (u) { return u.replace(/(~mv2\.\w+)$/, "$1/v1/fit/w_1400,h_1400,q_80/hero.webp"); };
+    slides = slides.map(function (s, i) { return i === 0 ? [hero.currentSrc || hero.src, s[1]] : [sized(s[0]), s[1]]; });
     var si = 0, warmed = false;
     /* Warm the next slide only after the page has loaded, one image at a time, so large slide images never compete with the first paint. */
     var warm = function (i) { new Image().src = slides[i][0]; };
     window.addEventListener("load", function () { setTimeout(function () { warmed = true; warm(1); }, 2500); });
-    setInterval(function () { if (!warmed) return; si = (si + 1) % slides.length; warm((si + 1) % slides.length); hero.style.opacity = "0"; setTimeout(function () { hero.src = slides[si][0]; hero.alt = slides[si][1]; hero.style.opacity = "1"; }, 400); }, 5000);
+    setInterval(function () { if (!warmed) return; si = (si + 1) % slides.length; warm((si + 1) % slides.length); hero.style.opacity = "0"; setTimeout(function () { if (hero.hasAttribute("srcset")) { slides[0][0] = hero.currentSrc || hero.src; hero.removeAttribute("srcset"); hero.removeAttribute("sizes"); } hero.src = slides[si][0]; hero.alt = slides[si][1]; hero.style.opacity = "1"; }, 400); }, 5000);
   }
 })();
 
@@ -242,6 +243,8 @@
   }
   window.zncTrack = track;
   document.addEventListener("click", function (e) {
+    var q = e.target.closest && e.target.closest("a.quotebar");
+    if (q) { track("quote_click", { page: location.pathname, place: "quotebar" }); return; }
     var a = e.target.closest && e.target.closest('a[href^="tel:"]');
     if (!a) return;
     try { sessionStorage.setItem("znc_call_click", "1"); } catch (x) {}

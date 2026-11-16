@@ -13,7 +13,7 @@ vm.runInNewContext(fs.readFileSync(path.join(ROOT, 'catalog.js'), 'utf8'), ctx);
 const CATS = ctx.window.__ZNC_CATS, Z = ctx.window.__ZNC;
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const ext = img => (img.match(/\.(\w+)$/) || [, 'jpg'])[1];
-const imgSized = (img, w, name, fmt) => `https://static.wixstatic.com/media/e06c28_${img}/v1/fit/w_${w},h_${w},q_85/${name}.${fmt || ext(img)}`;
+const imgSized = (img, w, name, fmt) => `https://static.wixstatic.com/media/e06c28_${img}/v1/fit/w_${w},h_${w},q_80/${name}.${fmt || ext(img)}`;
 const catOf = {}; for (const c of CATS) for (const it of Z[c.key] || []) catOf[it.slug] = { c, it };
 const get = slug => { const o = catOf[slug]; if (!o || o.it.hidden) throw new Error('Not in catalog: ' + slug); return { ...o.it, cat: o.c, url: `/rentals/${o.c.slug}/${o.it.slug}.html` }; };
 const fullName = it => it.name + (it.variant ? ` (${it.variant})` : '');

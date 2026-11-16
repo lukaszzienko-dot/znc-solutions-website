@@ -54,3 +54,9 @@
 
 .see-all{margin:14px 0}.see-all summary{cursor:pointer;font-weight:700;color:#0d4a34;font-size:14px;padding:8px 0}.see-all .item-links{margin-top:8px}
 @media(max-width:560px){.grid{grid-template-columns:repeat(2,1fr)}.p .ql-add{flex-wrap:wrap}.p .ql-add input{width:100%}}
+
+/* Audit Nov 16: mobile sticky quote button beside the call bar; larger footer tap targets; services headings as h2 (same look as before). */
+.quotebar{display:none}
+@media(max-width:560px){.callbar{right:calc(50% + 4px)!important;padding:12px 8px;font-size:14px}.quotebar{display:block;position:fixed;left:calc(50% + 4px);right:16px;bottom:calc(12px + env(safe-area-inset-bottom));background:#fff;color:#0d4a34;border:2px solid #0d4a34;padding:10px 8px;border-radius:30px;text-decoration:none;font-weight:700;font-size:14px;text-align:center;z-index:4;box-shadow:0 4px 14px #0002}}
+.fcol li a,.fcol>a{display:inline-block;padding:5px 0}
+.svc h2{font-size:18px;letter-spacing:-.02em;margin:22px 0 6px}

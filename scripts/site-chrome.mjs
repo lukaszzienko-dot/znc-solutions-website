@@ -36,6 +36,17 @@ export const HOME_FOOTER_HTML = `<footer><div class="w fnav fnav-home"><div clas
 /* Header nav: Testimonials link + a prominent "Call" link (desktop), and the sticky mobile call bar. Idempotent. */
 const NAV_CALL = `<a class="nav-call" href="tel:${TEL}" data-track="call_click">Call ${PHONE}</a>`;
 const CALLBAR = `<a class="callbar" href="tel:${TEL}" data-track="call_click">Call ${PHONE}</a>`;
+/* Mobile sticky "Get a Quote" button beside the call bar (CSS shows it on phones only). */
+const QUOTEBAR = `<a class="quotebar" href="/contact.html" data-track="quote_click">Get a Quote</a>`;
+/* Social share image: first ZNC photo on the page (Wix media), resized to 1200px JPG; falls back to the homepage photo. */
+const OG_DEFAULT = 'bbba71eec96f4bec842418a79189b67e~mv2.jpg';
+function ogify(html) {
+  if (/og:image/.test(html)) return html;
+  const body = html.slice(Math.max(0, html.indexOf('<main')));
+  const m = body.match(/static\.wixstatic\.com\/media\/e06c28_([0-9a-f]+~mv2\.(?:jpe?g|png))/);
+  const url = `https://static.wixstatic.com/media/e06c28_${m ? m[1] : OG_DEFAULT}/v1/fit/w_1200,h_1200,q_80/zncsolutions.jpg`;
+  return html.replace('</head>', `<meta property="og:image" content="${url}"></head>`);
+}
 export function navify(html) {
   html = html.replace(/<div class="?nav"?>([\s\S]*?)<\/div>/, (m, inner) => {
     let out = inner;
@@ -48,7 +59,8 @@ export function navify(html) {
   });
   html = html.replace(/<a class="?callbar"?[^>]*>[^<]*<\/a>/, CALLBAR);
   if (!html.includes('class="callbar"')) html = html.replace(/(<script src="?\/app\.js"?>|<\/body>)/, m => CALLBAR + m);
-  return html;
+  if (!html.includes('class="quotebar"')) html = html.replace(CALLBAR, CALLBAR + QUOTEBAR);
+  return ogify(html);
 }
 
 /* Honest delivery line below the hero (never inside it) on the homepage and key rental pages. No setup claim, no prices. */
