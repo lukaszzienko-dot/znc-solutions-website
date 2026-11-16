@@ -101,3 +101,4 @@ body{padding-bottom:calc(92px + env(safe-area-inset-bottom))!important}
 .ql-pill{left:auto;right:0;bottom:calc(70px + env(safe-area-inset-bottom));border-radius:22px 0 0 22px;border-right:0;padding:8px 12px 8px 14px;font-size:13px}
 }
 @media(max-width:380px){.brand{font-size:17px;letter-spacing:.05em}.nav .btn{padding:8px 11px}}
+@media(min-width:561px){body{padding-bottom:72px}}
