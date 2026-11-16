@@ -102,3 +102,13 @@ body{padding-bottom:calc(92px + env(safe-area-inset-bottom))!important}
 }
 @media(max-width:380px){.brand{font-size:17px;letter-spacing:.05em}.nav .btn{padding:8px 11px}}
 @media(min-width:561px){body{padding-bottom:72px}}
+/* Seasonal: Santa's sleigh after the logo text + tiny reindeer nav separators (aria-hidden, no layout shift) */
+.s-sleigh,.s-sep{display:none}
+.seasonal .s-sleigh{display:block;position:absolute;left:calc(100% + 10px);top:50%;margin-top:-12px;width:66px;height:22px;pointer-events:none;animation:s-bob 3.6s ease-in-out infinite}
+@keyframes s-bob{50%{transform:translateY(-3px) rotate(-3deg)}}
+.seasonal .s-sep{display:inline-block;width:15px;height:13px;margin:0 -6px 0 12px;vertical-align:-2px;pointer-events:none}
+@media(max-width:900px){.seasonal .s-sep{display:none}}@media(min-width:561px) and (max-width:900px){.seasonal .s-sleigh{display:none}}
+@media(max-width:560px){.seasonal .s-sleigh{left:auto;right:-14px;top:-17px;margin-top:0;width:48px;height:16px}}
+@media(max-width:380px){.seasonal .s-sleigh{width:40px;height:13px;right:-10px;top:-14px}}
+@media(max-width:340px){.seasonal .s-sleigh{display:none}}
+@media(prefers-reduced-motion:reduce){.seasonal .s-sleigh{animation:none}}
