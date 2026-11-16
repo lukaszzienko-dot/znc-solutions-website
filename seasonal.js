@@ -3,11 +3,11 @@
   var d = document, h = d.documentElement;
   if (!h.classList.contains("seasonal") || !window.matchMedia || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   function go() {
-    var n = innerWidth < 600 ? 16 : 34, box = d.createElement("div"), f = d.createDocumentFragment();
+    var n = innerWidth < 600 ? 22 : 44, box = d.createElement("div"), f = d.createDocumentFragment();
     box.className = "s-snow"; box.setAttribute("aria-hidden", "true");
     for (var i = 0; i < n; i++) {
-      var s = d.createElement("i"), z = 3 + Math.random() * 5;
-      s.style.cssText = "left:" + (Math.random() * 100).toFixed(1) + "%;width:" + z.toFixed(1) + "px;height:" + z.toFixed(1) + "px;opacity:" + (0.35 + Math.random() * 0.5).toFixed(2) +
+      var s = d.createElement("i"), z = 5 + Math.random() * 5;
+      s.style.cssText = "left:" + (Math.random() * 100).toFixed(1) + "%;width:" + z.toFixed(1) + "px;height:" + z.toFixed(1) + "px;opacity:" + (0.65 + Math.random() * 0.35).toFixed(2) +
         ";animation-duration:" + (9 + Math.random() * 9).toFixed(1) + "s;animation-delay:-" + (Math.random() * 18).toFixed(1) + "s";
       f.appendChild(s);
     }
