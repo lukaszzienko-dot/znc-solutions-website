@@ -59,7 +59,10 @@ export function navify(html) {
   });
   html = html.replace(/<a class="?callbar"?[^>]*>[^<]*<\/a>/, CALLBAR);
   if (!html.includes('class="callbar"')) html = html.replace(/(<script src="?\/app\.js"?>|<\/body>)/, m => CALLBAR + m);
-  if (!html.includes('class="quotebar"')) html = html.replace(CALLBAR, CALLBAR + QUOTEBAR);
+  /* Pages with their own quote form (#contact) scroll to it; others go to /contact.html. */
+  const QB = /id="?contact"?[\s>]/.test(html) ? QUOTEBAR.replace('href="/contact.html"', 'href="#contact"') : QUOTEBAR;
+  html = html.replace(/<a class="quotebar"[^>]*>[^<]*<\/a>/, '');
+  html = html.replace(CALLBAR, CALLBAR + QB);
   return ogify(html);
 }
 
