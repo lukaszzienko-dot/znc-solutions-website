@@ -14,6 +14,7 @@ const FAMILIES = {
   barware: [[/ice|cooler|cubes/i, 'ice and cooling'], [/shaker|jigger|opener|scoop|caddy|blender|towel|board|mat|napkin/i, 'bar tools'], [/carafe|dispenser|bottle/i, 'beverage service']],
   lounge: [[/table/i, 'tables'], [/couch|sofa|chaise|chair|set/i, 'seating'], [/heater|umbrella/i, 'outdoor comfort']],
   event: [[/coat|hanger|ticket/i, 'coat check'], [/tub|bin|bag|broom|slim|tray/i, 'back-of-house'], [/lantern|votive/i, 'ambient lighting']],
+  linens: [[/napkin/i, 'napkins'], [/overlay/i, 'overlays'], [/round/i, 'round tablecloths'], [/square/i, 'square tablecloths'], [/rectangular/i, 'rectangular tablecloths']],
 };
 export const familyOf = it => ((FAMILIES[it.cat.key] || []).find(([re]) => re.test(it.name)) || [])[1] || null;
 
@@ -32,11 +33,13 @@ const USE = {
   display: n => `Serving pieces are chosen against the buffet or dessert layout. Tell us the table length and what you plan to serve and we will help you pick the right quantity of the ${n}.`,
   kitchen: n => `Kitchen equipment is chosen against the menu, the power or fuel available at the venue, and your caterer's plan. Include those details when you request a quote for the ${n}.`,
   event: n => `Support items are easy to forget until load-in. Add the ${n} to the same quote list as your furniture and tabletop so everything is confirmed in one reply.`,
+  linens: n => `Linens are quoted with your table plan. Tell us how many of each table size you are renting, the colors you want, and the quantity of the ${n}, and we will confirm what is available for your date.`,
 };
 
 const FAQ3 = {
   chairs: it => [`Which tables pair with the ${it.fn}?`, /barstool/i.test(it.name) ? 'Barstools are meant for high-top and cocktail tables, such as our 24″ and 30″ round cocktail tables.' : 'Chairs pair with our 48″, 60″ and 72″ round tables, plus rectangular and farmhouse tables for family-style seating.'],
   tables: it => [`Can you help plan a layout with the ${it.fn}?`, 'Yes. Share your guest count and venue and we will help work out how many tables and chairs you need.'],
+  linens: it => [`Is the ${it.fn} for a round table?`, /round/i.test(it.specs && it.specs.dimensions || it.name) ? 'Yes. The size and shape are listed as round on this page. Rectangular and square cloths are listed separately in the linens category.' : /napkin/i.test(it.name) ? 'This is a napkin, not a tablecloth. Round, rectangular and square tablecloths are listed separately in the linens category.' : 'No. The size and shape are listed on this page, so you can tell it apart from our round tablecloths. Share your table sizes in the quote request and we will confirm the cloths that match.'],
 };
 
 export function itemDetailHtml(it, ctx) {
@@ -80,6 +83,7 @@ const GUIDE = {
   display: ['Serving and display pieces include trays, cake stands, risers, serving forks and spoons, tongs, ladles and a cake server set. Use risers to add height to a buffet and trays to group small items.', 'Combine serving pieces with <a href="/rentals/china-tabletop/">platters and bowls</a> and <a href="/rentals/kitchen-equipment/">kitchen equipment</a> for catered events.'],
   kitchen: ['Kitchen equipment is rented for caterers and event kitchens: a full-size electric convection oven, proofing cabinets, warming cabinets, baker racks, chafing dishes, deep fryers, burners and a refrigerator.', 'Tell us the menu, the power and fuel available at the venue and your caterer’s plan, and we will help confirm the right pieces.'],
   event: ['Event equipment covers the support items around furniture and tabletop: coat racks, hangers and numbered coat check tickets, a 4′ × 4′ portable stage unit, a popcorn machine, lanterns and votives, bus tubs, ice tubs and cleanup supplies.', 'Add them to the same quote list as your furniture and tabletop so everything is confirmed together.'],
+  linens: ['Each tablecloth in this category is listed with its full size and shape: round, rectangular or square, plus square rattan overlays. Dinner and cocktail napkins are listed with their sizes too. Fabrics in the inventory include Signature, Rattan, Panama, Velvet, cotton and classic polyester.', 'A custom fabric bar screen can be made in any tablecloth fabric. Share your table plan and colors with the quote, and see <a href="/linen-rentals.html">linen rentals</a> for the full size list. Paper cocktail napkins (packs of 50, color choice) are listed with <a href="/rentals/barware/paper-cocktail-napkins-50-ct.html">barware</a>.'],
 };
 export function catGuideHtml(c) {
   const g = GUIDE[c.key]; if (!g) return '';

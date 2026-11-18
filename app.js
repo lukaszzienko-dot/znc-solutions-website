@@ -166,13 +166,6 @@
       t.onkeydown = function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); showCat(k); } };
       cats.appendChild(t);
     });
-    var LS = "https://rentallinenswatches.com/fabrics/texture/rattan/";
-    var lt = el("div", "cat"); lt.tabIndex = 0;
-    var li = el("img"); li.loading = "lazy"; li.decoding = "async"; li.width = 44; li.height = 44; li.alt = "Rattan mint linen swatch sample for event table linens"; li.src = "https://rentallinenswatches.com/wp-content/uploads/sites/45/2019/04/Rattan-Mint-797.jpg";
-    lt.append(li, el("strong", null, "Linen Swatches"));
-    lt.onclick = function () { location.href = LS; };
-    lt.onkeydown = function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); location.href = LS; } };
-    cats.appendChild(lt);
     if (!Object.keys(CAT).length) cats.innerHTML = "<p>Catalog failed to load. Call 917-536-1245.</p>";
   }
 
