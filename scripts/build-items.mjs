@@ -147,8 +147,8 @@ for (const c of cats) {
 {
   const u = '/rentals/';
   const bc = crumbs([['Home', '/'], ['Rentals', u]]);
-  const html = head({ title: 'Party Rental Catalog | ZNC Solutions Wayne NJ', desc: `Browse ${ITEMS.length} party rental items from ZNC Solutions in Wayne, NJ: chairs, tables, lounge, bars, tabletop, kitchen gear and gallery walls. Call ${PHONE}.`, canonical: SITE + u, ld: { '@context': 'https://schema.org', '@graph': [bc.ld, { '@type': 'ItemList', name: 'Rental categories', itemListElement: cats.filter(c => itemsOf(c).length).map((c, i) => ({ '@type': 'ListItem', position: i + 1, url: `${SITE}/rentals/${c.slug}/`, name: c.label })) }] } }) + HEADER +
-    `<main>${bc.html}<section class="cat-head"><div class="w"><div class="ey">ZNC Rentals</div><h1>Rental Catalog</h1><p class="lead">Every item we rent, by category.</p></div></section>` +
+  const html = head({ title: 'Party Rental Catalog NYC | Tables, Chairs & Bars | ZNC', desc: `Browse ${ITEMS.length} party rental items for NYC, New Jersey and Connecticut: chairs, tables, lounge, bars, tabletop, kitchen gear and gallery walls. Call ${PHONE}.`, canonical: SITE + u, ld: { '@context': 'https://schema.org', '@graph': [bc.ld, { '@type': 'ItemList', name: 'Rental categories', itemListElement: cats.filter(c => itemsOf(c).length).map((c, i) => ({ '@type': 'ListItem', position: i + 1, url: `${SITE}/rentals/${c.slug}/`, name: c.label })) }] } }) + HEADER +
+    `<main>${bc.html}<section class="cat-head"><div class="w"><div class="ey">ZNC Rentals</div><h1>Party Rental Catalog for NYC</h1><p class="lead">Every item we rent, by category. Delivery across NYC, NJ &amp; CT.</p></div></section>` +
     cats.filter(c => itemsOf(c).length).map(c => `<section class="related"><div class="w"><h2><a href="/rentals/${c.slug}/">${esc(c.label)}</a></h2><div class="grid">${itemsOf(c).slice(0, 4).map(it => card(it, false)).join('')}</div>${seeAll(itemsOf(c))}<p><a class="btn btn-o" href="/rentals/${c.slug}/">View all ${esc(c.label)}</a></p></div></section>`).join('') +
     `</main>` + FOOTER + `</body></html>\n`;
   write('rentals/index.html', html); urls.push(u);

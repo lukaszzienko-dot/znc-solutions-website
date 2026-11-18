@@ -15,7 +15,11 @@ const GROUPS = [
     ['/party-rentals-montclair.html', 'Montclair'], ['/party-rentals-morristown.html', 'Morristown'], ['/party-rentals-hoboken.html', 'Hoboken'],
     ['/party-rentals-jersey-city.html', 'Jersey City']]],
   ['New York & Connecticut', [
-    ['/party-rentals-nyc.html', 'New York City'], ['/table-chair-rentals-manhattan.html', 'Manhattan tables & chairs'], ['/table-chair-rentals-brooklyn.html', 'Brooklyn tables & chairs'],
+    ['/party-rentals-nyc.html', 'New York City'], ['/event-rentals-nyc.html', 'Event rentals NYC'],
+    ['/party-rentals-manhattan.html', 'Manhattan'], ['/party-rentals-brooklyn.html', 'Brooklyn'],
+    ['/party-rentals-queens.html', 'Queens'], ['/party-rentals-bronx.html', 'The Bronx'],
+    ['/party-rentals-staten-island.html', 'Staten Island'],
+    ['/table-chair-rentals-manhattan.html', 'Manhattan tables & chairs'], ['/table-chair-rentals-brooklyn.html', 'Brooklyn tables & chairs'],
     ['/party-rentals-stamford-ct.html', 'Stamford, CT'], ['/party-rentals-greenwich-ct.html', 'Greenwich, CT'], ['/tri-state-event-rentals.html', 'Tri-state overview']]],
   ['Gallery walls', [
     ['/wall-panels.html', 'Gallery wall rentals'], ['/gallery-walls-chelsea.html', 'Chelsea'], ['/gallery-walls-manhattan.html', 'Manhattan'],
@@ -124,8 +128,9 @@ export function navify(html) {
 
 /* Honest delivery line below the hero (never inside it) on the homepage and key rental pages. No setup claim, no prices. */
 export const DELIVERY_PAGES = ['index.html', 'table-chair-rentals.html', 'furniture-lounge-rentals.html', 'linen-rentals.html', 'tabletop-glassware-rentals.html',
-  'kitchen-equipment-rentals.html', 'wall-panels.html', 'party-rentals-nyc.html', 'glassware-rental-nyc.html', 'catering-equipment-rental.html', 'bar-rental.html',
-  'chair-rental.html', 'trade-accounts.html', 'tri-state-event-rentals.html'];
+  'kitchen-equipment-rentals.html', 'wall-panels.html', 'party-rentals-nyc.html', 'event-rentals-nyc.html', 'glassware-rental-nyc.html', 'catering-equipment-rental.html', 'bar-rental.html',
+  'chair-rental.html', 'trade-accounts.html', 'tri-state-event-rentals.html',
+  'party-rentals-manhattan.html', 'party-rentals-brooklyn.html', 'party-rentals-queens.html', 'party-rentals-bronx.html', 'party-rentals-staten-island.html'];
 const STRIP = `<div class="dstrip"><div class="w">Delivery and pickup across NY, NJ and CT · <a href="tel:${TEL}" data-track="call_click">Call ${PHONE}</a> · <a href="#contact">Request a quote</a></div></div>`;
 export function deliverify(html, file) {
   if (!DELIVERY_PAGES.includes(file) || html.includes('class="dstrip"')) return html;
