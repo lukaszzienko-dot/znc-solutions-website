@@ -84,8 +84,8 @@ const PAGES = [
   form: 'Equipment you need, quantities, date, venue, power',
 },
 {
-  file: 'bar-rental.html', crumb: 'Bar Rental', h1: 'Bar Rental for Events',
-  title: 'Bar Rental | Event Bars, Barware & Bar Stools | ZNC',
+  file: 'bar-rental.html', crumb: 'Bar Rental', h1: 'Modern Bar Rentals in NYC, NJ & CT',
+  title: 'Modern Bar Rentals NYC, NJ & CT | ZNC Solutions',
   desc: 'Event bar rental for NYC, NJ and CT: an 8′ wooden bar, a fabric bar screen, ice tubs, shakers, coolers, bar stools and cocktail tables. Call 917-536-1245.',
   ey: 'Bars · Barware · Stools', hero: '8-wooden-bar',
   heroAlt: '8 foot wooden bar, an event bar rental from ZNC Solutions for NYC, NJ and CT events',
