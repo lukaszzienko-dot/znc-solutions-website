@@ -132,8 +132,8 @@ for (const c of cats) {
   const list = itemsOf(c); if (!list.length) continue;
   const u = `/rentals/${c.slug}/`;
   const bc = crumbs([['Home', '/'], ['Rentals', '/rentals/'], [c.label, u]]);
-  const title = (t => t.length <= 60 ? t : `${catTitle(c)} | ZNC Solutions`)(`${catTitle(c)} | ZNC Solutions NJ/NY`);
-  const desc = `${c.label} rentals from ZNC Solutions in Wayne, NJ: ${list.length} items for events across NJ, NYC and CT. Build a quote list or call ${PHONE}.`;
+  const title = (t => t.length <= 60 ? t : `${catTitle(c)} | ZNC Solutions`)(`${catTitle(c)} in NYC, NJ & CT | ZNC`);
+  const desc = `${catTitle(c)} for events across NYC, NJ & CT: ${list.length} items to add to your quote list. Call ${PHONE}.`;
   const itemList = { '@type': 'ItemList', name: `${c.label} rentals`, numberOfItems: list.length, itemListElement: list.map((it, i) => ({ '@type': 'ListItem', position: i + 1, url: SITE + it.url, name: fullName(it) })) };
   const landing = CAT_LANDING[c.key];
   const html = head({ title, desc, canonical: SITE + u, ogImage: imgSized(list[0].img, 1000, list[0].slug), ld: { '@context': 'https://schema.org', '@graph': [bc.ld, itemList] } }) + HEADER +
