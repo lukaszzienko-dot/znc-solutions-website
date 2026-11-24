@@ -58,6 +58,13 @@ function titleFor(n) {
   return n.slice(0, 54).trim() + ' | ZNC';
 }
 function descFor(it) {
+  if (it.description) {
+    const d = String(it.description).trim();
+    const extra = ` Delivery across NYC, NJ & CT. Call ${PHONE}.`;
+    if ((d + extra).length <= 160) return d + extra;
+    if (d.length <= 160) return d;
+    return d.slice(0, 157).trim() + '...';
+  }
   const n = fullName(it);
   for (const d of [`Rent the ${n} for your event from ZNC Solutions in Wayne, NJ. ${it.cat.label} rentals delivered across NJ, NYC and CT. Call ${PHONE}.`,
     `Rent the ${n} from ZNC Solutions in Wayne, NJ. ${it.cat.label} rentals for NJ, NYC and CT. Call ${PHONE}.`,
@@ -81,7 +88,7 @@ function addBtn(it, cls) {
 }
 function card(it, withAdd) {
   const sp = filledSpecs(it).filter(([l]) => l !== 'Notes').map(([, v]) => esc(v)).join('<br>');
-  return `<div class="p"><a class="p-link" href="${it.url}"><img loading="lazy" src="${imgSized(it.img, 500, it.slug, 'webp')}" alt="${esc(fullName(it))}, ${esc(it.cat.label)} rental from ZNC Solutions"><b>${esc(pretty(it.name))}</b></a>${sp ? `<span>${sp}</span>` : ''}${withAdd ? addBtn(it) : ''}<a class="p-more" href="${it.url}">View details</a></div>`;
+  return `<div class="p"><a class="p-link" href="${it.url}"><img loading="lazy" src="${imgSized(it.img, 500, it.slug, 'webp')}" alt="${esc(it.alt || `${fullName(it)}, ${it.cat.label} rental from ZNC Solutions`)}"><b>${esc(pretty(it.name))}</b></a>${sp ? `<span>${sp}</span>` : ''}${withAdd ? addBtn(it) : ''}<a class="p-more" href="${it.url}">View details</a></div>`;
 }
 const seeAll = list => `<details class="see-all"><summary>See all ${list.length} item${list.length === 1 ? '' : 's'}</summary><ul class="item-links">${list.map(it => `<li><a href="${it.url}">${esc(fullName(it))}</a></li>`).join('')}</ul></details>`;
 function write(rel, html) { const f = path.join(ROOT, rel); fs.mkdirSync(path.dirname(f), { recursive: true }); fs.writeFileSync(f, navify(html)); }
@@ -106,14 +113,14 @@ for (const it of ITEMS) {
   const bc = crumbs([['Home', '/'], ['Rentals', '/rentals/'], [c.label, `/rentals/${c.slug}/`], [n, it.url]]);
   const specs = filledSpecs(it);
   const photos = [it.img, ...(it.gallery || []).filter(g => g !== it.img)];
-  const product = { '@type': 'Product', '@id': SITE + it.url + '#product', name: n, url: SITE + it.url, image: photos.map(p => (p.startsWith('/') ? SITE : '') + imgSized(p, 1000, it.slug)), description: `${n} available to rent from ZNC Solutions in Wayne, NJ, for events across New York, New Jersey and Connecticut.`, brand: { '@type': 'Brand', name: 'ZNC Solutions' }, category: c.label };
+  const product = { '@type': 'Product', '@id': SITE + it.url + '#product', name: n, url: SITE + it.url, image: photos.map(p => (p.startsWith('/') ? SITE : '') + imgSized(p, 1000, it.slug)), description: it.description ? `${it.description} Delivery across NYC, NJ & CT.` : `${n} available to rent from ZNC Solutions in Wayne, NJ, for events across New York, New Jersey and Connecticut.`, brand: { '@type': 'Brand', name: 'ZNC Solutions' }, category: c.label };
   if (specs.length) product.additionalProperty = specs.map(([l, v]) => ({ '@type': 'PropertyValue', name: l, value: v }));
   const landing = CAT_LANDING[c.key];
   const title = titleFor(n), desc = descFor(it);
-  const html = head({ title, desc, canonical: SITE + it.url, ogImage: imgSized(it.img, 1000, it.slug), ogType: 'product', ld: { '@context': 'https://schema.org', '@graph': [bc.ld, product] } }) + HEADER +
-    `<main>${bc.html}<section class="item"><div class="w item-g"><div class="item-media"><img id="itemPhoto" src="${imgSized(it.img, 800, it.slug, 'webp')}"${it.img.startsWith('/') ? '' : ` srcset="${imgSized(it.img, 500, it.slug, 'webp')} 500w, ${imgSized(it.img, 800, it.slug, 'webp')} 800w" sizes="(max-width:850px) 92vw, 560px"`} alt="${esc(n)} for rent from ZNC Solutions, Wayne NJ" width="800" height="800" fetchpriority="high">` +
+  const html = head({ title, desc, canonical: SITE + it.url, ogImage: (it.img.startsWith('/') ? SITE : '') + imgSized(it.img, 1000, it.slug), ogType: 'product', ld: { '@context': 'https://schema.org', '@graph': [bc.ld, product] } }) + HEADER +
+    `<main>${bc.html}<section class="item"><div class="w item-g"><div class="item-media"><img id="itemPhoto" src="${imgSized(it.img, 800, it.slug, 'webp')}"${it.img.startsWith('/') ? '' : ` srcset="${imgSized(it.img, 500, it.slug, 'webp')} 500w, ${imgSized(it.img, 800, it.slug, 'webp')} 800w" sizes="(max-width:850px) 92vw, 560px"`} alt="${esc(it.alt || `${n} for rent from ZNC Solutions, Wayne NJ`)}" width="800" height="800" fetchpriority="high">` +
     (photos.some(p => p.startsWith('/')) ? `<p id="itemPhotoCap" class="small" style="margin:.3rem 0 0;color:#888;font-size:.75rem"></p>` : '') + (photos.length > 1 ? `<div class="thumbs">${photos.map((p, i) => `<button type="button" data-photo="${imgSized(p, 800, it.slug)}"${p.startsWith('/') ? ' data-cap="Styling concept" title="Styling concept"' : ''} aria-label="Show photo ${i + 1} of ${esc(n)}${p.startsWith('/') ? ' (styling concept)' : ''}"><img loading="lazy" src="${imgSized(p, 160, it.slug, 'webp')}" alt="${esc(n)} rental, photo ${i + 1} of ${photos.length}"></button>`).join('')}</div>` : '') +
-    `</div><div class="item-info"><div class="ey">${esc(c.label)}</div><h1>${esc(pretty(it.name))}</h1>${it.variant ? `<p class="variant">${esc(it.variant)}</p>` : ''}<p class="lead">${esc(c.key === 'walls' ? (c.short || c.blurb.split('. ')[0] + '.') : c.blurb)}</p>` +
+    `</div><div class="item-info"><div class="ey">${esc(c.label)}</div><h1>${esc(pretty(it.name))}</h1>${it.variant ? `<p class="variant">${esc(it.variant)}</p>` : ''}<p class="lead">${esc(it.description || (c.key === 'walls' ? (c.short || c.blurb.split('. ')[0] + '.') : c.blurb))}</p>` +
     (specs.length ? `<dl class="spec-list">${specs.map(([l, v]) => `<dt>${esc(l)}</dt><dd>${esc(v)}</dd>`).join('')}</dl>` : '') +
     `${addBtn(it, 'ql-add-lg')}` +
     `<p class="item-cta"><a class="btn" href="/contact.html">Request a quote</a> <a class="btn btn-o" href="tel:${TEL}">Call ${PHONE}</a></p>` +
