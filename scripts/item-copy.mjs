@@ -1,4 +1,4 @@
-/* Copy for generated rental pages: item "About" + FAQ blocks and category planning guides.
+/* Copy for generated rental pages: item compare lists + FAQ blocks and category planning guides.
    Only restates facts already on the site (sizes, seating counts, catalog names) plus plain planning advice. No prices, no invented claims. */
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const PHONE = '917-536-1245';
@@ -17,44 +17,17 @@ const FAMILIES = {
 };
 export const familyOf = it => ((FAMILIES[it.cat.key] || []).find(([re]) => re.test(it.name)) || [])[1] || null;
 
-/* One short usage note per category. {n} = item name. */
-const USE = {
-  walls: n => `Share the wall length, ceiling height, door widths and load-in window in your quote request so we can confirm how many panels the ${n} setup needs.`,
-  chairs: n => `Chair counts follow guest count: plan one chair per seat at each table, so a 60″ round that seats 8–10 needs 8–10 chairs. Tell us your table count and guest count and we will confirm that the ${n} is available for your date.`,
-  tables: n => `Table counts follow guest count and layout. Tell us how many guests you expect, whether the event is seated or standing, and the room dimensions, and we will help plan how the ${n} fits.`,
-  lounge: n => `Lounge pieces work best as a group. Pair the ${n} with a coffee table, a rug and side pieces from the same category, and tell us the footprint of the seating area when you request a quote.`,
-  bars: n => `A bar needs a plan for ice, glassware and back-of-house storage. Add barware and glassware from the same order alongside the ${n} and describe the space so we can plan the setup.`,
-  barware: n => `The ${n} is meant to be ordered with the rest of a bar setup. Tell us the guest count and the drink menu and we will help you decide how many pieces to add to the quote list.`,
-  coffee: n => `Coffee and tea service quantities depend on guest count and how long service runs. Tell us both and we will confirm the ${n} and any matching cups, saucers or creamers.`,
-  china: n => `Plates and bowls are ordered against the menu and the number of courses, not just the guest count. Share your menu style and headcount in the quote request so we can confirm the ${n} quantities.`,
-  glass: n => `Glassware counts depend on how many drink types you serve and how long the event runs. Share your guest count and drink list and we will confirm the ${n} quantity.`,
-  silver: n => `Flatware is ordered against the menu and number of courses. Share your guest count and course plan and we will confirm how many place settings of the ${n} you need.`,
-  display: n => `Serving pieces are chosen against the buffet or dessert layout. Tell us the table length and what you plan to serve and we will help you pick the right quantity of the ${n}.`,
-  kitchen: n => `Kitchen equipment is chosen against the menu, the power or fuel available at the venue, and your caterer's plan. Include those details when you request a quote for the ${n}.`,
-  event: n => `Support items are easy to forget until load-in. Add the ${n} to the same quote list as your furniture and tabletop so everything is confirmed in one reply.`,
-};
-
 const FAQ3 = {
   chairs: it => [`Which tables pair with the ${it.fn}?`, /barstool/i.test(it.name) ? 'Barstools are meant for high-top and cocktail tables, such as our 24″ and 30″ round cocktail tables.' : 'Chairs pair with our 48″, 60″ and 72″ round tables, plus rectangular and farmhouse tables for family-style seating.'],
   tables: it => [`Can you help plan a layout with the ${it.fn}?`, 'Yes. Share your guest count and venue and we will help work out how many tables and chairs you need.'],
 };
 
 export function itemDetailHtml(it, ctx) {
-  const { fullName, peers, byFamily, landing } = ctx;
+  const { fullName, peers, landing } = ctx;
   const n = fullName(it), c = it.cat, fam = familyOf(it);
   const sibs = fam ? peers.filter(p => p !== it && familyOf(p) === fam) : [];
-  const bits = [`The ${n} is one of ${peers.length} items in the ${c.label} category that ZNC Solutions rents for events in New Jersey, New York City and Connecticut.`];
-  if (fam && sibs.length) bits.push(`In the catalog it sits with ${sibs.length} other ${fam}, listed below so you can compare sizes, finishes and styles before you build a quote list.`);
-  const spec = ctx.specs.map(([l, v]) => `${l.toLowerCase()}: ${v}`).join('; ');
-  if (spec) bits.push(`Listed details — ${spec}.`);
-  const DIFF = {
-    'white-chiavari-chair': 'This is the standard-height White Chiavari Chair for seated dining. The taller, bar-height version is the White Chiavari Barstool, which is meant for high-top and cocktail tables.',
-    'white-chiavari-barstool': 'This is the bar-height White Chiavari Barstool for high-top and cocktail tables. For seated dining at standard tables, see the White Chiavari Chair.',
-  };
-  const diffHtml = DIFF[it.slug] ? `<p>${esc(DIFF[it.slug])}${it.slug === 'white-chiavari-chair' ? ' <a href="/rentals/chairs-barstools/white-chiavari-barstool.html">White Chiavari Barstool</a>.' : ' <a href="/rentals/chairs-barstools/white-chiavari-chair.html">White Chiavari Chair</a>.'}</p>` : '';
-  const use = (USE[c.key] || USE.event)(n);
-  const sibHtml = sibs.length ? `<h2>Other ${esc(fam)} we rent</h2><details class="see-all"><summary>See all ${sibs.length}</summary><ul class="item-links">${sibs.map(p => `<li><a href="${p.url}">${esc(fullName(p))}</a></li>`).join('')}</ul></details>` : '';
-  if (c.key === 'walls') return `<section class="feature item-detail"><div class="w"><h2>About the ${esc(n)}</h2><p>4′ × 7′ panels; a 20-foot wall uses five. Send your wall length and venue for a quote.</p></div></section>` +
+  const sibHtml = sibs.length ? `<section class="feature item-detail"><div class="w"><h2>Other ${esc(fam)} we rent</h2><details class="see-all"><summary>See all ${sibs.length}</summary><ul class="item-links">${sibs.map(p => `<li><a href="${p.url}">${esc(fullName(p))}</a></li>`).join('')}</ul></details></div></section>` : '';
+  if (c.key === 'walls') return sibHtml +
     `<section class="feature faq"><div class="w"><h2>${esc(n)} rental questions</h2><h3>How do I rent the ${esc(n)}?</h3><p>Add it to your quote list or call <a href="tel:+19175361245">${PHONE}</a>.</p><h3>Does ZNC deliver the ${esc(n)}?</h3><p>Yes, across North Jersey, New York City and Connecticut.</p></div></section>`;
   const f3 = FAQ3[c.key] ? FAQ3[c.key]({ ...it, fn: n }) : [`Can I combine the ${n} with other rentals?`, `Yes. One quote list can include furniture, tabletop, bar and kitchen items from the same inventory${landing ? `; see <a href="${landing[0]}">${esc(landing[1])}</a> for related items` : ''}.`];
   const faqs = [
@@ -62,7 +35,7 @@ export function itemDetailHtml(it, ctx) {
     [`Does ZNC deliver the ${n}?`, `ZNC delivers rentals across North Jersey, New York City and Connecticut. Include the venue and load-in details in your request, or call <a href="tel:+19175361245">${PHONE}</a>.`],
     f3,
   ];
-  return `<section class="feature item-detail"><div class="w"><h2>About the ${esc(n)}</h2><p>${esc(bits.join(' '))}</p>${diffHtml}<p>${esc(use)}</p>${sibHtml}</div></section>` +
+  return sibHtml +
     `<section class="feature faq"><div class="w"><h2>${esc(n)} rental questions</h2>${faqs.map(([q, a]) => `<h3>${esc(q)}</h3><p>${a.includes('<a') ? a : esc(a)}</p>`).join('')}</div></section>`;
 }
 
