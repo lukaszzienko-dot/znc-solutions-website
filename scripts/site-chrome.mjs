@@ -25,7 +25,7 @@ const GROUPS = [
   ['Gallery walls', [
     ['/wall-panels.html', 'Gallery wall rentals'], ['/gallery-walls-chelsea.html', 'Chelsea'], ['/gallery-walls-manhattan.html', 'Manhattan'],
     ['/gallery-walls-brooklyn.html', 'Brooklyn'], ['/gallery-walls-hoboken-jersey-city.html', 'Hoboken & Jersey City'], ['/portable-gallery-walls.html', 'Portable gallery walls'], ['/room-divider-partition-wall-rental-nyc.html', 'Room divider & partition wall NYC']]],
-  ['Company', [['/about.html', 'About ZNC Solutions'], ['/testimonials', 'Testimonials'], ['/trade-accounts.html', 'Trade accounts'], ['/contact.html', 'Request a quote']]],
+  ['Company', [['/about.html', 'About ZNC Solutions'], ['/testimonials', 'Testimonials'], ['/trade-accounts.html', 'Trade accounts'], ['/blog/', 'Planning guides'], ['/contact.html', 'Request a quote']]],
 ];
 const esc = s => s.replace(/&/g, '&amp;');
 const PINTEREST_URL = 'https://www.pinterest.com/lzienko/';
@@ -35,7 +35,8 @@ export const FOOTER_HTML = `<footer><div class="w fnav"><div class="fcol"><stron
   `</div><div class="w fcopy">© <span id="year"></span> ZNC Solutions · Wayne, NJ</div></footer>`;
 
 /* Homepage footer: no town / city / area lists on the main page (location landings stay linked from every other page). */
-const HOME_GROUPS = GROUPS.filter(([h]) => h === 'Rentals' || h === 'Company');
+/* The blog is linked from inner pages only, not from the homepage. */
+const HOME_GROUPS = GROUPS.filter(([h]) => h === 'Rentals' || h === 'Company').map(([h, l]) => [h, l.filter(([u]) => u !== '/blog/')]);
 export const HOME_FOOTER_HTML = `<footer><div class="w fnav fnav-home"><div class="fcol"><strong>ZNC SOLUTIONS</strong><br>Party rentals, gallery walls and event equipment<br><a href="mailto:info@zncsolutions.com">info@zncsolutions.com</a><br><a href="tel:${TEL}">${PHONE}</a><br>${PINTEREST_LINK}</div>` +
   HOME_GROUPS.map(([h, l]) => `<div class="fcol"><p class="fh">${esc(h)}</p><ul>${l.map(([u, t]) => `<li><a href="${u}">${esc(t)}</a></li>`).join('')}</ul></div>`).join('') +
   `</div><div class="w fcopy">© <span id="year"></span> ZNC Solutions</div></footer>`;
