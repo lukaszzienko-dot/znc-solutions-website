@@ -34,10 +34,10 @@ export const FOOTER_HTML = `<footer><div class="w fnav"><div class="fcol"><stron
   GROUPS.map(([h, l]) => `<div class="fcol"><p class="fh">${esc(h)}</p><ul>${l.map(([u, t]) => `<li><a href="${u}">${esc(t)}</a></li>`).join('')}</ul></div>`).join('') +
   `</div><div class="w fcopy">© <span id="year"></span> ZNC Solutions · Wayne, NJ</div></footer>`;
 
-/* Homepage footer: no town / city / area lists on the main page (location landings stay linked from every other page). */
-/* The blog is linked from inner pages only, not from the homepage. */
-const HOME_GROUPS = GROUPS.filter(([h]) => h === 'Rentals' || h === 'Company').map(([h, l]) => [h, l.filter(([u]) => u !== '/blog/')]);
-export const HOME_FOOTER_HTML = `<footer><div class="w fnav fnav-home"><div class="fcol"><strong>ZNC SOLUTIONS</strong><br>Party rentals, gallery walls and event equipment<br><a href="mailto:info@zncsolutions.com">info@zncsolutions.com</a><br><a href="tel:${TEL}">${PHONE}</a><br>${PINTEREST_LINK}</div>` +
+/* Homepage footer: same New Jersey and New York & Connecticut location columns as the inner pages (footer only; no location
+   section in the homepage body). The blog is linked from inner pages only, not from the homepage. */
+const HOME_GROUPS = GROUPS.filter(([h]) => ['Rentals', 'New Jersey', 'New York & Connecticut', 'Company'].includes(h)).map(([h, l]) => [h, l.filter(([u]) => u !== '/blog/')]);
+export const HOME_FOOTER_HTML = `<footer><div class="w fnav"><div class="fcol"><strong>ZNC SOLUTIONS</strong><br>Party rentals, gallery walls and event equipment<br><a href="mailto:info@zncsolutions.com">info@zncsolutions.com</a><br><a href="tel:${TEL}">${PHONE}</a><br>${PINTEREST_LINK}</div>` +
   HOME_GROUPS.map(([h, l]) => `<div class="fcol"><p class="fh">${esc(h)}</p><ul>${l.map(([u, t]) => `<li><a href="${u}">${esc(t)}</a></li>`).join('')}</ul></div>`).join('') +
   `</div><div class="w fcopy">© <span id="year"></span> ZNC Solutions</div></footer>`;
 
