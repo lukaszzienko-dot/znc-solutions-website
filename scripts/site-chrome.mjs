@@ -11,6 +11,7 @@ const GROUPS = [
     ['/kitchen-equipment-rentals.html', 'Kitchen equipment'], ['/glassware-rental-nyc.html', 'Glassware rental'], ['/catering-equipment-rental.html', 'Catering equipment'],
     ['/bar-rental.html', 'Bar setups & barware'], ['/chair-rental.html', 'Chair rental'], ['/wall-panels.html', 'Gallery wall panels'], ['/holiday-party-rentals.html', 'Holiday party & NYE rentals']]],
   ['New Jersey', [
+    ['/event-rentals-new-jersey.html', 'New Jersey event rentals'], ['/party-rentals-bergen-county-nj.html', 'Bergen County'], ['/party-rentals-essex-county-newark-nj.html', 'Newark & Essex County'],
     ['/event-rentals-wayne-nj.html', 'Wayne'], ['/party-rentals-north-jersey.html', 'North Jersey'], ['/party-rentals-paterson.html', 'Paterson'],
     ['/party-rentals-montclair.html', 'Montclair'], ['/party-rentals-morristown.html', 'Morristown'], ['/party-rentals-hoboken.html', 'Hoboken'],
     ['/party-rentals-jersey-city.html', 'Jersey City']]],

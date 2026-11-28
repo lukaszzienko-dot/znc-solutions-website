@@ -82,6 +82,7 @@ const PAGES = [
   reviews: ['Annie Gonzalez', 'Kathleen Reddington'],
   related: [['/kitchen-equipment-rentals.html', 'Kitchen Equipment Rentals'], ['/rentals/serving-display/', 'Serving & display'], ['/rentals/coffee-tea-service/', 'Coffee & tea service'], ['/tabletop-glassware-rentals.html', 'Tabletop & Glassware Rentals'], ['/glassware-rental-nyc.html', 'Glassware Rental NYC'], ['/trade-accounts.html', 'Trade Accounts']],
   form: 'Equipment you need, quantities, date, venue, power',
+  areas: `<h2>Catering equipment rental in New Jersey</h2><p>Caterers, venues and hosts across New Jersey book the same chafing dishes, food pans, buffet risers and coffee urns for weddings, galas, school and church events and office lunches. We deliver to Bergen, Essex, Hudson, Passaic and Morris Counties. See <a href="/event-rentals-new-jersey.html">event rentals in New Jersey</a>, <a href="/party-rentals-bergen-county-nj.html">party rentals in Bergen County</a>, <a href="/party-rentals-essex-county-newark-nj.html">party rentals in Newark and Essex County</a> and <a href="/party-rentals-morristown.html">party rentals in Morristown</a>.</p><h2>Chafing dish rental in NYC</h2><p>For buffets in Manhattan offices, Brooklyn lofts and Queens halls, 8 qt chafing dishes with full-size food pans and fuel keep hot dishes on the line through service. Tell us the number of hot dishes and the length of service and we suggest a count. See <a href="/event-rentals-nyc.html">event rentals NYC</a>, <a href="/party-rentals-manhattan.html">party rentals in Manhattan</a> and <a href="/party-rentals-brooklyn.html">party rentals in Brooklyn</a>.</p>`,
 },
 {
   file: 'bar-rental.html', crumb: 'Bar Rental', h1: 'Modern Bar Rentals in NYC, NJ & CT',
@@ -106,6 +107,7 @@ const PAGES = [
   reviews: ['UK Mission Press Office', 'Luke Heneghan'],
   related: [['/holiday-party-rentals.html', 'Holiday Party & NYE Rentals'], ['/glassware-rental-nyc.html', 'Glassware Rental NYC'], ['/rentals/bars/', 'Bars'], ['/rentals/barware/', 'Barware'], ['/furniture-lounge-rentals.html', 'Event Furniture & Lounge'], ['/chair-rental.html', 'Chair Rental'], ['/trade-accounts.html', 'Trade Accounts']],
   form: 'Bar setup you need, quantities, date, venue',
+  areas: `<h2>Event bar rental in NYC and New Jersey</h2><p>We rent bar furniture and equipment, not bartending or alcohol service: the 8′ wooden bar, a fabric bar screen, ice tubs, tools, stools and cocktail tables. The bar goes to Manhattan galleries and lofts, Brooklyn studios and New Jersey halls, homes and offices alike. See <a href="/party-rentals-nyc.html">party rentals NYC</a>, <a href="/party-rentals-manhattan.html">party rentals in Manhattan</a>, <a href="/event-rentals-new-jersey.html">event rentals in New Jersey</a>, <a href="/party-rentals-jersey-city.html">party rentals in Jersey City</a> and <a href="/party-rentals-bergen-county-nj.html">party rentals in Bergen County</a>.</p>`,
 },
 {
   file: 'chair-rental.html', crumb: 'Chair Rental', h1: 'Chair Rental for Events',
@@ -245,6 +247,7 @@ for (const P of PAGES) {
     `<!-- TODO(delivery-timing): any order cut-off or delivery-timing line awaits Lukasz's confirmation. Not shown until confirmed. -->` +
     P.sections.map(([h, lead, slugs]) => `<section class="related"><div class="w"><h2>${h}</h2><p class="lead">${lead}</p>${cards(slugs)}</div></section>`).join('') +
     `<section class="feature"><div class="w">${P.guide}<p>${callBtns}</p></div></section>` +
+    (P.areas ? `<section class="feature"><div class="w">${P.areas}</div></section>` : '') +
     (P.noReviews ? '' : teaser(P.reviews)) +
     `<section class="feature faq"><div class="w"><h2>FAQ</h2>${P.faqs.map(([q, a]) => `<h3>${esc(q)}</h3><p>${link(a)}</p>`).join('')}</div></section>` +
     `<section class="related"><div class="w"><h2>Related rentals</h2><p class="cat-links">${P.related.map(([u, t]) => `<a href="${u}">${esc(t)}</a>`).join('')}</p></div></section>` +

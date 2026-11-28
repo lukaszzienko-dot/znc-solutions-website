@@ -302,6 +302,23 @@ const PAGES = [
   }
 ];
 
+
+/* Contextual links from each NYC page to the New Jersey pages and to the matching service pages (unique wording per page). */
+const NJX = {
+  'event-rentals-nyc.html': section('Event rentals in New Jersey too',
+    `<p>Planners who run events on both sides of the Hudson can use one catalog for both. See <a href="/event-rentals-new-jersey.html">event rentals in New Jersey</a>, <a href="/party-rentals-jersey-city.html">party rentals in Jersey City</a> and <a href="/party-rentals-hoboken.html">party rentals in Hoboken</a>, or go straight to <a href="/table-chair-rentals.html">table and chair rental</a>, <a href="/furniture-lounge-rentals.html">lounge furniture rental</a>, <a href="/bar-rental.html">event bar rental</a>, <a href="/catering-equipment-rental.html">catering equipment rental</a> and <a href="/wall-panels.html">wall panel rental</a>.</p>`),
+  'party-rentals-manhattan.html': section('Manhattan rentals by category',
+    `<p>Jump straight to <a href="/table-chair-rentals-manhattan.html">table and chair rental in Manhattan</a>, <a href="/furniture-lounge-rentals.html">lounge furniture rental in Manhattan</a>, <a href="/bar-rental.html">event bar rental in Manhattan</a>, <a href="/catering-equipment-rental.html">catering equipment rental</a> or <a href="/gallery-walls-manhattan.html">gallery wall rental in Manhattan</a>. Hosting across the river as well? See <a href="/party-rentals-hoboken.html">party rentals in Hoboken</a>, <a href="/party-rentals-jersey-city.html">Jersey City</a> and <a href="/event-rentals-new-jersey.html">event rentals in New Jersey</a>.</p>`),
+  'party-rentals-brooklyn.html': section('Brooklyn rentals by category',
+    `<p>Go straight to <a href="/table-chair-rentals-brooklyn.html">table and chair rental in Brooklyn</a>, <a href="/furniture-lounge-rentals.html">lounge furniture rental in Brooklyn</a>, <a href="/bar-rental.html">event bar rental</a>, <a href="/catering-equipment-rental.html">catering equipment rental</a> or <a href="/gallery-walls-brooklyn.html">gallery wall rental in Brooklyn</a>. Guests coming from New Jersey? We also deliver to <a href="/party-rentals-jersey-city.html">Jersey City</a>, <a href="/party-rentals-hoboken.html">Hoboken</a> and the rest of <a href="/event-rentals-new-jersey.html">New Jersey</a>.</p>`),
+  'party-rentals-queens.html': section('Queens rentals by category',
+    `<p>See <a href="/table-chair-rentals.html">table and chair rental for Queens events</a>, <a href="/furniture-lounge-rentals.html">lounge furniture rental</a>, <a href="/bar-rental.html">event bar rental</a>, <a href="/catering-equipment-rental.html">catering equipment rental</a> and <a href="/wall-panels.html">wall panel rental</a>. The same catalog also covers <a href="/event-rentals-new-jersey.html">event rentals in New Jersey</a> and Connecticut.</p>`),
+  'party-rentals-bronx.html': section('Bronx rentals by category',
+    `<p>Browse <a href="/table-chair-rentals.html">table and chair rental for Bronx events</a>, <a href="/catering-equipment-rental.html">catering equipment rental</a>, <a href="/bar-rental.html">event bar rental</a>, <a href="/furniture-lounge-rentals.html">lounge furniture rental</a> and <a href="/linen-rentals.html">linen rentals</a>. Planning in New Jersey or Connecticut too? See <a href="/event-rentals-new-jersey.html">event rentals in New Jersey</a> and the <a href="/tri-state-event-rentals.html">tri-state overview</a>.</p>`),
+  'party-rentals-staten-island.html': section('Staten Island rentals by category',
+    `<p>Start with <a href="/table-chair-rentals.html">table and chair rental for Staten Island events</a>, <a href="/catering-equipment-rental.html">catering equipment rental</a>, <a href="/bar-rental.html">event bar rental</a> and <a href="/furniture-lounge-rentals.html">lounge furniture rental</a>. Staten Island families often host on both sides of the bridges, and we also deliver to <a href="/party-rentals-jersey-city.html">Jersey City</a>, <a href="/party-rentals-essex-county-newark-nj.html">Newark and Essex County</a> and the rest of <a href="/event-rentals-new-jersey.html">New Jersey</a>.</p>`)
+};
+
 function assertMeta(P) {
   if (P.title.length > 60) throw new Error(P.file + ' title length ' + P.title.length + ': ' + P.title);
   if (P.desc.length < 120 || P.desc.length > 165) throw new Error(P.file + ' desc length ' + P.desc.length + ': ' + P.desc);
@@ -338,7 +355,7 @@ function bannedHits(html, file) {
     [/certificate of insurance/i, 'certificate of insurance'],
     [/Pricing depends/i, 'Pricing depends'],
     [/from Wayne,\s*NJ/i, 'from Wayne, NJ'],
-    [/www\./i, 'www.'],
+    [/www\.zncsolutions/i, 'www.zncsolutions'] /* www.pinterest.com in the footer is fine */,
     [/47 Monterey/i, '47 Monterey'],
     [/\bTomek\b/i, 'Tomek'],
     [/exhibition-wall-rental/i, 'exhibition-wall-rental'],
@@ -360,7 +377,7 @@ const counts = [];
 for (const P of PAGES) {
   assertMeta(P);
   const URL = '/' + P.file;
-  const body = P.body();
+  const body = P.body() + (NJX[P.file] || '');
   const faqHtml = faqBlock(P.faqH2, P.faqs);
   const contact = contactBlock(P.formH2, P.locPh, P.needsPh);
   const mainInner = `<section class="hero"><div class="w"><div class="ey">${P.ey}</div><h1>${esc(P.h1)}</h1><p>${P.intro}</p><p>${callBtns}</p></div></section>` + body + faqHtml + contact;

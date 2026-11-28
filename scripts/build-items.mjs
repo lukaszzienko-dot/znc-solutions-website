@@ -66,10 +66,11 @@ function descFor(it) {
     return d.slice(0, 157).trim() + '...';
   }
   const n = fullName(it);
-  for (const d of [`Rent the ${n} for your event from ZNC Solutions in Wayne, NJ. ${it.cat.label} rentals delivered across NJ, NYC and CT. Call ${PHONE}.`,
-    `Rent the ${n} from ZNC Solutions in Wayne, NJ. ${it.cat.label} rentals for NJ, NYC and CT. Call ${PHONE}.`,
-    `Rent the ${n} from ZNC Solutions in Wayne, NJ. Delivery across NJ, NYC and CT.`]) if (d.length <= 160) return d;
-  return `Rent the ${n} from ZNC Solutions in Wayne, NJ.`;
+  for (const d of [`Rent the ${n} for your event from ZNC Solutions. ${it.cat.label} rentals with delivery across NYC, NJ & CT. Call ${PHONE}.`,
+    `Rent the ${n} from ZNC Solutions. ${it.cat.label} rentals for NYC, NJ & CT. Call ${PHONE}.`,
+    `Rent the ${n} from ZNC Solutions. Delivery across NYC, NJ & CT. Call ${PHONE}.`,
+    `Rent the ${n} from ZNC Solutions. Delivery across NYC, NJ & CT.`]) if (d.length <= 160) return d;
+  return `Rent the ${n} from ZNC Solutions.`;
 }
 
 const HEADER = `<header><div class="w"><nav><a class="brand" href="/">ZNC SOLUTIONS</a><div class="nav"><a href="/rentals/">Rentals</a><a href="/wall-panels.html">Wall Panels</a><a href="/testimonials">Testimonials</a><a class="btn" href="/contact.html">Quote</a></div></nav></div></header>`;
@@ -113,12 +114,12 @@ for (const it of ITEMS) {
   const bc = crumbs([['Home', '/'], ['Rentals', '/rentals/'], [c.label, `/rentals/${c.slug}/`], [n, it.url]]);
   const specs = filledSpecs(it);
   const photos = [it.img, ...(it.gallery || []).filter(g => g !== it.img)];
-  const product = { '@type': 'Product', '@id': SITE + it.url + '#product', name: n, url: SITE + it.url, image: photos.map(p => (p.startsWith('/') ? SITE : '') + imgSized(p, 1000, it.slug)), description: it.description ? `${it.description} Delivery across NYC, NJ & CT.` : `${n} available to rent from ZNC Solutions in Wayne, NJ, for events across New York, New Jersey and Connecticut.`, brand: { '@type': 'Brand', name: 'ZNC Solutions' }, category: c.label };
+  const product = { '@type': 'Product', '@id': SITE + it.url + '#product', name: n, url: SITE + it.url, image: photos.map(p => (p.startsWith('/') ? SITE : '') + imgSized(p, 1000, it.slug)), description: it.description ? `${it.description} Delivery across NYC, NJ & CT.` : `${n} available to rent from ZNC Solutions for events across New York, New Jersey and Connecticut.`, brand: { '@type': 'Brand', name: 'ZNC Solutions' }, category: c.label };
   if (specs.length) product.additionalProperty = specs.map(([l, v]) => ({ '@type': 'PropertyValue', name: l, value: v }));
   const landing = CAT_LANDING[c.key];
   const title = titleFor(n), desc = descFor(it);
   const html = head({ title, desc, canonical: SITE + it.url, ogImage: (it.img.startsWith('/') ? SITE : '') + imgSized(it.img, 1000, it.slug), ogType: 'product', ld: { '@context': 'https://schema.org', '@graph': [bc.ld, product] } }) + HEADER +
-    `<main>${bc.html}<section class="item"><div class="w item-g"><div class="item-media"><img id="itemPhoto" src="${imgSized(it.img, 800, it.slug, 'webp')}"${it.img.startsWith('/') ? '' : ` srcset="${imgSized(it.img, 500, it.slug, 'webp')} 500w, ${imgSized(it.img, 800, it.slug, 'webp')} 800w" sizes="(max-width:850px) 92vw, 560px"`} alt="${esc(it.alt || `${n} for rent from ZNC Solutions, Wayne NJ`)}" width="800" height="800" fetchpriority="high">` +
+    `<main>${bc.html}<section class="item"><div class="w item-g"><div class="item-media"><img id="itemPhoto" src="${imgSized(it.img, 800, it.slug, 'webp')}"${it.img.startsWith('/') ? '' : ` srcset="${imgSized(it.img, 500, it.slug, 'webp')} 500w, ${imgSized(it.img, 800, it.slug, 'webp')} 800w" sizes="(max-width:850px) 92vw, 560px"`} alt="${esc(it.alt || `${n} for rent from ZNC Solutions`)}" width="800" height="800" fetchpriority="high">` +
     (photos.some(p => p.startsWith('/')) ? `<p id="itemPhotoCap" class="small" style="margin:.3rem 0 0;color:#888;font-size:.75rem"></p>` : '') + (photos.length > 1 ? `<div class="thumbs">${photos.map((p, i) => `<button type="button" data-photo="${imgSized(p, 800, it.slug)}"${p.startsWith('/') ? ' data-cap="Styling concept" title="Styling concept"' : ''} aria-label="Show photo ${i + 1} of ${esc(n)}${p.startsWith('/') ? ' (styling concept)' : ''}"><img loading="lazy" src="${imgSized(p, 160, it.slug, 'webp')}" alt="${esc(n)} rental, photo ${i + 1} of ${photos.length}"></button>`).join('')}</div>` : '') +
     `</div><div class="item-info"><div class="ey">${esc(c.label)}</div><h1>${esc(pretty(it.name))}</h1>${it.variant ? `<p class="variant">${esc(it.variant)}</p>` : ''}<p class="lead">${esc(it.description || (c.key === 'walls' ? (c.short || c.blurb.split('. ')[0] + '.') : c.blurb))}</p>` +
     (specs.length ? `<dl class="spec-list">${specs.map(([l, v]) => `<dt>${esc(l)}</dt><dd>${esc(v)}</dd>`).join('')}</dl>` : '') +
@@ -139,8 +140,8 @@ for (const c of cats) {
   const list = itemsOf(c); if (!list.length) continue;
   const u = `/rentals/${c.slug}/`;
   const bc = crumbs([['Home', '/'], ['Rentals', '/rentals/'], [c.label, u]]);
-  const title = c.key === 'walls' ? 'Gallery Wall Rental NYC, NJ & CT | ZNC Solutions' : (t => t.length <= 60 ? t : `${catTitle(c)} | ZNC Solutions`)(`${catTitle(c)} | ZNC Solutions NJ/NY`);
-  const desc = c.key === 'walls' ? `Gallery wall rental NYC: rigid 4′ × 7′ event walls and temporary exhibition walls for events across NYC, NJ and CT. Call ${PHONE}.` : `${c.label} rentals from ZNC Solutions in Wayne, NJ: ${list.length} items for events across NJ, NYC and CT. Build a quote list or call ${PHONE}.`;
+  const title = c.key === 'walls' ? 'Gallery Wall Rental NYC, NJ & CT | ZNC Solutions' : (t => t.length <= 60 ? t : `${catTitle(c)} | ZNC Solutions`)(`${catTitle(c)} in NYC, NJ & CT | ZNC`);
+  const desc = c.key === 'walls' ? `Gallery wall rental NYC: rigid 4′ × 7′ event walls and temporary exhibition walls for events across NYC, NJ and CT. Call ${PHONE}.` : `${catTitle(c)} for events across NYC, NJ & CT: ${list.length} items to add to your quote list. Call ${PHONE}.`;
   const itemList = { '@type': 'ItemList', name: `${c.label} rentals`, numberOfItems: list.length, itemListElement: list.map((it, i) => ({ '@type': 'ListItem', position: i + 1, url: SITE + it.url, name: fullName(it) })) };
   const landing = CAT_LANDING[c.key];
   const html = head({ title, desc, canonical: SITE + u, ogImage: imgSized(list[0].img, 1000, list[0].slug), ld: { '@context': 'https://schema.org', '@graph': [bc.ld, itemList] } }) + HEADER +
